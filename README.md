@@ -26,6 +26,7 @@ git clone https://github.com/stevewebmarket/nightingale-mapping.git
 cd nightingale-mapping
 
 # Run the baseline bidirectional test
+# (download orchestra.wav and rock.wav first — see "Reference Audio Samples" below)
 python run_nightingale_baseline.py
 ```
 
@@ -35,6 +36,25 @@ This will:
 - Extract ladder structures
 - Regenerate sound from the ladder
 - Show round-trip fidelity
+
+### Reference Audio Samples (permanent URLs)
+
+The three reference WAVs used by the baseline test and the conversational
+research loop are mirrored as assets on the `samples-v1` GitHub Release on
+this repo. These URLs are stable and do not expire:
+
+- birdsong (5.1 MB) — short broadband bird recording, used as a
+  non-harmonic stress test:
+  <https://github.com/stevewebmarket/nightingale-mapping/releases/download/samples-v1/birdsong.wav>
+- orchestra (20.1 MB) — sustained orchestral passage at ~83 Hz, used as
+  the harmonic-content baseline:
+  <https://github.com/stevewebmarket/nightingale-mapping/releases/download/samples-v1/orchestra.wav>
+- rock (15.5 MB) — rock track with bass and lead, used as the
+  mixed-content test:
+  <https://github.com/stevewebmarket/nightingale-mapping/releases/download/samples-v1/rock.wav>
+
+`run_nightingale_baseline.py` only needs `orchestra.wav` and `rock.wav`;
+`birdsong.wav` is used by the conversational loop in `conv_loop.py`.
 
 ### Repository Structure
 
