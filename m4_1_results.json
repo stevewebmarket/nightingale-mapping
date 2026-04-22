@@ -4,7 +4,8 @@
     "fmin": 50,
     "fmax": 16000,
     "tolerance_pct": 0.01,
-    "onset_mode": "cqt_flux"
+    "onset_mode": "cqt_flux",
+    "pitch_mode": "adaptive_rms_attack"
   },
   "rows": [
     {
@@ -76,25 +77,25 @@
     {
       "label": "polyphonic",
       "test": "composition",
-      "within": 0,
+      "within": 1,
       "total": 8
     },
     {
       "label": "highenergy",
       "test": "pitch_shift",
-      "within": 4,
+      "within": 6,
       "total": 8
     },
     {
       "label": "highenergy",
       "test": "time_stretch",
-      "within": 3,
+      "within": 5,
       "total": 8
     },
     {
       "label": "highenergy",
       "test": "composition",
-      "within": 2,
+      "within": 4,
       "total": 8
     },
     {
@@ -116,7 +117,7 @@
       "total": 8
     }
   ],
-  "total_within": 100,
+  "total_within": 107,
   "total_notes": 144,
-  "score": 0.6944444444444444
+  "score": 0.7430555555555556
 }

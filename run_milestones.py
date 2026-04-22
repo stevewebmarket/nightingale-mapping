@@ -55,7 +55,24 @@ DEFAULT_CONFIG = {
     # held; flute 16/24 -> 22/24; documented regression: rock time_stretch
     # 7/8 -> 4/8.  Set onset_mode="baseline" to recover the M3.x detector.
     "onset_mode": "cqt_flux",
+    # M5.5/M5.6: adaptive RMS-attack routing is the new default pitch
+    # strategy.  Single global rule: early-half RMS / late-half RMS in
+    # [t-0.05, t+0.20] > 1.5  -> use short_med window [t+0.02, t+0.18];
+    # otherwise use baseline window [t-0.15, t+0.25].  M5.5 ablation
+    # (commit 5042891): grand total 100/144 -> 107/144 (0.7431);
+    # highenergy 9 -> 15 (+6); polyphonic 4 -> 5; orch/flute/synth held;
+    # routes ~19% to short_med (genuinely adaptive, not collapsed).
+    # Set pitch_mode="baseline" to recover the M5.3 fixed-window strategy.
+    "pitch_mode": "adaptive_rms_attack",
 }
+
+# Pitch-window analysis intervals (seconds, relative to onset time)
+PITCH_WINDOW_BASELINE  = (-0.15, 0.25)
+PITCH_WINDOW_SHORT_MED = (0.02, 0.18)
+# Adaptive RMS-attack routing thresholds (M5.5)
+RMS_PROBE_EARLY = (-0.05, 0.075)
+RMS_PROBE_LATE  = (0.075, 0.20)
+RMS_ATTACK_THRESHOLD = 1.5
 
 
 def load_clip(path):
@@ -89,19 +106,48 @@ def detect_onsets(audio, cfg=None, n=NUM_NOTES):
     return onsets[:n]
 
 
-def pitch_at(audio, t, cfg=None):
-    cfg = cfg or DEFAULT_CONFIG
-    # Match the proposal's analysis window: t-0.15s to t+0.25s (0.4s total)
-    start = max(0, int((t - 0.15) * SR))
-    end = min(len(audio), int((t + 0.25) * SR))
+def _pitch_window_median(audio, t, window, cfg):
+    start = max(0, int((t + window[0]) * SR))
+    end = min(len(audio), int((t + window[1]) * SR))
     seg = audio[start:end]
     if len(seg) < 512:
         return None
-    f0 = librosa.yin(seg, fmin=cfg.get("fmin", 50), fmax=cfg.get("fmax", 16000), sr=SR)
+    f0 = librosa.yin(seg, fmin=cfg.get("fmin", 50),
+                     fmax=cfg.get("fmax", 16000), sr=SR)
     valid = f0[f0 > cfg.get("fmin", 50)]
     if len(valid) == 0:
         return None
     return float(np.median(valid))
+
+
+def _rms_attack_ratio(audio, t):
+    """Early-half RMS / late-half RMS in the probe window."""
+    def _rms(start_off, end_off):
+        s = max(0, int((t + start_off) * SR))
+        e = min(len(audio), int((t + end_off) * SR))
+        seg = audio[s:e]
+        if len(seg) == 0:
+            return 0.0
+        return float(np.sqrt(np.mean(seg ** 2) + 1e-12))
+    early = _rms(*RMS_PROBE_EARLY)
+    late  = _rms(*RMS_PROBE_LATE)
+    if late <= 0:
+        return 0.0
+    return early / late
+
+
+def pitch_at(audio, t, cfg=None):
+    cfg = cfg or DEFAULT_CONFIG
+    mode = cfg.get("pitch_mode", "adaptive_rms_attack")
+    if mode == "baseline":
+        return _pitch_window_median(audio, t, PITCH_WINDOW_BASELINE, cfg)
+    if mode == "short_med":
+        return _pitch_window_median(audio, t, PITCH_WINDOW_SHORT_MED, cfg)
+    if mode == "adaptive_rms_attack":
+        if _rms_attack_ratio(audio, t) > RMS_ATTACK_THRESHOLD:
+            return _pitch_window_median(audio, t, PITCH_WINDOW_SHORT_MED, cfg)
+        return _pitch_window_median(audio, t, PITCH_WINDOW_BASELINE, cfg)
+    raise ValueError(f"unknown pitch_mode: {mode!r}")
 
 
 def octave_fold(ratio, target):
