@@ -2,20 +2,19 @@
 M4.1 — Expanded benchmark.
 
 Same system, same metric, same 1% tolerance, no per-dataset tuning.
-Runs the unchanged M3.1 pipeline on five clips chosen to stress
+Runs the unchanged M3.1 pipeline on six clips chosen to stress
 different failure modes:
 
-  orchestra (existing)         baseline harmonic content
-  rock      (existing)         baseline mixed content
-  trumpet                      clean monophonic   (librosa example)
-  choice    (drum + bass)      transient-heavy    (librosa example)
-  brahms    (string orchestra) dense polyphonic   (librosa example)
-  synthetic                    ground-truth sine sequence at known ratios
+  orchestra      baseline harmonic content   (samples-v1 release)
+  rock           baseline mixed content      (samples-v1 release)
+  flute          clean monophonic            (curated)
+  polyphonic     dense polyphonic            (curated)
+  highenergy     transient-heavy             (curated)
+  synthetic_just ground-truth sine sequence at known just ratios
 
 Synthetic case = 8 pure sine notes at 220 Hz * {1, 9/8, 5/4, 4/3,
-3/2, 5/3, 15/8, 2} with 0.5s tone + 0.1s silence each.  This is the
-ratio-perfect anchor: any drop here means the pipeline cannot even
-recover ratios it produced itself.
+3/2, 5/3, 15/8, 2} with 0.5s tone + 0.1s silence each.  Ratio-perfect
+anchor: any drop here is a system characteristic, not the audio.
 
 No re-tuning.  The default extractor config from run_milestones is
 used unchanged.
@@ -25,6 +24,7 @@ Usage:
 """
 
 import json
+import os
 import numpy as np
 import librosa
 
@@ -56,8 +56,7 @@ def synthetic_clip(base_freq=220.0, tone_dur=0.5, gap_dur=0.1):
     return audio
 
 
-def load_librosa_example(name):
-    path = librosa.example(name)
+def load_audio_file(path):
     y, _ = librosa.load(path, sr=SR, duration=CLIP_SECONDS, mono=True)
     return y
 
@@ -80,12 +79,20 @@ def main():
 
     print("Loading clips...")
     clips = []
-    for name, path in [("orchestra", "orchestra.wav"), ("rock", "rock.wav")]:
-        clips.append((name, load_clip(path)))
-    for name, ex in [("trumpet", "trumpet"),
-                     ("choice_drum_bass", "choice"),
-                     ("brahms_orchestra", "brahms")]:
-        clips.append((name, load_librosa_example(ex)))
+    file_clips = [
+        ("orchestra",  "orchestra.wav"),
+        ("rock",       "rock.wav"),
+        ("flute",      "flute.mp3"),
+        ("polyphonic", "polyphonic.mp3"),
+        ("highenergy", "highenergy.wav"),
+    ]
+    for name, path in file_clips:
+        if not os.path.isfile(path):
+            raise FileNotFoundError(
+                f"Missing {path}.  See scripts/fetch_samples.py for orchestra/rock; "
+                f"flute/polyphonic/highenergy ship from samples-v2 release."
+            )
+        clips.append((name, load_audio_file(path)))
     clips.append(("synthetic_just", synthetic_clip()))
 
     print("=" * 78)

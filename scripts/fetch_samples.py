@@ -13,21 +13,34 @@ import sys
 import urllib.request
 from pathlib import Path
 
-RELEASE_BASE = (
+RELEASE_V1 = (
     "https://github.com/stevewebmarket/nightingale-mapping"
     "/releases/download/samples-v1"
 )
-SAMPLES = ("birdsong.wav", "orchestra.wav", "rock.wav")
+RELEASE_V2 = (
+    "https://github.com/stevewebmarket/nightingale-mapping"
+    "/releases/download/samples-v2"
+)
+
+# (filename, release_base) pairs
+SAMPLES = (
+    ("birdsong.wav",   RELEASE_V1),
+    ("orchestra.wav",  RELEASE_V1),
+    ("rock.wav",       RELEASE_V1),
+    ("flute.mp3",      RELEASE_V2),
+    ("polyphonic.mp3", RELEASE_V2),
+    ("highenergy.wav", RELEASE_V2),
+)
 ROOT = Path(__file__).resolve().parent.parent
 
 
 def main() -> int:
-    for name in SAMPLES:
+    for name, base in SAMPLES:
         dst = ROOT / name
         if dst.exists() and dst.stat().st_size > 0:
             print(f"[ok ] {name} already present, skipping")
             continue
-        url = f"{RELEASE_BASE}/{name}"
+        url = f"{base}/{name}"
         print(f"downloading {url} -> {dst} ...", flush=True)
         try:
             with urllib.request.urlopen(url, timeout=60) as resp:
