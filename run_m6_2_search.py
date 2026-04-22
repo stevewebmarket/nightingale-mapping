@@ -8,6 +8,11 @@ This turns the pairwise metric from M6.1 into a usable behaviour:
 
 Run:    python run_m6_2_search.py                    # all queries, default library
         python run_m6_2_search.py twinkle_box        # single query
+
+Reproducibility caveat: librosa.load falls back from PySoundFile to audioread
+for compressed formats (mp3, m4a) when SoundFile cannot decode them.  Decoder
+backend differences across environments can cause sub-percent feature drift
+on those clips.  WAV inputs avoid this entirely.
 """
 from __future__ import annotations
 
@@ -65,10 +70,20 @@ def main():
 
         print(f"  {'rank':>4s}  {'candidate':25s} {'score':>6s} "
               f"{'fold':>5s} {'raw':>5s} {'fNT':>5s}  verdict")
+        # Group ties so a non-technical reader does not read coincidental
+        # ordering of equal scores as meaningful ranking.
+        prev_score = None
+        rank = 0
         for i, (name, r) in enumerate(ranked, 1):
-            print(f"  {i:>4d}  {name:25s} {r['score']:6.3f} "
+            if prev_score is None or abs(r["score"] - prev_score) > 1e-6:
+                rank = i
+                rank_str = f"{rank:>4d}"
+            else:
+                rank_str = "   ="  # tied with previous rank
+            print(f"  {rank_str}  {name:25s} {r['score']:6.3f} "
                   f"{r['fold_match']:5.2f} {r['raw_match']:5.2f} "
                   f"{r['fold_match_nt']:5.2f}  {r['verdict']}")
+            prev_score = r["score"]
         print()
 
     # ---------------------------------------------------------------------
@@ -83,7 +98,7 @@ def main():
     print("Pass-condition self-check:")
 
     non_degenerate_ok = True
-    transformed_ok = True
+    transformed_results = []  # list of (query, ok-or-None)  None = N/A
     for q in queries:
         if q not in features:
             continue
@@ -98,15 +113,25 @@ def main():
             non_degenerate_ok = False
         own_tform = [n for n, _ in ranked
                      if n.startswith(q) and n != q]
-        if own_tform:
+        if not own_tform:
+            transformed_results.append((q, None))  # N/A
+        else:
             top_tform_idx = min(i for i, (n, _) in enumerate(ranked)
                                 if n in own_tform)
             unrelated_idx = [i for i, (n, _) in enumerate(ranked)
                              if not n.startswith(q.split("_")[0])]
-            if unrelated_idx and top_tform_idx >= min(unrelated_idx):
-                transformed_ok = False
+            ok = bool(unrelated_idx) and top_tform_idx < min(unrelated_idx)
+            transformed_results.append((q, ok))
 
-    # melody-vs-non-melody check using twinkle_box's ranking
+    # transformed-rank check passes only if every applicable query passes;
+    # queries with no own-transform are N/A and excluded from the verdict
+    applicable = [ok for _, ok in transformed_results if ok is not None]
+    transformed_ok = bool(applicable) and all(applicable)
+
+    # Melody-vs-non-melody check using twinkle_box's ranking.  Crucially,
+    # exclude the synthetic twinkle_box_tstretch from the "twinkle" side --
+    # otherwise the check could pass on the synthetic transform alone, even
+    # if cross-instrument matching (the actual capability under test) fails.
     melody_ok = False
     if "twinkle_box" in features:
         exclude = {x for x in features
@@ -114,7 +139,8 @@ def main():
                    and not x.startswith("twinkle_box")}
         ranked = rank_against_library("twinkle_box", features, exclude=exclude)
         twinkle_scores = [r["score"] for n, r in ranked
-                          if n.startswith("twinkle")]
+                          if n.startswith("twinkle")
+                          and not (n.endswith("_pshift") or n.endswith("_tstretch"))]
         other_scores = [r["score"] for n, r in ranked
                         if not n.startswith("twinkle")]
         if twinkle_scores and other_scores:
@@ -126,8 +152,11 @@ def main():
     print(f"  1. non-degenerate ranking spread:        {tag(non_degenerate_ok)}")
     print(f"  2. own transformed copy ranks above unrelated clips: "
           f"{tag(transformed_ok)}")
-    print(f"  3. same-melody (twinkle*) ranks above different-melody:  "
-          f"{tag(melody_ok)}")
+    for q, ok in transformed_results:
+        marker = "PASS" if ok else ("FAIL" if ok is False else "N/A (no own transform)")
+        print(f"       {q:25s} {marker}")
+    print(f"  3. cross-instrument same-melody (twinkle real clips only) "
+          f"ranks above different-melody: {tag(melody_ok)}")
     print(f"  4. numeric ranking + per-row verdict output:      "
           f"PASS (printed above)")
     print(f"  5. fresh-clone reproducible: NOT VERIFIED HERE -- this script")

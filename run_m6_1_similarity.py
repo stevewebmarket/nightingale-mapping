@@ -153,10 +153,13 @@ def similarity(features_a, features_b):
     nontriv_b = sum(1 for r in raw_b if _is_nontrivial(r))
 
     # Honest verdict label so the headline number is not over-interpreted.
-    # A high "fold/raw" with zero non-trivial matches means the clips agree
-    # only on flat ~1.0 intervals -- not meaningful melodic structure.
+    # Strong verdicts ("structural match", "partial melodic match") require
+    # BOTH clips to have enough non-trivial melodic content (>= MIN_NT_FOR_VERDICT)
+    # so that a few coincidental matches on a near-flat clip cannot be
+    # promoted to "structural match".
+    MIN_NT_FOR_VERDICT = 4
     min_nt = min(nontriv_a, nontriv_b)
-    if min_nt < 2:
+    if min_nt < MIN_NT_FOR_VERDICT:
         verdict = "insufficient melodic content"
     elif fold_match_nt >= 0.40 and score >= 0.50:
         verdict = "structural match"
