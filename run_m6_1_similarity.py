@@ -29,28 +29,38 @@ TOL_PCT = 0.05  # 5 percent tolerance for "matching" ratios
 # ---------------------------------------------------------------------------
 
 def extract_pitch_sequence(audio):
-    """Run the locked extractor and return the ordered list of detected
-    fundamentals (Nones dropped)."""
+    """Run the locked extractor and return the per-onset pitch list.
+    Preserves None at onsets where pitch detection failed so structural
+    position is not silently distorted."""
     onsets = rm.detect_onsets(audio)
     pitches = []
     for t in onsets:
         p = rm.pitch_at(audio, t)
-        if p is not None and p > 0:
+        if p is None or p <= 0:
+            pitches.append(None)
+        else:
             pitches.append(float(p))
     return pitches
 
 
 def interval_ratios(pitches):
-    """Consecutive interval ratios:  r[i] = p[i+1] / p[i]."""
-    return [pitches[i + 1] / pitches[i] for i in range(len(pitches) - 1)]
+    """Consecutive interval ratios r[i] = p[i+1]/p[i].  If either neighbour
+    is None the ratio is None (no silent gap-skipping across missing notes)."""
+    out = []
+    for i in range(len(pitches) - 1):
+        a, b = pitches[i], pitches[i + 1]
+        if a is None or b is None or a <= 0 or b <= 0:
+            out.append(None)
+        else:
+            out.append(b / a)
+    return out
 
 
 def octave_fold_to_unit(r):
-    """Fold ratio into [1/sqrt(2), sqrt(2)] by powers of 2, then take the
-    side-agnostic distance from 1.0 in log2 space.  Intervals an octave apart
-    collapse to the same folded value."""
-    if r <= 0:
-        return 1.0
+    """Fold ratio into [1/sqrt(2), sqrt(2)] by powers of 2 so intervals an
+    octave apart collapse to the same folded value.  None passes through."""
+    if r is None or r <= 0:
+        return r
     while r < 1 / math.sqrt(2):
         r *= 2
     while r > math.sqrt(2):
@@ -62,62 +72,93 @@ def octave_fold_to_unit(r):
 # Similarity scoring
 # ---------------------------------------------------------------------------
 
-def best_shift_match_fraction(seq_a, seq_b, tol_pct=TOL_PCT):
-    """Slide seq_b across seq_a by integer offsets.  At each offset count
-    positions matching within tol_pct.  Score that offset as
-    matches / max(len_a, len_b) -- so a high score requires both real
-    coverage AND positional alignment.  Require overlap >= MIN_OVERLAP to
-    avoid one-element coincidental matches scoring 1.0."""
-    if not seq_a or not seq_b:
-        return 0.0
+# A ratio is "non-trivial" if it differs from 1.0 by more than this in log2
+# space, i.e. it represents a real interval rather than a held tone.
+NONTRIVIAL_LOG2 = 0.10  # ~7 percent up or down
+
+def _is_nontrivial(r):
+    return r is not None and r > 0 and abs(math.log2(r)) > NONTRIVIAL_LOG2
+
+
+def best_shift_match(seq_a, seq_b, tol_pct=TOL_PCT):
+    """Slide seq_b across seq_a by integer offsets.  At each offset, only
+    positions where BOTH ratios are valid (not None) count toward overlap.
+    Score that offset as matches / max(valid_a, valid_b) -- requires both
+    real coverage and positional alignment.  Require overlap >= MIN_OVERLAP.
+
+    Also tracks "non-trivial matches": matches where the ratio represents
+    a real melodic interval (not a held tone), so flat streams of ~1.0
+    do not get credit for spurious agreement.
+
+    Returns (best_match_fraction, best_nontrivial_match_fraction).
+    """
+    valid_a = sum(1 for r in seq_a if r is not None)
+    valid_b = sum(1 for r in seq_b if r is not None)
+    if valid_a == 0 or valid_b == 0:
+        return 0.0, 0.0
     la, lb = len(seq_a), len(seq_b)
-    norm = max(la, lb)
+    norm = max(valid_a, valid_b)
     min_overlap = max(3, min(la, lb) // 2)
-    best = 0.0
+    nontriv_norm = max(
+        1,
+        max(sum(1 for r in seq_a if _is_nontrivial(r)),
+            sum(1 for r in seq_b if _is_nontrivial(r))),
+    )
+    best, best_nt = 0.0, 0.0
     for k in range(-(lb - 1), la):
         i_start = max(0, k)
         i_end = min(la, lb + k)
-        overlap = i_end - i_start
-        if overlap < min_overlap:
+        if i_end - i_start < min_overlap:
             continue
         matches = 0
+        nt_matches = 0
+        valid_overlap = 0
         for i in range(i_start, i_end):
-            j = i - k
-            a, b = seq_a[i], seq_b[j]
-            if a <= 0 or b <= 0:
+            a, b = seq_a[i], seq_b[i - k]
+            if a is None or b is None or a <= 0 or b <= 0:
                 continue
+            valid_overlap += 1
             if abs(a - b) / max(a, b) <= tol_pct:
                 matches += 1
+                if _is_nontrivial(a) and _is_nontrivial(b):
+                    nt_matches += 1
+        if valid_overlap < min_overlap:
+            continue
         frac = matches / norm
+        nt_frac = nt_matches / nontriv_norm
         if frac > best:
             best = frac
-    return best
-
-
-def length_agreement(seq_a, seq_b):
-    if not seq_a or not seq_b:
-        return 0.0
-    return min(len(seq_a), len(seq_b)) / max(len(seq_a), len(seq_b))
+        if nt_frac > best_nt:
+            best_nt = nt_frac
+    return best, best_nt
 
 
 def similarity(features_a, features_b):
-    """Combine raw-ratio match, octave-folded match, and length agreement."""
+    """Combine raw-ratio match, octave-folded match, and a non-trivial-match
+    component that prevents flat 1.0-streams from scoring high spuriously.
+
+    score = 0.45*fold_match + 0.25*raw_match + 0.30*nontrivial_fold_match
+    """
     raw_a, raw_b = features_a["ratios"], features_b["ratios"]
     fold_a, fold_b = features_a["folded"], features_b["folded"]
 
-    raw_match = best_shift_match_fraction(raw_a, raw_b)
-    fold_match = best_shift_match_fraction(fold_a, fold_b)
-    len_agree = length_agreement(raw_a, raw_b)
+    raw_match, _              = best_shift_match(raw_a, raw_b)
+    fold_match, fold_match_nt = best_shift_match(fold_a, fold_b)
 
-    score = 0.5 * fold_match + 0.3 * raw_match + 0.2 * len_agree
+    score = 0.45 * fold_match + 0.25 * raw_match + 0.30 * fold_match_nt
+
+    valid_a = sum(1 for r in raw_a if r is not None)
+    valid_b = sum(1 for r in raw_b if r is not None)
+    nontriv_a = sum(1 for r in raw_a if _is_nontrivial(r))
+    nontriv_b = sum(1 for r in raw_b if _is_nontrivial(r))
 
     return {
         "score": score,
         "raw_match": raw_match,
         "fold_match": fold_match,
-        "len_agree": len_agree,
-        "len_a": len(raw_a) + 1,  # back to note count
-        "len_b": len(raw_b) + 1,
+        "fold_match_nt": fold_match_nt,
+        "valid_a": valid_a,  "valid_b": valid_b,
+        "nontriv_a": nontriv_a, "nontriv_b": nontriv_b,
         "octave_consistent": fold_match > raw_match + 0.05,
     }
 
@@ -193,18 +234,24 @@ def main():
     print("Loading clips and extracting features...")
     feat = build_features()
 
+    def fmt_ratio(r):
+        return "  ?  " if r is None else f"{r:5.3f}"
+
     print()
-    print("Per-clip extracted features (interval ratios shown to 3dp):")
+    print("Per-clip extracted features (interval ratios; '?' = pitch-detection failed):")
     for name in sorted(feat):
         ratios = feat[name]["ratios"]
-        rstr = ", ".join(f"{r:.3f}" for r in ratios)
-        fstr = ", ".join(f"{r:.3f}" for r in feat[name]["folded"])
-        print(f"  {name:20s} notes={len(feat[name]['pitches']):2d}")
+        n_valid = sum(1 for r in ratios if r is not None)
+        n_nt = sum(1 for r in ratios if _is_nontrivial(r))
+        rstr = ", ".join(fmt_ratio(r) for r in ratios)
+        fstr = ", ".join(fmt_ratio(r) for r in feat[name]["folded"])
+        print(f"  {name:20s} notes={len(feat[name]['pitches']):2d}  "
+              f"valid_ratios={n_valid}  non-trivial={n_nt}")
         print(f"     raw   : [{rstr}]")
         print(f"     folded: [{fstr}]")
 
     print()
-    print(f"{'pair':40s} {'score':>6s}  {'fold':>5s} {'raw':>5s} {'len':>5s}  notes")
+    print(f"{'pair':40s} {'score':>6s}  {'fold':>5s} {'raw':>5s} {'fNT':>5s}  valid")
     print("-" * 80)
     rows = []
     for a, b in PAIRS:
@@ -212,20 +259,22 @@ def main():
         rows.append((a, b, r))
         pair_str = f"{a} vs {b}"
         print(f"{pair_str:40s} {r['score']:6.3f}  "
-              f"{r['fold_match']:5.2f} {r['raw_match']:5.2f} {r['len_agree']:5.2f}  "
-              f"{r['len_a']}/{r['len_b']}")
+              f"{r['fold_match']:5.2f} {r['raw_match']:5.2f} "
+              f"{r['fold_match_nt']:5.2f}  "
+              f"{r['valid_a']}/{r['valid_b']}")
 
     print()
-    print("Diagnostics:")
+    print("Diagnostics (fNT = non-trivial-interval matches; flat ~1.0 streams excluded):")
     for a, b, r in rows:
-        bits = []
-        bits.append(f"matched ratios fold={r['fold_match']*100:.0f}% "
-                    f"raw={r['raw_match']*100:.0f}%")
-        bits.append(f"lengths {r['len_a']}/{r['len_b']} (agreement {r['len_agree']:.2f})")
-        if r["octave_consistent"]:
-            bits.append("octave-consistent: yes")
-        else:
-            bits.append("octave-consistent: no/marginal")
+        bits = [
+            f"matched ratios fold={r['fold_match']*100:.0f}% "
+            f"raw={r['raw_match']*100:.0f}%  "
+            f"non-trivial-fold={r['fold_match_nt']*100:.0f}%",
+            f"valid ratios {r['valid_a']}/{r['valid_b']}  "
+            f"non-trivial {r['nontriv_a']}/{r['nontriv_b']}",
+            "octave-consistent: " + ("yes" if r["octave_consistent"]
+                                     else "no/marginal"),
+        ]
         print(f"  {a} vs {b}:")
         for x in bits:
             print(f"     - {x}")
@@ -237,25 +286,28 @@ def main():
     n_pairs = len(rows)
     non_degenerate = (max(scores) - min(scores)) > 0.05
     # "intuitively similar" = the two transformed-orchestra pairs
-    # "intuitively dissimilar" = any cross-clip pair
     similar_scores = [r["score"] for a, b, r in rows
                       if b.startswith("orchestra_")]
     dissimilar_scores = [r["score"] for a, b, r in rows
                          if not b.startswith("orchestra_")]
-    has_ordering = (similar_scores and dissimilar_scores
-                    and max(similar_scores) > min(dissimilar_scores))
+    has_ordering = (bool(similar_scores) and bool(dissimilar_scores)
+                    and min(similar_scores) > max(dissimilar_scores))
+
+    def tag(ok):
+        return "PASS" if ok else "FAIL"
 
     print()
     print("Pass-condition self-check:")
-    print(f"  pairs tested:                  {n_pairs}      (need >= 5)  "
-          f"{'PASS' if n_pairs >= 5 else 'FAIL'}")
-    print(f"  non-degenerate spread:         {max(scores)-min(scores):.3f}  "
-          f"(need > 0.05) {'PASS' if non_degenerate else 'FAIL'}")
-    print(f"  similar > dissimilar ordering: "
-          f"{'PASS' if has_ordering else 'FAIL'}")
-    print(f"  numeric + diagnostic output:   PASS (above)")
-    print(f"  fresh-clone reproducible:      PASS (deterministic, "
-          f"uses locked extractor + sample WAV/MP3 files)")
+    print(f"  1. pairs tested >= 5:                    {n_pairs:>3d}    {tag(n_pairs >= 5)}")
+    print(f"  2. non-degenerate spread > 0.05:         {max(scores)-min(scores):.3f}  {tag(non_degenerate)}")
+    print(f"  3. ALL similar > ALL dissimilar:                {tag(has_ordering)}")
+    print(f"     similar pairs:    {[round(s,3) for s in similar_scores]}")
+    print(f"     dissimilar pairs: {[round(s,3) for s in dissimilar_scores]}")
+    print(f"  4. numeric + diagnostic output:                 PASS (printed above)")
+    print(f"  5. fresh-clone reproducible: NOT VERIFIED HERE -- this script is")
+    print(f"     deterministic given the locked extractor + sample files;")
+    print(f"     verify externally by cloning the canonical repo, running")
+    print(f"     scripts/fetch_samples.py, then re-running this script.")
 
 
 if __name__ == "__main__":
