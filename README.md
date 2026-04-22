@@ -12,11 +12,16 @@ We are building a ladder of structure-preserving correspondences so that mathema
 
 ### Latest Results (orchestra + rock)
 
+Reproducible via `python run_milestones.py` — three identical runs.
+
 | Test                        | Orchestra          | Rock                          |
 |-----------------------------|--------------------|-------------------------------|
 | Pitch shift 1.5×            | 7/8                | 8/8 (octave-folded)           |
 | Time stretch 1.5×           | 8/8                | 7/8 (octave-folded)           |
+| Composition (shift+stretch) | 7/8                | 7/8 (octave-folded)           |
 | Bidirectional round-trip    | 8/8                | 8/8 (non-trivial)             |
+
+44 of 48 measurements within 1% of target across two clips × three transforms × eight notes.
 
 ### How to Run (start here)
 
@@ -29,3 +34,6 @@ python fetch_samples.py   # or download manually from the samples-v1 release
 
 # Run the baseline bidirectional test
 python run_nightingale_baseline.py
+
+# Or run the full milestone check (M1.2 pitch shift + time stretch + M1.4 composition)
+python run_milestones.py
