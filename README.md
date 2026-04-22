@@ -12,7 +12,8 @@ We are building a ladder of structure-preserving correspondences so that mathema
 
 ### Latest Results (orchestra + rock)
 
-Reproducible via `python run_milestones.py` — three identical runs.
+Reproducible via `python run_milestones.py` — three identical runs. Full
+method, table, and caveats in [MILESTONES.md](MILESTONES.md).
 
 | Test                        | Orchestra          | Rock                          |
 |-----------------------------|--------------------|-------------------------------|
