@@ -184,11 +184,16 @@ def similarity(features_a, features_b):
 # ---------------------------------------------------------------------------
 
 CLIPS = [
-    ("orchestra",  "orchestra.wav"),
-    ("rock",       "rock.wav"),
-    ("flute",      "flute.mp3"),
-    ("polyphonic", "polyphonic.mp3"),
-    ("highenergy", "highenergy.wav"),
+    ("orchestra",         "orchestra.wav"),
+    ("rock",              "rock.wav"),
+    ("flute",             "flute.mp3"),
+    ("polyphonic",        "polyphonic.mp3"),
+    ("highenergy",        "highenergy.wav"),
+    # Twinkle melody, three timbres -- the "obvious test case" set:
+    # same melody, different instrument.
+    ("twinkle_box",       "twinkle_box.mp3"),
+    ("twinkle_harmonica", "twinkle_harmonica.wav"),
+    ("twinkle_people",    "twinkle_people.m4a"),
 ]
 
 
@@ -215,8 +220,12 @@ def build_features():
     orch = features["orchestra"]["audio"]
     shifted = rm.pitch_shift_resample(orch, rm.SHIFT_FACTOR)
     stretched = librosa.effects.time_stretch(y=orch, rate=1 / rm.SHIFT_FACTOR)
+    twinkle = features["twinkle_box"]["audio"]
+    twinkle_stretched = librosa.effects.time_stretch(
+        y=twinkle, rate=1 / rm.SHIFT_FACTOR)
     for label, audio in [("orchestra_pshift", shifted),
-                         ("orchestra_tstretch", stretched)]:
+                         ("orchestra_tstretch", stretched),
+                         ("twinkle_box_tstretch", twinkle_stretched)]:
         pitches = extract_pitch_sequence(audio)
         ratios = interval_ratios(pitches)
         folded = [octave_fold_to_unit(r) for r in ratios]
@@ -233,12 +242,16 @@ PAIRS = [
     # Sanity: same clip transformed should match its original.
     ("orchestra", "orchestra_pshift"),
     ("orchestra", "orchestra_tstretch"),
-    # Cross-clip pairs (different sources, expect lower).
-    ("orchestra", "rock"),
-    ("orchestra", "flute"),
-    ("rock",      "highenergy"),
-    ("flute",     "highenergy"),
-    ("polyphonic", "flute"),
+    # Same melody, different instrument -- the operator's "obvious test cases".
+    ("twinkle_box",       "twinkle_harmonica"),
+    ("twinkle_box",       "twinkle_people"),
+    ("twinkle_harmonica", "twinkle_people"),
+    # Same melody, different tempo (synthetic pair from twinkle_box).
+    ("twinkle_box",       "twinkle_box_tstretch"),
+    # Cross-clip pairs (different melodies, expect lower).
+    ("orchestra",         "rock"),
+    ("twinkle_box",       "rock"),
+    ("twinkle_harmonica", "polyphonic"),
 ]
 
 
