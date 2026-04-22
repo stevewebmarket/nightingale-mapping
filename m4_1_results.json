@@ -1,0 +1,122 @@
+{
+  "config": {
+    "onset_delta": 0.05,
+    "fmin": 50,
+    "fmax": 16000,
+    "tolerance_pct": 0.01,
+    "onset_mode": "cqt_flux"
+  },
+  "rows": [
+    {
+      "label": "orchestra",
+      "test": "pitch_shift",
+      "within": 8,
+      "total": 8
+    },
+    {
+      "label": "orchestra",
+      "test": "time_stretch",
+      "within": 8,
+      "total": 8
+    },
+    {
+      "label": "orchestra",
+      "test": "composition",
+      "within": 8,
+      "total": 8
+    },
+    {
+      "label": "rock",
+      "test": "pitch_shift",
+      "within": 8,
+      "total": 8
+    },
+    {
+      "label": "rock",
+      "test": "time_stretch",
+      "within": 4,
+      "total": 8
+    },
+    {
+      "label": "rock",
+      "test": "composition",
+      "within": 6,
+      "total": 8
+    },
+    {
+      "label": "flute",
+      "test": "pitch_shift",
+      "within": 7,
+      "total": 8
+    },
+    {
+      "label": "flute",
+      "test": "time_stretch",
+      "within": 8,
+      "total": 8
+    },
+    {
+      "label": "flute",
+      "test": "composition",
+      "within": 7,
+      "total": 8
+    },
+    {
+      "label": "polyphonic",
+      "test": "pitch_shift",
+      "within": 1,
+      "total": 8
+    },
+    {
+      "label": "polyphonic",
+      "test": "time_stretch",
+      "within": 3,
+      "total": 8
+    },
+    {
+      "label": "polyphonic",
+      "test": "composition",
+      "within": 0,
+      "total": 8
+    },
+    {
+      "label": "highenergy",
+      "test": "pitch_shift",
+      "within": 4,
+      "total": 8
+    },
+    {
+      "label": "highenergy",
+      "test": "time_stretch",
+      "within": 3,
+      "total": 8
+    },
+    {
+      "label": "highenergy",
+      "test": "composition",
+      "within": 2,
+      "total": 8
+    },
+    {
+      "label": "synthetic_just",
+      "test": "pitch_shift",
+      "within": 8,
+      "total": 8
+    },
+    {
+      "label": "synthetic_just",
+      "test": "time_stretch",
+      "within": 7,
+      "total": 8
+    },
+    {
+      "label": "synthetic_just",
+      "test": "composition",
+      "within": 8,
+      "total": 8
+    }
+  ],
+  "total_within": 100,
+  "total_notes": 144,
+  "score": 0.6944444444444444
+}

@@ -49,6 +49,12 @@ DEFAULT_CONFIG = {
     "fmin": 50,
     "fmax": 16000,
     "tolerance_pct": 0.01,
+    # M5.2/M5.3: CQT-based onset envelope is the new default.  Beat the
+    # baseline detector in the M5.2 ablation (commit 0a2790b): polyphonic
+    # detected onsets 5/8 -> 8/8 across all transforms; orchestra/synthetic
+    # held; flute 16/24 -> 22/24; documented regression: rock time_stretch
+    # 7/8 -> 4/8.  Set onset_mode="baseline" to recover the M3.x detector.
+    "onset_mode": "cqt_flux",
 }
 
 
@@ -57,12 +63,29 @@ def load_clip(path):
     return audio
 
 
+def _cqt_onset_envelope(audio):
+    C = np.abs(librosa.cqt(y=audio, sr=SR))
+    S = librosa.amplitude_to_db(C, ref=np.max)
+    return librosa.onset.onset_strength(sr=SR, S=S)
+
+
 def detect_onsets(audio, cfg=None, n=NUM_NOTES):
     cfg = cfg or DEFAULT_CONFIG
-    onsets = librosa.onset.onset_detect(
-        y=audio, sr=SR, units='time',
-        delta=cfg.get("onset_delta", 0.05), wait=4, backtrack=True
-    )
+    mode = cfg.get("onset_mode", "cqt_flux")
+    delta = cfg.get("onset_delta", 0.05)
+    if mode == "cqt_flux":
+        env = _cqt_onset_envelope(audio)
+        onsets = librosa.onset.onset_detect(
+            onset_envelope=env, sr=SR, units='time',
+            delta=delta, wait=4, backtrack=True,
+        )
+    elif mode == "baseline":
+        onsets = librosa.onset.onset_detect(
+            y=audio, sr=SR, units='time',
+            delta=delta, wait=4, backtrack=True,
+        )
+    else:
+        raise ValueError(f"unknown onset_mode: {mode!r}")
     return onsets[:n]
 
 
