@@ -14,6 +14,42 @@ deterministic across runs. Replace these numbers only by re-running the script.
 **Headline:** 44 of 48 measurements within 1% of target across two clips ×
 three transforms × eight notes (octave-folded).
 
+## M3.1 — Audio Transform Invariance Metric
+
+A single invariance score formalised from the milestone pipeline:
+
+```
+score = notes_within_tolerance / total_notes
+```
+
+aggregated across the six locked cases above. With the default extractor
+config this gives the headline as a single number:
+
+| Config                              | Score   | Within / Total |
+|-------------------------------------|---------|----------------|
+| **baseline**                        | 0.9167  | 44 / 48        |
+| mutant_a (`onset_delta` 0.05→0.20)  | 0.8333  | 40 / 48        |
+| mutant_b (`fmax` 16000→4000)        | 0.9167  | 44 / 48        |
+| mutant_c (`tolerance_pct` 1%→0.1%)  | 0.5417  | 26 / 48        |
+
+Reproduce with:
+
+```bash
+python run_m3_1_metric.py
+```
+
+Pass criteria (both must hold): the baseline score is byte-identical across
+repeated runs, and at least two config mutants move the score away from
+baseline. Both held in the development environment across three consecutive
+runs (mutant_a and mutant_c moved; mutant_b did not, because YIN's `fmin=50`
+and natural pitch range mean dropping `fmax` from 16 kHz to 4 kHz did not
+change which fundamentals were detected on these clips).
+
+This metric grades the extractor on **real transformed audio**. It does not
+round-trip through synthetic regenerations of its own output (an earlier
+draft of M3.1 did exactly that and saturated at 1.0 on baseline plus two of
+three mutants — that script was discarded).
+
 ## How to reproduce
 
 ```bash

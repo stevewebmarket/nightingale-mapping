@@ -44,28 +44,38 @@ NUM_NOTES = 8
 SHIFT_FACTOR = 1.5
 TOLERANCE_PCT = 0.01  # within 1%
 
+DEFAULT_CONFIG = {
+    "onset_delta": 0.05,
+    "fmin": 50,
+    "fmax": 16000,
+    "tolerance_pct": 0.01,
+}
+
 
 def load_clip(path):
     audio, _ = librosa.load(path, sr=SR, duration=CLIP_SECONDS)
     return audio
 
 
-def detect_onsets(audio, n=NUM_NOTES):
+def detect_onsets(audio, cfg=None, n=NUM_NOTES):
+    cfg = cfg or DEFAULT_CONFIG
     onsets = librosa.onset.onset_detect(
-        y=audio, sr=SR, units='time', delta=0.05, wait=4, backtrack=True
+        y=audio, sr=SR, units='time',
+        delta=cfg.get("onset_delta", 0.05), wait=4, backtrack=True
     )
     return onsets[:n]
 
 
-def pitch_at(audio, t, fmax=16000):
+def pitch_at(audio, t, cfg=None):
+    cfg = cfg or DEFAULT_CONFIG
     # Match the proposal's analysis window: t-0.15s to t+0.25s (0.4s total)
     start = max(0, int((t - 0.15) * SR))
     end = min(len(audio), int((t + 0.25) * SR))
     seg = audio[start:end]
     if len(seg) < 512:
         return None
-    f0 = librosa.yin(seg, fmin=50, fmax=fmax, sr=SR)
-    valid = f0[f0 > 50]
+    f0 = librosa.yin(seg, fmin=cfg.get("fmin", 50), fmax=cfg.get("fmax", 16000), sr=SR)
+    valid = f0[f0 > cfg.get("fmin", 50)]
     if len(valid) == 0:
         return None
     return float(np.median(valid))
@@ -84,7 +94,8 @@ def octave_fold(ratio, target):
     return r
 
 
-def within_tolerance(value, target, pct=TOLERANCE_PCT):
+def within_tolerance(value, target, cfg=None):
+    pct = (cfg or DEFAULT_CONFIG).get("tolerance_pct", TOLERANCE_PCT)
     return abs(value - target) / target <= pct
 
 
@@ -97,26 +108,24 @@ def pitch_shift_resample(audio, factor=SHIFT_FACTOR):
     return librosa.resample(audio, orig_sr=int(SR * factor), target_sr=SR)
 
 
-def score_pitch_shift(audio, label):
-    onsets = detect_onsets(audio)
+def score_pitch_shift(audio, label, cfg=None):
+    cfg = cfg or DEFAULT_CONFIG
+    onsets = detect_onsets(audio, cfg)
     shifted_audio = pitch_shift_resample(audio, SHIFT_FACTOR)
 
     raw = []
     folded = []
     for t in onsets:
-        p_orig = pitch_at(audio, t)
-        # resample compressed time by 1/SHIFT_FACTOR, so onset lands at t/SHIFT_FACTOR
-        p_shift = pitch_at(shifted_audio, t / SHIFT_FACTOR)
+        p_orig = pitch_at(audio, t, cfg)
+        p_shift = pitch_at(shifted_audio, t / SHIFT_FACTOR, cfg)
         if p_orig is None or p_shift is None:
-            raw.append(None)
-            folded.append(None)
-            continue
+            raw.append(None); folded.append(None); continue
         ratio = p_shift / p_orig
         raw.append(ratio)
         folded.append(octave_fold(ratio, SHIFT_FACTOR))
 
-    n_raw = sum(1 for r in raw if r is not None and within_tolerance(r, SHIFT_FACTOR))
-    n_fold = sum(1 for r in folded if r is not None and within_tolerance(r, SHIFT_FACTOR))
+    n_raw = sum(1 for r in raw if r is not None and within_tolerance(r, SHIFT_FACTOR, cfg))
+    n_fold = sum(1 for r in folded if r is not None and within_tolerance(r, SHIFT_FACTOR, cfg))
     return {
         'label': label, 'test': 'pitch_shift',
         'raw': raw, 'folded': folded,
@@ -125,25 +134,24 @@ def score_pitch_shift(audio, label):
     }
 
 
-def score_time_stretch(audio, label):
-    onsets = detect_onsets(audio)
+def score_time_stretch(audio, label, cfg=None):
+    cfg = cfg or DEFAULT_CONFIG
+    onsets = detect_onsets(audio, cfg)
     stretched = librosa.effects.time_stretch(y=audio, rate=1 / SHIFT_FACTOR)
 
     raw = []
     folded = []
     for t in onsets:
-        p_orig = pitch_at(audio, t)
-        p_stretch = pitch_at(stretched, t * SHIFT_FACTOR)
+        p_orig = pitch_at(audio, t, cfg)
+        p_stretch = pitch_at(stretched, t * SHIFT_FACTOR, cfg)
         if p_orig is None or p_stretch is None:
-            raw.append(None)
-            folded.append(None)
-            continue
+            raw.append(None); folded.append(None); continue
         ratio = p_stretch / p_orig
         raw.append(ratio)
         folded.append(octave_fold(ratio, 1.0))
 
-    n_raw = sum(1 for r in raw if r is not None and within_tolerance(r, 1.0))
-    n_fold = sum(1 for r in folded if r is not None and within_tolerance(r, 1.0))
+    n_raw = sum(1 for r in raw if r is not None and within_tolerance(r, 1.0, cfg))
+    n_fold = sum(1 for r in folded if r is not None and within_tolerance(r, 1.0, cfg))
     return {
         'label': label, 'test': 'time_stretch',
         'raw': raw, 'folded': folded,
@@ -152,35 +160,46 @@ def score_time_stretch(audio, label):
     }
 
 
-def score_composition(audio, label):
-    """Apply resample-shift (1.5x faster, +5th) THEN time-stretch (1.5x longer),
-    so durations cancel out.  Pitch should still be 1.5x original at orig time."""
-    onsets = detect_onsets(audio)
-    shifted = pitch_shift_resample(audio, SHIFT_FACTOR)         # 1/1.5x duration, 1.5x pitch
-    composed = librosa.effects.time_stretch(y=shifted, rate=1 / SHIFT_FACTOR)  # back to orig duration
+def score_composition(audio, label, cfg=None):
+    cfg = cfg or DEFAULT_CONFIG
+    onsets = detect_onsets(audio, cfg)
+    shifted = pitch_shift_resample(audio, SHIFT_FACTOR)
+    composed = librosa.effects.time_stretch(y=shifted, rate=1 / SHIFT_FACTOR)
 
     raw = []
     folded = []
     for t in onsets:
-        p_orig = pitch_at(audio, t)
-        # net duration change = (1/1.5) * 1.5 = 1.0, so onset stays at t
-        p_comp = pitch_at(composed, t)
+        p_orig = pitch_at(audio, t, cfg)
+        p_comp = pitch_at(composed, t, cfg)
         if p_orig is None or p_comp is None:
-            raw.append(None)
-            folded.append(None)
-            continue
+            raw.append(None); folded.append(None); continue
         ratio = p_comp / p_orig
         raw.append(ratio)
         folded.append(octave_fold(ratio, SHIFT_FACTOR))
 
-    n_raw = sum(1 for r in raw if r is not None and within_tolerance(r, SHIFT_FACTOR))
-    n_fold = sum(1 for r in folded if r is not None and within_tolerance(r, SHIFT_FACTOR))
+    n_raw = sum(1 for r in raw if r is not None and within_tolerance(r, SHIFT_FACTOR, cfg))
+    n_fold = sum(1 for r in folded if r is not None and within_tolerance(r, SHIFT_FACTOR, cfg))
     return {
         'label': label, 'test': 'composition',
         'raw': raw, 'folded': folded,
         'raw_score': n_raw, 'folded_score': n_fold,
         'total': len(onsets),
     }
+
+
+def compute_milestone_scores(orchestra, rock, cfg=None):
+    """Run the six milestone cases and return per-case results.
+    Each result has 'within_tolerance' (folded_score) and 'total_notes' (total).
+    """
+    cfg = cfg or DEFAULT_CONFIG
+    out = []
+    for clip, label in [(orchestra, "Orchestra"), (rock, "Rock")]:
+        for fn in (score_pitch_shift, score_time_stretch, score_composition):
+            r = fn(clip, label, cfg)
+            r["within_tolerance"] = r["folded_score"]
+            r["total_notes"] = r["total"]
+            out.append(r)
+    return out
 
 
 def fmt(x):
