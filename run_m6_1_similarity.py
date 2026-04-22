@@ -152,6 +152,21 @@ def similarity(features_a, features_b):
     nontriv_a = sum(1 for r in raw_a if _is_nontrivial(r))
     nontriv_b = sum(1 for r in raw_b if _is_nontrivial(r))
 
+    # Honest verdict label so the headline number is not over-interpreted.
+    # A high "fold/raw" with zero non-trivial matches means the clips agree
+    # only on flat ~1.0 intervals -- not meaningful melodic structure.
+    min_nt = min(nontriv_a, nontriv_b)
+    if min_nt < 2:
+        verdict = "insufficient melodic content"
+    elif fold_match_nt >= 0.40 and score >= 0.50:
+        verdict = "structural match"
+    elif fold_match_nt >= 0.20:
+        verdict = "partial melodic match"
+    elif score >= 0.40:
+        verdict = "flat-agreement only (no melodic match)"
+    else:
+        verdict = "no match"
+
     return {
         "score": score,
         "raw_match": raw_match,
@@ -160,6 +175,7 @@ def similarity(features_a, features_b):
         "valid_a": valid_a,  "valid_b": valid_b,
         "nontriv_a": nontriv_a, "nontriv_b": nontriv_b,
         "octave_consistent": fold_match > raw_match + 0.05,
+        "verdict": verdict,
     }
 
 
@@ -251,17 +267,16 @@ def main():
         print(f"     folded: [{fstr}]")
 
     print()
-    print(f"{'pair':40s} {'score':>6s}  {'fold':>5s} {'raw':>5s} {'fNT':>5s}  valid")
-    print("-" * 80)
+    print(f"{'pair':36s} {'score':>6s} {'fold':>5s} {'raw':>5s} {'fNT':>5s}  verdict")
+    print("-" * 100)
     rows = []
     for a, b in PAIRS:
         r = similarity(feat[a], feat[b])
         rows.append((a, b, r))
         pair_str = f"{a} vs {b}"
-        print(f"{pair_str:40s} {r['score']:6.3f}  "
+        print(f"{pair_str:36s} {r['score']:6.3f} "
               f"{r['fold_match']:5.2f} {r['raw_match']:5.2f} "
-              f"{r['fold_match_nt']:5.2f}  "
-              f"{r['valid_a']}/{r['valid_b']}")
+              f"{r['fold_match_nt']:5.2f}  {r['verdict']}")
 
     print()
     print("Diagnostics (fNT = non-trivial-interval matches; flat ~1.0 streams excluded):")
