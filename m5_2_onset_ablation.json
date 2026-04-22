@@ -1,0 +1,738 @@
+{
+  "config": {
+    "onset_delta": 0.05,
+    "fmin": 50,
+    "fmax": 16000,
+    "tolerance_pct": 0.01
+  },
+  "results": {
+    "baseline": {
+      "orchestra": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.00043452993601200696
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.0009105934753493861
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.0002840534566345513
+        }
+      },
+      "rock": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.0012713627938806629
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.0022783526607225713
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.0014088188636554033
+        }
+      },
+      "flute": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 5,
+          "median_rel_error": 0.007308268119127215
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 6,
+          "median_rel_error": 0.003791268641424206
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 5,
+          "median_rel_error": 0.00558714903127607
+        }
+      },
+      "polyphonic": {
+        "pitch_shift": {
+          "detected": 5,
+          "matches": 1,
+          "median_rel_error": 0.12381780936445264
+        },
+        "time_stretch": {
+          "detected": 5,
+          "matches": 1,
+          "median_rel_error": 0.21354678473076505
+        },
+        "composition": {
+          "detected": 5,
+          "matches": 2,
+          "median_rel_error": 0.014143320896900402
+        }
+      },
+      "highenergy": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 4,
+          "median_rel_error": 0.016920135935398394
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 3,
+          "median_rel_error": 0.01999038823263022
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 2,
+          "median_rel_error": 0.029561196842329274
+        }
+      },
+      "synthetic_just": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 6,
+          "median_rel_error": 0.0012403416073822151
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.0003625909672924643
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.0010539064082838077
+        }
+      }
+    },
+    "soft": {
+      "orchestra": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.00043452993601200696
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.0009190244998639185
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.0002625123133773351
+        }
+      },
+      "rock": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.0033901541006859937
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 4,
+          "median_rel_error": 0.123510115366609
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 6,
+          "median_rel_error": 0.0038160032287016437
+        }
+      },
+      "flute": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 4,
+          "median_rel_error": 0.0713462099667134
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.0023263461282294617
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 4,
+          "median_rel_error": 0.08094409828314857
+        }
+      },
+      "polyphonic": {
+        "pitch_shift": {
+          "detected": 6,
+          "matches": 1,
+          "median_rel_error": 0.13898591528437615
+        },
+        "time_stretch": {
+          "detected": 6,
+          "matches": 1,
+          "median_rel_error": 0.2047826958056282
+        },
+        "composition": {
+          "detected": 6,
+          "matches": 2,
+          "median_rel_error": 0.06935226569573585
+        }
+      },
+      "highenergy": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 4,
+          "median_rel_error": 0.016920135935398394
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 3,
+          "median_rel_error": 0.01999038823263022
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 2,
+          "median_rel_error": 0.029561196842329274
+        }
+      },
+      "synthetic_just": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 6,
+          "median_rel_error": 0.0012403416073822151
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.0003625909672924643
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.0010539064082838077
+        }
+      }
+    },
+    "softer_short_wait": {
+      "orchestra": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.0013470995704062774
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.0009840144991635214
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.00022810126083598153
+        }
+      },
+      "rock": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.0025713774523508093
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 5,
+          "median_rel_error": 0.0034519434219649203
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 6,
+          "median_rel_error": 0.0026006273746657094
+        }
+      },
+      "flute": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 2,
+          "median_rel_error": 0.1870788366405905
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 6,
+          "median_rel_error": 0.0011299909848884182
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 3,
+          "median_rel_error": 0.15992681994876423
+        }
+      },
+      "polyphonic": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 0,
+          "median_rel_error": 0.20732469330601083
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 0,
+          "median_rel_error": 0.09825302557815152
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 0,
+          "median_rel_error": 0.07716517231122152
+        }
+      },
+      "highenergy": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 4,
+          "median_rel_error": 0.016920135935398394
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 3,
+          "median_rel_error": 0.01999038823263022
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 2,
+          "median_rel_error": 0.029561196842329274
+        }
+      },
+      "synthetic_just": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 6,
+          "median_rel_error": 0.0012403416073822151
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.00025162371856218835
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.0010255636890933821
+        }
+      }
+    },
+    "no_backtrack": {
+      "orchestra": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.00039571347091086706
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.0006979601174009198
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.00019652036871479578
+        }
+      },
+      "rock": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.0012883913002285456
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.0038401634774916094
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.001710194663986068
+        }
+      },
+      "flute": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 6,
+          "median_rel_error": 0.004851169922136819
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 6,
+          "median_rel_error": 0.0019287063408560123
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 5,
+          "median_rel_error": 0.004734864316415935
+        }
+      },
+      "polyphonic": {
+        "pitch_shift": {
+          "detected": 5,
+          "matches": 0,
+          "median_rel_error": 0.3211360823435759
+        },
+        "time_stretch": {
+          "detected": 5,
+          "matches": 1,
+          "median_rel_error": 0.23444190517819963
+        },
+        "composition": {
+          "detected": 5,
+          "matches": 1,
+          "median_rel_error": 0.1014318918093459
+        }
+      },
+      "highenergy": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 4,
+          "median_rel_error": 0.010029604308928963
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 4,
+          "median_rel_error": 0.01949635483130091
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 4,
+          "median_rel_error": 0.014265513715139955
+        }
+      },
+      "synthetic_just": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 4,
+          "median_rel_error": 0.03140203175981997
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 6,
+          "median_rel_error": 0.0013824766373244923
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 4,
+          "median_rel_error": 0.012682327755228522
+        }
+      }
+    },
+    "cqt_flux": {
+      "orchestra": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.0007070730596721031
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.0007689067489686785
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 6.960599869813382e-05
+        }
+      },
+      "rock": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.0015279559688668638
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 4,
+          "median_rel_error": 0.1257915129040575
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 6,
+          "median_rel_error": 0.0026233112128054943
+        }
+      },
+      "flute": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.0023327513776553546
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.0023670072414703203
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.0023901946653647568
+        }
+      },
+      "polyphonic": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 1,
+          "median_rel_error": 0.11965573495304507
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 3,
+          "median_rel_error": 0.042081914102570894
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 0,
+          "median_rel_error": 0.14581019914314597
+        }
+      },
+      "highenergy": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 4,
+          "median_rel_error": 0.01784577188164701
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 3,
+          "median_rel_error": 0.026983860210067157
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 2,
+          "median_rel_error": 0.05234445241046866
+        }
+      },
+      "synthetic_just": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.0003427413060514972
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.0009897587884517556
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.0005643256566168671
+        }
+      }
+    },
+    "mel_median": {
+      "orchestra": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 6,
+          "median_rel_error": 0.0009600979607580958
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 6,
+          "median_rel_error": 0.0011031468636185648
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 6,
+          "median_rel_error": 0.00018472776587463713
+        }
+      },
+      "rock": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 5,
+          "median_rel_error": 0.002395686667148178
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 5,
+          "median_rel_error": 0.0038381696268061094
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 5,
+          "median_rel_error": 0.0026812631198574652
+        }
+      },
+      "flute": {
+        "pitch_shift": {
+          "detected": 5,
+          "matches": 4,
+          "median_rel_error": 0.00397929069106399
+        },
+        "time_stretch": {
+          "detected": 5,
+          "matches": 4,
+          "median_rel_error": 0.006749120101398276
+        },
+        "composition": {
+          "detected": 5,
+          "matches": 3,
+          "median_rel_error": 0.006313596266112054
+        }
+      },
+      "polyphonic": {
+        "pitch_shift": {
+          "detected": 5,
+          "matches": 0,
+          "median_rel_error": 0.15415402120429963
+        },
+        "time_stretch": {
+          "detected": 5,
+          "matches": 1,
+          "median_rel_error": 0.03361783167997889
+        },
+        "composition": {
+          "detected": 5,
+          "matches": 1,
+          "median_rel_error": 0.019288680596570185
+        }
+      },
+      "highenergy": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 5,
+          "median_rel_error": 0.003232109569986171
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 4,
+          "median_rel_error": 0.01620960789322451
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 2,
+          "median_rel_error": 0.01504279374639846
+        }
+      },
+      "synthetic_just": {
+        "pitch_shift": {
+          "detected": 0,
+          "matches": 0,
+          "median_rel_error": null
+        },
+        "time_stretch": {
+          "detected": 0,
+          "matches": 0,
+          "median_rel_error": null
+        },
+        "composition": {
+          "detected": 0,
+          "matches": 0,
+          "median_rel_error": null
+        }
+      }
+    },
+    "cqt_flux_soft": {
+      "orchestra": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.0015205191167858199
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.0009259291044381168
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.0005827108146411557
+        }
+      },
+      "rock": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 8,
+          "median_rel_error": 0.001618451929932337
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 5,
+          "median_rel_error": 0.004435513075352615
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.0024460579061205876
+        }
+      },
+      "flute": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 3,
+          "median_rel_error": 0.1289423986099767
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 6,
+          "median_rel_error": 0.0012759759063722953
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 2,
+          "median_rel_error": 0.15992681994876423
+        }
+      },
+      "polyphonic": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 1,
+          "median_rel_error": 0.16382073464242888
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 1,
+          "median_rel_error": 0.055658910701862074
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 0,
+          "median_rel_error": 0.09528051074007841
+        }
+      },
+      "highenergy": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 4,
+          "median_rel_error": 0.02595730059383613
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 4,
+          "median_rel_error": 0.016186085481560863
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 2,
+          "median_rel_error": 0.03341798347546628
+        }
+      },
+      "synthetic_just": {
+        "pitch_shift": {
+          "detected": 8,
+          "matches": 6,
+          "median_rel_error": 0.0004929207925149873
+        },
+        "time_stretch": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.0009897587884517556
+        },
+        "composition": {
+          "detected": 8,
+          "matches": 7,
+          "median_rel_error": 0.0011124171307859885
+        }
+      }
+    }
+  }
+}
