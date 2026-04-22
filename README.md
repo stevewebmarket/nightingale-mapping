@@ -1,40 +1,70 @@
 # The Nightingale Mapping
 
-**A bidirectional translation layer between mathematical structures and sound.**
+**A research probe into whether mathematical structure survives translation into sound.**
 
-### Vision
-We are building a ladder of structure-preserving correspondences so that mathematical structures (ratios, sequences, symmetries, scaling, recursion, hierarchies…) can be rendered as sound — and real sound can be decoded back into its underlying mathematical form.
+We test this by running real audio through systematic transforms (pitch shift, time
+stretch, composition), extracting per-onset pitch ratios, and measuring how many
+fall within 1% of the algebraically expected value.
 
-### Current Achievements
-- Clean ladder: Levels 2–7 (ratios, sequences, symmetries, scaling, recursion) with Fraction decoder for exact rational representation.
-- Real-audio invariance demonstrated on orchestral and rock recordings (pitch shift + time stretch).
-- Working bidirectional prototype: sound → ladder → regenerated sound with measurable round-trip fidelity.
+## Headline (as of M5.6, commit `d332f54`)
 
-### Latest Results (orchestra + rock)
+| Clip            | Total | Score  |
+|-----------------|-------|--------|
+| orchestra       | 24/24 | 1.0000 |
+| flute           | 22/24 | 0.9167 |
+| synthetic_just  | 23/24 | 0.9583 |
+| rock            | 18/24 | 0.7500 |
+| highenergy      | 15/24 | 0.6250 |
+| polyphonic      |  5/24 | 0.2083 |
+| **TOTAL**       | **107/144** | **0.7431** |
 
-Reproducible via `python run_milestones.py` — three identical runs. Full
-method, table, and caveats in [MILESTONES.md](MILESTONES.md).
+6 clips × 3 transforms (pitch_shift 1.5×, time_stretch 1.5×, composition) ×
+8 notes each, octave-folded, deterministic across runs.
 
-| Test                        | Orchestra          | Rock                          |
-|-----------------------------|--------------------|-------------------------------|
-| Pitch shift 1.5×            | 7/8                | 8/8 (octave-folded)           |
-| Time stretch 1.5×           | 8/8                | 7/8 (octave-folded)           |
-| Composition (shift+stretch) | 7/8                | 7/8 (octave-folded)           |
-| Bidirectional round-trip    | 8/8                | 8/8 (non-trivial)             |
+Open issues tracked, not hidden: rock time_stretch sits at 4/8 (regression
+introduced when `cqt_flux` onset detection was locked in M5.3); polyphonic
+remains the largest "other_errors" bucket and is now believed to be
+pitch-tracker limited (see M5.7).
 
-44 of 48 measurements within 1% of target across two clips × three transforms × eight notes.
-
-### How to Run (start here)
+## How to reproduce
 
 ```bash
 git clone https://github.com/stevewebmarket/nightingale-mapping.git
 cd nightingale-mapping
+pip install -r requirements.txt
+python scripts/fetch_samples.py        # downloads samples-v2 release
+python run_m4_1_benchmark.py           # locked benchmark, prints table above
+python run_m5_1_diagnostics.py         # per-onset failure classification
+```
 
-# Download reference samples (permanent links)
-python fetch_samples.py   # or download manually from the samples-v1 release
+The default extractor lives in `run_milestones.py`:
 
-# Run the baseline bidirectional test
-python run_nightingale_baseline.py
+```python
+DEFAULT_CONFIG = {
+    "onset_mode":  "cqt_flux",            # locked in M5.3
+    "pitch_mode":  "adaptive_rms_attack", # locked in M5.6
+    "fmin": 50, "fmax": 16000, "tolerance_pct": 0.01,
+    "onset_delta": 0.05,
+}
+```
 
-# Or run the full milestone check (M1.2 pitch shift + time stretch + M1.4 composition)
-python run_milestones.py
+Both locked modes have a `"baseline"` selectable for compatibility and
+future comparisons (no destructive overwrite).
+
+## Milestone log
+
+See [MILESTONES.md](MILESTONES.md). Each milestone is one commit, has a
+pre-set pass condition declared *before* the run, reports headline numbers,
+notes regressions openly, and is reproducible from a fresh clone.
+
+## What this does *not* claim
+
+* It does not claim the algebraic relationship is preserved with arbitrary
+  precision under arbitrary transforms.
+* It does not claim polyphonic pitched material is solved (5/24).
+* It does not claim CREPE or other neural pitch trackers were beaten —
+  CREPE is currently skipped for environment reasons (see M5.7).
+
+## License
+
+See `LICENSE`.
