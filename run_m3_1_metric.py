@@ -44,6 +44,41 @@ def evaluate_config(orchestra, rock, cfg):
     return summary, case_results
 
 
+_AUDIO_CACHE = {}
+
+def _load_audio_cached():
+    if "orchestra" not in _AUDIO_CACHE:
+        for f in ("orchestra.wav", "rock.wav"):
+            if not os.path.isfile(f):
+                raise FileNotFoundError(
+                    f"Missing {f}.  Run: python scripts/fetch_samples.py"
+                )
+        _AUDIO_CACHE["orchestra"] = load_clip("orchestra.wav")
+        _AUDIO_CACHE["rock"] = load_clip("rock.wav")
+    return _AUDIO_CACHE["orchestra"], _AUDIO_CACHE["rock"]
+
+
+def evaluate_m3_1(config=None, verbose=False):
+    """Importable hook used by run_m3_2_optimize.py.
+
+    Returns dict with keys: score, within_tolerance, total_notes, case_results.
+    """
+    cfg = dict(DEFAULT_CONFIG)
+    if config:
+        cfg.update(config)
+    orchestra, rock = _load_audio_cached()
+    summary, case_results = evaluate_config(orchestra, rock, cfg)
+    if verbose:
+        print(f"score={summary['score']:.4f} "
+              f"within/total={summary['within_tolerance']}/{summary['total_notes']}")
+    return {
+        "score": summary["score"],
+        "within_tolerance": summary["within_tolerance"],
+        "total_notes": summary["total_notes"],
+        "case_results": case_results,
+    }
+
+
 def main():
     for f in ("orchestra.wav", "rock.wav"):
         if not os.path.isfile(f):
