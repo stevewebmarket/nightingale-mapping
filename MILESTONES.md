@@ -110,9 +110,105 @@ limited. But pyin's voicing classifier rejects valid frames in noisy
 material, costing 7-10 matches each on rock, flute, highenergy.
 **Pre-set conditions fail (3 of 7).** Not locked.
 
+## M5.8 — HPSS / harmonic pre-filter ablation (commit `b5669ed`) — NEGATIVE
+
+Tested harmonic-percussive source separation (HPSS) as a pre-filter
+before YIN pitch estimation, expecting cleaner harmonic content on
+polyphonic and percussive clips.
+
+| variant | poly | high | orch | flute | synth | rock_t | total |
+|---|---|---|---|---|---|---|---|
+| yin (control) | 5 | 15 | 24 | 22 | 23 | 4 | 107/144 |
+| hpss + yin | 5 | 15 | 24 | 22 | 23 | 4 | 107/144 |
+
+No measurable change on any clip. **Pre-set conditions fail** (no win,
+added cost). Not locked.
+
+## M5.9 — CREPE pitch tracker — ABANDONED
+
+Attempted to install CREPE for the pitch-tracker swap originally skipped
+in M5.7. Heavy dependency footprint (`tensorflow-cpu` required), unclear
+upside given M5.7's pyin result, abandoned mid-install. `tensorflow-cpu`
+remains installed as a harmless leftover.
+
+## M6.1 — Pairwise structural similarity (`run_m6_1_similarity.py`)
+
+First milestone using the locked M5.6 extractor as a fixed front-end.
+Score two clips by matching their interval-ratio sequences:
+octave-folded match + raw match + non-trivial-only match (sub-scores
+combined with weights 0.45 / 0.25 / 0.30).
+
+Honest verdict labels gated on **>= 4 non-trivial intervals on both
+sides** so a near-flat clip cannot be promoted to "structural match".
+
+| pair                                | score | verdict                    |
+|-------------------------------------|------:|----------------------------|
+| orchestra vs orchestra_pshift       | 0.700 | structural match           |
+| orchestra vs orchestra_tstretch     | 0.700 | structural match           |
+| orchestra vs rock                   | 0.164 | insufficient melodic content |
+
+All four pre-set pass conditions met. Two architect rounds applied
+(gap-aware None-preserving ratios; honest non-trivial component).
+
+## M6.2 — Query-vs-library search (`run_m6_2_search.py`)
+
+Reuses M6.1 to rank every other library member against a query clip.
+Three operator-supplied Twinkle clips (`twinkle_box.mp3`,
+`twinkle_harmonica.wav`, `twinkle_people.m4a`) added — same melody,
+three timbres.
+
+Headline (`twinkle_box` query):
+
+| rank | candidate              | score | verdict                |
+|-----:|------------------------|------:|------------------------|
+| 1    | twinkle_box_tstretch   | 0.479 | partial melodic match  |
+| 2    | twinkle_harmonica      | 0.284 | partial melodic match  |
+| 3-7  | (unrelated, tied)      | 0.164 | insufficient melodic content |
+
+All four pre-set conditions met. Architect-review fixes: 4-non-trivial
+verdict gate; per-query PASS/FAIL/N/A self-check; tied ranks visible.
+
+## M6.3 — Small-library retrieval (`run_m6_3_retrieval.py`)
+
+Pre-set bar: for each of 3 Twinkle queries, does any Twinkle-family
+relative appear in the **top 3 dense ranks** (tied scores share the
+same rank level)?
+
+Library = 9 candidates (3 real twinkle + 1 synthetic twinkle transform
++ orchestra / rock / flute / highenergy / polyphonic).
+
+**3/3 queries pass.** All 7 pre-set conditions met. One pass is
+explicitly labelled `borderline` (`twinkle_people` — top-1 is unrelated
+but `twinkle_box_tstretch` reaches rank 3). Architect-review fixes:
+dense-rank semantics; spec-faithful "max(relative) >= min(unrelated)"
+check; explicit `PASS (borderline)` when top-1 is unrelated.
+
+## M6.4 — Family-retrieval demo (`run_m6_4_family_retrieval.py`)
+
+Stronger question: given a Twinkle query, does the system retrieve the
+**whole family** of Twinkle clips ahead of unrelated ones?
+
+| Query                | Family in top 3 | Family in top 5 | Best family outranks all non-family |
+|----------------------|:---------------:|:---------------:|:-----------------------------------:|
+| `twinkle_box`        | 3               | 3               | YES                                 |
+| `twinkle_harmonica`  | 2               | 3               | YES                                 |
+| `twinkle_people`     | 1               | 1               | NO (weak-evidence, flagged)         |
+
+All 5 pre-set conditions met. The voice query (`twinkle_people`) is
+explicitly flagged as weak-evidence (only 2 non-trivial intervals
+recovered by the M5.6 extractor) — the honesty guarantee is asserted in
+the script's self-check, not just printed.
+
+Architect-review fixes: replaced a tautological cond4 with a real check
+(every nt<4 query must be marked weak AND `twinkle_people` must still
+be weak); dense-rank semantics called out in docs.
+
 ## Open issues (tracked, not hidden)
 
 * **rock time_stretch = 4/8** since M5.3. Diagnosed as upstream cqt onset
   placement on percussive material, not the pitch window.
 * **polyphonic = 5/24** is now believed to be pitch-tracker limited
   (pyin gets 10/24 there but breaks other clips; CREPE not yet tested).
+* **voice-query family retrieval (`twinkle_people`)** remains the next
+  real product limit — needs a better front-end pitch tracker for voice,
+  not more retrieval engineering.

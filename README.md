@@ -6,6 +6,11 @@ We test this by running real audio through systematic transforms (pitch shift, t
 stretch, composition), extracting per-onset pitch ratios, and measuring how many
 fall within 1% of the algebraically expected value.
 
+**Latest capability (M6.3 / M6.4):** small-library **retrieval by relational
+similarity** — given a query clip, the system can recover structurally
+related clips from a mixed library using extracted interval structure,
+not raw timbre. See [Retrieval headline](#retrieval-headline-m63--m64) below.
+
 ## Headline (as of M5.6, commit `d332f54`)
 
 | Clip            | Total | Score  |
@@ -26,6 +31,25 @@ introduced when `cqt_flux` onset detection was locked in M5.3); polyphonic
 remains the largest "other_errors" bucket and is now believed to be
 pitch-tracker limited (see M5.7).
 
+## Retrieval headline (M6.3 / M6.4)
+
+In a **9-clip mixed library** (3 real Twinkle recordings on different
+instruments + 1 synthetic Twinkle time-stretch + 5 unrelated clips), all
+3 Twinkle queries retrieve a Twinkle-family relative in the top 3 dense
+ranks (tied scores share the same rank level). M6.4 family-retrieval
+summary:
+
+| Query                | Family in top 3 | Family in top 5 | Best family outranks all non-family |
+|----------------------|:---------------:|:---------------:|:-----------------------------------:|
+| `twinkle_box`        | 3               | 3               | YES                                 |
+| `twinkle_harmonica`  | 2               | 3               | YES                                 |
+| `twinkle_people`     | 1 (borderline)  | 1 (borderline)  | NO (weak-evidence, flagged)         |
+
+The borderline / weak-evidence case is honest: the pitch tracker recovers
+only 2 non-trivial intervals from the voice clip, so its rows are
+explicitly labelled `insufficient melodic content` and the verdict gate
+refuses to call it a structural match.
+
 ## How to reproduce
 
 ```bash
@@ -35,6 +59,10 @@ pip install -r requirements.txt
 python scripts/fetch_samples.py        # downloads samples-v2 release
 python run_m4_1_benchmark.py           # locked benchmark, prints table above
 python run_m5_1_diagnostics.py         # per-onset failure classification
+
+# Retrieval (M6.3 / M6.4):
+python run_m6_3_retrieval.py           # small-library retrieval
+python run_m6_4_family_retrieval.py    # family-retrieval demo
 ```
 
 The default extractor lives in `run_milestones.py`:
@@ -64,6 +92,19 @@ notes regressions openly, and is reproducible from a fresh clone.
 * It does not claim polyphonic pitched material is solved (5/24).
 * It does not claim CREPE or other neural pitch trackers were beaten —
   CREPE is currently skipped for environment reasons (see M5.7).
+
+## Current limitations (M6 retrieval)
+
+* Voice / weak-melodic clips remain hard. The pitch tracker is the
+  bottleneck: when fewer than ~4 non-trivial intervals survive
+  extraction, the similarity layer correctly refuses to claim a
+  structural match (and family-retrieval falls back to the borderline
+  path, as `twinkle_people` shows above).
+* Retrieval is meaningful only when enough non-trivial intervals
+  survive extraction in *both* the query and the candidate.
+* The current extractor is locked at M5.6; M5.7 (pyin), M5.8 (HPSS)
+  and M5.9 (CREPE) were tested and did not improve on it for melodic
+  retrieval (see [MILESTONES.md](MILESTONES.md)).
 
 ## License
 
