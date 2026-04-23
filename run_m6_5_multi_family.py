@@ -221,16 +221,26 @@ def family_passes(rows, *, label):
 
 
 def twinkle_did_not_regress(f1_rows):
-    """M6.4 headline (locked):
+    """Compare current Twinkle (top3, top5, outranks, weak) tuples to the
+    M6.4 headline values.
+
+    HONESTY CAVEAT (this is NOT a relaxed check):
+    The 'outranks' field here uses M6.5's stricter 'outranks-ALL-other'
+    comparator (which counts the new Lamb family as 'other') rather than
+    M6.4's 'outranks-all-nonfam' comparator.  So a regression flagged by
+    this function can be either:
+      (a) a true behavioural regression (e.g. fewer family hits in top 3
+          because Lamb clips now occupy higher ranks), or
+      (b) a strictness change in the comparator (the Twinkle family is
+          now scored against more rivals).
+    Both are real consequences of adding Family 2 to the library; we do
+    not paper over either by silently downgrading to M6.4's comparator.
+
+    M6.4 headline (for reference):
        twinkle_box       top3=3 top5=3 outranks-all-nonfam=YES
        twinkle_harmonica top3=2 top5=3 outranks-all-nonfam=YES
        twinkle_people    top3=1 top5=1 outranks-all-nonfam=NO  (weak)
-
-    Note: 'outranks-all-other' here is STRICTER than M6.4's
-    'outranks-all-nonfam' because it now includes the lamb family too.
-    So we relax that specific check to 'twinkle_box and twinkle_harmonica
-    must still beat all clips outside Twinkle' (which is what the strict
-    YES required in M6.4 too, since lamb wasn't in the library)."""
+    """
     expected = {
         "twinkle_box":       (3, 3, True,  False),  # (top3, top5, outranks, weak)
         "twinkle_harmonica": (2, 3, True,  False),

@@ -241,7 +241,7 @@ Discipline (declared before the run):
 | 2 | family-2 hit in top 3 for >= 2 queries                   | **FAIL** (1/3) |
 | 3 | best family-2 outranks all-other for >= 2 queries        | **FAIL** (0/3) |
 | 4 | no outside-family clip labelled a strong / partial match | **FAIL** (`polyphonic` repeatedly tagged "partial melodic match") |
-| 5 | Twinkle behaviour does not regress                       | **FAIL** (Lamb clips bump twinkle relatives out of top 3 for `twinkle_harmonica`; the new outranks-all-other check is also stricter than M6.4's outranks-all-nonfam) |
+| 5 | Twinkle behaviour does not regress                       | **FAIL** (`twinkle_box` top-3 family hits drop 3->2 and `twinkle_harmonica` top-3 drops 2->1 because Lamb clips now occupy ranks 1-3 for those queries -- a real behavioural change. The `outranks` field for `twinkle_harmonica` also flips YES->NO, but that is partly apples-to-oranges: M6.5 uses the stricter 'outranks-all-other' comparator (Lamb counts as 'other'), where M6.4 only had to beat non-family clips. We deliberately do NOT downgrade the comparator to look better; both effects are honest consequences of adding Family 2.) |
 | 6 | weak-evidence cases honestly flagged                     | PASS   |
 | 7 | fresh-clone reproducible                                 | PASS (verified externally) |
 
