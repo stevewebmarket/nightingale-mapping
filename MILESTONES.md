@@ -203,12 +203,83 @@ Architect-review fixes: replaced a tautological cond4 with a real check
 (every nt<4 query must be marked weak AND `twinkle_people` must still
 be weak); dense-rank semantics called out in docs.
 
+## M6.5 — Multi-family retrieval validation (`run_m6_5_multi_family.py`) — NEGATIVE
+
+The deliberate generalization test: does the M6.4 result hold for a
+second, independently-recorded melody under the *same* locked pipeline,
+with no per-family tuning?
+
+Family 2: **Mary Had a Little Lamb**, three timbres
+(`lamb_solo.mp3`, `lamb_group.mp3`, `lamb_male.mp3`) — operator-supplied,
+attached to release `samples-v3`.
+
+Library = M6.3 library (9) + the three Lamb clips = 12 candidates.
+
+Discipline (declared before the run):
+
+* No per-family tuning.
+* No scoring changes.
+* No extractor edits.
+* Honest weak-evidence labelling preserved.
+
+### Headline (all six queries)
+
+| query              | family | top3 hits | top5 hits | best-same-family outranks all-other |
+|--------------------|:------:|:---------:|:---------:|:-----------------------------------:|
+| `twinkle_box`        | F1 | 2 | 3 | YES |
+| `twinkle_harmonica`  | F1 | 1 | 2 | NO  |
+| `twinkle_people`     | F1 | 1 | 1 | NO (weak) |
+| `lamb_solo`          | F2 | 0 | 1 | NO (weak) |
+| `lamb_group`         | F2 | 1 | 2 | NO |
+| `lamb_male`          | F2 | 0 | 1 | NO (weak) |
+
+### Pre-set pass conditions (declared before the run)
+
+| # | condition                                                | result |
+|--:|----------------------------------------------------------|--------|
+| 1 | >= 2 queries from the new family                         | PASS   |
+| 2 | family-2 hit in top 3 for >= 2 queries                   | **FAIL** (1/3) |
+| 3 | best family-2 outranks all-other for >= 2 queries        | **FAIL** (0/3) |
+| 4 | no outside-family clip labelled a strong / partial match | **FAIL** (`polyphonic` repeatedly tagged "partial melodic match") |
+| 5 | Twinkle behaviour does not regress                       | **FAIL** (Lamb clips bump twinkle relatives out of top 3 for `twinkle_harmonica`; the new outranks-all-other check is also stricter than M6.4's outranks-all-nonfam) |
+| 6 | weak-evidence cases honestly flagged                     | PASS   |
+| 7 | fresh-clone reproducible                                 | PASS (verified externally) |
+
+**M6.5 result: FAIL** (4 of 7 pre-set conditions fail).
+
+### Honest interpretation
+
+The Twinkle family is the locked-extractor + locked-similarity
+pipeline's good case, not its general case. The Lamb clips show that
+when the pitch tracker recovers fewer non-trivial intervals (2-3 per
+clip on these recordings), the similarity scores collapse into the same
+narrow band as the unrelated clips, and family-level separation
+disappears. Twinkle's family separation in M6.4 was real, but it
+relied on (a) the unusually clean interval structure of the Twinkle
+recordings the operator chose, and (b) the absence of any other
+melodic family in the library to compete with it.
+
+The bottleneck is upstream — the M5.6 pitch tracker on weak-melodic
+material — not the retrieval layer. M5.7 (pyin) and M5.8 (HPSS) were
+already tested and rejected for the M3-M5 benchmark; M5.9 (CREPE) was
+abandoned mid-install. A real fix here is a better front-end pitch
+tracker, not more retrieval engineering.
+
+This is the result the operator explicitly asked us to be willing to
+report. **No tuning was applied to make M6.5 pass.**
+
 ## Open issues (tracked, not hidden)
 
 * **rock time_stretch = 4/8** since M5.3. Diagnosed as upstream cqt onset
   placement on percussive material, not the pitch window.
 * **polyphonic = 5/24** is now believed to be pitch-tracker limited
   (pyin gets 10/24 there but breaks other clips; CREPE not yet tested).
-* **voice-query family retrieval (`twinkle_people`)** remains the next
-  real product limit — needs a better front-end pitch tracker for voice,
+* **voice-query family retrieval (`twinkle_people`)** remains a real
+  pipeline limit — needs a better front-end pitch tracker for voice,
   not more retrieval engineering.
+* **multi-family generalization (M6.5 NEGATIVE)** — the locked
+  extractor + similarity pipeline does not generalise to a second
+  independently-recorded melodic family without per-family tuning.
+  The honest read is that the Twinkle result is closer to a special
+  case than to a general retrieval claim at the current pipeline
+  maturity.

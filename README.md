@@ -7,9 +7,18 @@ stretch, composition), extracting per-onset pitch ratios, and measuring how many
 fall within 1% of the algebraically expected value.
 
 **Latest capability (M6.3 / M6.4):** small-library **retrieval by relational
-similarity** — given a query clip, the system can recover structurally
-related clips from a mixed library using extracted interval structure,
-not raw timbre. See [Retrieval headline](#retrieval-headline-m63--m64) below.
+similarity** for the Twinkle melody family — given a Twinkle query, the
+system recovers the Twinkle family from a mixed library using extracted
+interval structure, not raw timbre. See [Retrieval headline](#retrieval-headline-m63--m64) below.
+
+**M6.5 (multi-family validation): NEGATIVE.** Adding a second melody
+family (Mary Had a Little Lamb, three timbres) under the *same* locked
+extractor + similarity pipeline — no per-family tuning — does *not*
+reproduce the Twinkle result. Lamb queries fail to retrieve their own
+family ahead of unrelated clips, and the Lamb clips also disrupt some
+Twinkle retrievals. The honest reading: the Twinkle result is closer to
+a *special case* than to a general-purpose retrieval claim at the
+current pipeline maturity. Details in [MILESTONES.md § M6.5](MILESTONES.md).
 
 ## Headline (as of M5.6, commit `d332f54`)
 
@@ -63,6 +72,7 @@ python run_m5_1_diagnostics.py         # per-onset failure classification
 # Retrieval (M6.3 / M6.4):
 python run_m6_3_retrieval.py           # small-library retrieval
 python run_m6_4_family_retrieval.py    # family-retrieval demo
+python run_m6_5_multi_family.py        # multi-family validation (NEGATIVE)
 ```
 
 The default extractor lives in `run_milestones.py`:
@@ -106,6 +116,13 @@ notes regressions openly, and is reproducible from a fresh clone.
   were tested as alternatives and did not improve on it for melodic
   retrieval. M5.9 (CREPE) was abandoned mid-install — not benchmarked.
   See [MILESTONES.md](MILESTONES.md).
+* **Multi-family generalization is not yet demonstrated.** M6.5 added a
+  Mary-Had-a-Little-Lamb family and ran the same pipeline unchanged;
+  family-2 retrieval failed all the per-family pre-set conditions, and
+  Twinkle retrieval also degraded slightly because Lamb clips occupy
+  near-identical score ranges. The next real improvement target is the
+  front-end pitch tracker (voice / weak-melodic clips), not more
+  retrieval engineering.
 
 ## License
 

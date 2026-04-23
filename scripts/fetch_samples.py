@@ -26,6 +26,9 @@ SAMPLES = (
     ("twinkle_box.mp3",      "samples-v3"),
     ("twinkle_harmonica.wav","samples-v3"),
     ("twinkle_people.m4a",   "samples-v3"),
+    ("lamb_solo.mp3",        "samples-v3"),
+    ("lamb_group.mp3",       "samples-v3"),
+    ("lamb_male.mp3",        "samples-v3"),
 )
 ROOT = Path(__file__).resolve().parent.parent
 
