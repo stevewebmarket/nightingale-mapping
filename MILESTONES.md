@@ -1,11 +1,56 @@
 # Milestones
 
+> **Status: locked for evaluation / packaging.**
+> All milestones M3.1 → M6.5 are complete. M6.5 is an honest **FAIL /
+> boundary** result, retained on purpose. No further algorithm,
+> extraction, similarity, or retrieval changes are planned at this
+> repo state.
+
 Single source of truth for milestone numbers. Each milestone is one commit,
 sets its pass condition *before* the run, and reports headline numbers
 that reproduce byte-identically from a fresh clone.
 
 Format per entry: **What changed / Headline / Beat baseline? / Regressions /
 Reproducible / Recommendation.**
+
+## Status table
+
+| Milestone | What                                              | Status |
+|-----------|---------------------------------------------------|--------|
+| M3.1      | Audio transform invariance metric                 | complete |
+| M3.2      | Hyperparameter sweep                              | complete |
+| M3.3      | Sensitivity check                                 | complete |
+| M3.4      | Focused search                                    | complete |
+| M4.1      | Six-clip benchmark (baseline 93/135)              | complete |
+| M5.1      | Per-onset diagnostics                             | complete |
+| M5.2      | Onset detector ablation (cqt_flux wins)           | complete |
+| M5.3      | Lock cqt_flux as default onset                    | complete (locked) |
+| M5.4      | Pitch-window ablation                             | complete (NEGATIVE) |
+| M5.5      | Adaptive routing ablation                         | complete |
+| M5.6      | Lock adaptive routing -- **107/144 = 0.7431**     | complete (LOCKED baseline) |
+| M5.7      | Pitch tracker swap (pyin vs YIN)                  | complete (NEGATIVE) |
+| M5.8      | HPSS / harmonic pre-filter                        | complete (NEGATIVE) |
+| M5.9      | CREPE pitch tracker                               | **deferred / abandoned mid-install -- never benchmarked** |
+| M6.1      | Pairwise structural similarity                    | complete (PASS) |
+| M6.2      | Query-vs-library search                           | complete (PASS) |
+| M6.3      | Small-library retrieval (3/3 queries)             | complete (PASS) |
+| M6.4      | Family-retrieval demo (Twinkle)                   | complete (PASS) |
+| M6.5      | Multi-family validation (Lamb)                    | complete (**honest FAIL / boundary**) |
+
+## Current boundary
+
+* **What works:** small-library retrieval by structural similarity on
+  **clean instrumental melodic families** (M6.4 Twinkle result).
+* **What does not yet work:** **voice-heavy / weak-melodic extraction**
+  -- when the M5.6 pitch tracker recovers fewer than ~4 non-trivial
+  intervals from a clip, similarity scores collapse into the same band
+  as unrelated clips and family-level separation disappears (M6.5 Lamb
+  result, and the `twinkle_people` borderline case).
+
+The bottleneck is the front-end pitch tracker on weak-melodic material,
+not the retrieval layer. Improving past this boundary would mean
+swapping the front-end tracker (e.g. CREPE, never benchmarked here) --
+explicitly out of scope for the current locked repo.
 
 ---
 
