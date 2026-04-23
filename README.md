@@ -56,7 +56,7 @@ refuses to call it a structural match.
 git clone https://github.com/stevewebmarket/nightingale-mapping.git
 cd nightingale-mapping
 pip install -r requirements.txt
-python scripts/fetch_samples.py        # downloads samples-v2 release
+python scripts/fetch_samples.py        # fetches v1+v2+v3 release assets
 python run_m4_1_benchmark.py           # locked benchmark, prints table above
 python run_m5_1_diagnostics.py         # per-onset failure classification
 
@@ -102,9 +102,10 @@ notes regressions openly, and is reproducible from a fresh clone.
   path, as `twinkle_people` shows above).
 * Retrieval is meaningful only when enough non-trivial intervals
   survive extraction in *both* the query and the candidate.
-* The current extractor is locked at M5.6; M5.7 (pyin), M5.8 (HPSS)
-  and M5.9 (CREPE) were tested and did not improve on it for melodic
-  retrieval (see [MILESTONES.md](MILESTONES.md)).
+* The current extractor is locked at M5.6; M5.7 (pyin) and M5.8 (HPSS)
+  were tested as alternatives and did not improve on it for melodic
+  retrieval. M5.9 (CREPE) was abandoned mid-install — not benchmarked.
+  See [MILESTONES.md](MILESTONES.md).
 
 ## License
 
