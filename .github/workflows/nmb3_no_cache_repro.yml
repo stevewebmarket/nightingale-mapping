@@ -82,6 +82,24 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Install system audio backends (target-agnostic)
+        # ffmpeg is required for librosa/audioread to decode compressed
+        # audio formats not handled by libsndfile (notably .m4a, and as
+        # a more reliable backend for .mp3).  This is target-agnostic
+        # infrastructure -- no M5.6 / M4.1 / M6.x specific behaviour is
+        # introduced; a target that uses only .wav samples pays the
+        # apt-get cost but is otherwise unaffected.  Discovered when
+        # the first M6.4 dispatch (run 24937425251 at SHA 59fad71)
+        # failed with audioread.exceptions.NoBackendError on
+        # twinkle_people.m4a.  Documented in
+        # nmb3/nmb3_blocks/block_022_plan.md (Forbidden actions /
+        # cherry-picking clause: infrastructure failures may be retried
+        # with honest documentation).
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg
+          ffmpeg -version | head -1
+
       - name: Install dependencies (no caches)
         run: |
           python -m pip install --no-cache-dir --upgrade pip
