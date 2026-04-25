@@ -62,7 +62,8 @@ Dispatch:
   - **script:**  `python run_m6_5_multi_family.py`
   - **head SHA:**  `9eaabacf5ae5640d329fa97ebe316486eaccd08f`
   - **CI run id:**  24937928571
-  - **artefact:**  `nmb3-no-cache-repro-m6_5-24937928571` (90-day retention)
+  - **artefact:**  `nmb3-no-cache-repro-m6_5-24937928571` (90-day
+    retention); inner stdout file:  `no_cache_repro_m6_5.txt`
   - **dispatched against:**  `.github/workflows/nmb3_no_cache_repro.yml`
 
 The script ran unmodified on canonical (no edits to

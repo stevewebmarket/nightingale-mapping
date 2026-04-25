@@ -29,7 +29,7 @@ binds itself to that floor (see "Honesty Floor" section below).
 One Question to Answer:
 Does the locked M6.5 multi-family retrieval FAIL reproduce on a
 fresh clone with no caches, including all six query rows of the
-headline table, the per-condition results (4 of 7 PASS, 3 of 7
+headline table, the per-condition results (3 of 7 PASS, 4 of 7
 FAIL), the explicit FAIL verdict, and — most importantly — the
 specific failure modes documented in MILESTONES.md (`polyphonic`
 repeatedly tagged "partial melodic match"; Twinkle top-3 hits
