@@ -707,12 +707,25 @@ path.
   because O023 succeeded with zero drift and no regression points
   back at M5.4 / M5.5 / M5.6-in-repo), and an explicit "what this
   does NOT recommend" section enumerating every forbidden and
-  out-of-scope claim.  Recommendation is a draft on canonical
-  until Steve issues an explicit approval string.  No improvement
+  out-of-scope claim.  Recommendation was a draft on canonical
+  until Steve issued his explicit approval string.  No improvement
   claim was made (forbidden actions clause respected).  Full-
   scope expansion to a v2 recommendation aggregating all four
   P4 objectives remains available if Steve later authorises and
   succeeds O020 / O021 / O022.
+
+  **APPROVED by Steve at 2026-04-25T17:59:01Z** via chat string
+  "Approve P4 partial-scope closure" (see `nmb3/nmb3_decisions.log`
+  entry of the same timestamp, and § 8 of the recommendation
+  file).  The five binding items in § 5 of the recommendation
+  are now in force for funding-package purposes on the partial-
+  scope basis defined in § 2 (107/144 = 0.7431 treated as
+  independently reproducible; 234/54 routing treated as part of
+  the locked baseline; future citations use run ids 24936558636 /
+  24936650442 + head SHA `1368524699287cc28ae416c7edda7f6c04b4c0e0`;
+  O020 / O021 / O022 deferred under the activation rule, not
+  skipped or failed; shared no-cache workflow remains the
+  target-agnostic canonical reproduction surface).
 - **Auto-execute permission**: YES (validation/measurement-integrity).
 - **Rewrite permission**: Steve only.
 

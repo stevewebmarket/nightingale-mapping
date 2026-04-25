@@ -6,8 +6,12 @@ Author:       NMB3 autonomous loop, executing objective O024 under
               (partial-scope closure)" (see
               `nmb3/nmb3_decisions.log`, 2026-04-25T17:41:53Z entry).
 Audience:     Steve.
-Status:       Recommendation only.  Becomes binding only on Steve's
-              explicit approval string in chat.
+Status:       **APPROVED by Steve at 2026-04-25T17:59:01Z** via chat
+              string "Approve P4 partial-scope closure" (see
+              `nmb3/nmb3_decisions.log`, 2026-04-25T17:59:01Z entry,
+              and § 8 of this file).  Binding for funding-package
+              purposes on the partial-scope basis defined in § 2.
+              Initial draft generated under O024 at 2026-04-25T17:41:53Z.
 
 ---
 
@@ -255,3 +259,36 @@ Steve, please respond with one line:
 
 Until Steve responds with one of these, the recommendation is on
 canonical as a draft only and is not binding.
+
+---
+
+## 8. Approval record (added post-approval)
+
+  - **Approver:**  Steve.
+  - **Approval string (verbatim):**  "Approve P4 partial-scope closure"
+  - **Approval timestamp:**  2026-04-25T17:59:01Z.
+  - **Channel:**  Chat reply to the loop's O024 SUCCEEDED summary.
+  - **Effect:**  This recommendation is now binding for funding-
+    package purposes on the partial-scope basis defined in § 2.
+    The five binding items in § 5 (treat 107/144 = 0.7431 as
+    independently reproducible; treat 234/54 routing as part of
+    the locked baseline; cite by run id + SHA; treat O020 / O021
+    / O022 as deferred under the activation rule, not skipped or
+    failed; keep the shared no-cache reproducibility workflow as
+    the canonical reproduction surface) are now in force.
+  - **Future-expansion path preserved:**  If Steve later authorises
+    and succeeds O020 / O021 / O022, this recommendation can be
+    superseded by a full-scope
+    `m5_phase_p4_closure_recommendation_v2.md` aggregating all
+    four objectives.  Nothing in this approval forecloses that
+    path.
+  - **Cross-references:**
+    - O024 in `nmb3/nmb3_objective_map.md` (status updated to
+      reflect the binding approval).
+    - `nmb3/nmb3_decisions.log`, 2026-04-25T17:59:01Z entry
+      (Steve's verbatim approval string).
+    - O023 evidence in `nmb3/nmb3_reports/o023_m5_6_fresh_clone_reproduction.md`
+      (the load-bearing reproduction this approval rests on).
+    - Workflow file `.github/workflows/nmb3_no_cache_repro.yml`
+      (the canonical reproduction surface this approval keeps in
+      its current target-agnostic shape).

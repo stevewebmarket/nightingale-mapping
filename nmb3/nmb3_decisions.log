@@ -162,3 +162,56 @@
       propose the next objective without beginning it.  This is
       loop 6 of 6 in the session budget; the next loop will
       require a fresh session.
+
+[2026-04-25T17:59:01Z] Steve, via chat reply to the O024 SUCCEEDED report:
+  "Approve P4 partial-scope closure"
+
+  This is the binding approval string requested in section 7 of
+  nmb3/nmb3_reports/m5_phase_p4_closure_recommendation.md.
+
+  Effect on the recommendation:
+    - Status of the recommendation file changes from "draft on
+      canonical pending Steve approval" to "APPROVED by Steve at
+      2026-04-25T17:59:01Z, binding for funding-package purposes
+      on the partial-scope basis defined in section 2".
+    - Section 1 of the recommendation file (file header) is
+      updated to reflect the new status.
+    - A new section 8 ("Approval record") is appended to the
+      recommendation file, recording Steve's verbatim approval
+      string, the timestamp, the channel, the binding effect,
+      the preserved future-expansion path, and cross-references
+      to the objective map, this decisions.log entry, the O023
+      evidence file, and the shared workflow file.
+
+  Effect on the objective map (nmb3_objective_map.md):
+    - O024's Status entry is extended to record the approval
+      timestamp, the verbatim approval string, and an explicit
+      restatement of the five binding items now in force.
+    - No other objective's status changes.  In particular,
+      O020 / O021 / O022 remain PROPOSED -- the partial-scope
+      approval explicitly preserves the future-expansion path
+      to a full-scope v2 recommendation.
+
+  What this approval does NOT do:
+    - does NOT advance any later objective (O025+);
+    - does NOT generalise the M5.6 baseline beyond the canonical
+      6-clip benchmark set;
+    - does NOT claim improvement on the M5.6 baseline;
+    - does NOT recommend M4 (funding-package-preparation) phase
+      transition;
+    - does NOT make any funding claim, commercial claim, or
+      perceptual-validity claim;
+    - does NOT supersede or replace any prior recommendation
+      (M3.1 closure recommendation remains in its prior state);
+    - does NOT edit any policy file, MILESTONES.md, the M3.1
+      archive, the M3.1 closure recommendation, the shared
+      reproducibility workflow yml, or any pipeline code;
+    - does NOT begin or authorise any new objective execution
+      -- the loop will stop after this approval-recording commit
+      and propose the next objective without beginning it.
+
+  Loop budget: this approval-recording commit is a bookkeeping
+  commit (recording an externally-supplied approval), not a new
+  objective execution, so it does not consume an additional loop
+  beyond the 6 already used for objective execution in this
+  session.  The session is still complete after this commit.
