@@ -1,0 +1,63 @@
+name: NMB3 Block 001
+
+on:
+  workflow_dispatch:
+
+jobs:
+  block-001:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Show block plan
+        run: |
+          cat nmb3/nmb3_blocks/block_001_plan.md
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Fetch samples
+        run: |
+          python scripts/fetch_samples.py
+
+      - name: Run M3.1 metric
+        run: |
+          mkdir -p nmb3/nmb3_logs nmb3/nmb3_reports
+          python run_m3_1_metric.py | tee nmb3/nmb3_logs/block_001_raw_output.txt
+
+      - name: Create Block 001 report
+        run: |
+          cat > nmb3/nmb3_reports/block_001_report.md <<'EOF'
+          # NMB3 Block 001 Report
+
+          Block ID:
+          block_001
+
+          Commands Run:
+          - python scripts/fetch_samples.py
+          - python run_m3_1_metric.py
+
+          Raw Results:
+          See block_001_raw_output.txt artifact.
+
+          Conclusion:
+          Pending interpreter review.
+          EOF
+
+      - name: Upload report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nmb3-block-001-report
+          path: |
+            nmb3/nmb3_logs/block_001_raw_output.txt
+            nmb3/nmb3_reports/block_001_report.md
