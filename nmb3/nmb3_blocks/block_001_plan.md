@@ -26,8 +26,8 @@ Forbidden Actions:
 - no changing evaluation logic
 
 Required Commands:
-- run M3.1 metric script on baseline
-- run M3.1 metric script on each mutated config
+- python scripts/fetch_samples.py
+- python run_m3_1_metric.py
 
 Optional Commands:
 - repeat baseline run if results look unstable
