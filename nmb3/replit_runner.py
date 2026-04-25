@@ -12,7 +12,7 @@ def write_file(path, content):
         f.write(content)
 
 # Load context
-project_charter = read_file("nmb3/nmb3_project_charter.md")
+manifesto = read_file("nmb3/nmb3_manifesto.md")
 manager_rules = read_file("nmb3/nmb3_manager_agent.md")
 interpreter_rules = read_file("nmb3/nmb3_interpreter_agent.md")
 block_template = read_file("nmb3/nmb3_block_template.md")
@@ -26,8 +26,8 @@ raw_output = read_file("nmb3/nmb3_logs/block_001_raw_output.txt")
 prompt = f"""
 You are the NMB3 Manager + Interpreter Agent.
 
-PROJECT CHARTER:
-{project_charter}
+PROJECT MANIFESTO:
+{manifesto}
 
 MANAGER RULES:
 {manager_rules}
