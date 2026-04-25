@@ -1040,7 +1040,15 @@ path.
 - **Purpose**: Aggregate O030–O035 into a Steve-facing recommendation
   that explicitly includes the M6.5 boundary as part of the closed
   result, not as an open issue to be solved.
-- **Dependencies**: O035
+- **Dependencies**: O035 — SATISFIED at 2026-04-25T18:58:00Z
+  (canonical SHA dd1b689).  Clean dependency against the literal
+  Dependencies clause; no waiver required.  Note: O030 / O031 /
+  O032 (M6.1 / M6.2 / M6.3 fresh CI re-validation) remain PROPOSED
+  on canonical and are NOT formal dependencies of O036; the
+  closure recommendation aggregates them on a partial-scope basis
+  matching the O024 P4 partial-scope closure pattern, with their
+  PROPOSED status explicitly recorded in the recommendation's
+  scope section.
 - **Success criteria**: `nmb3/nmb3_reports/m6_phase_closure_recommendation.md`
   exists; explicitly states "M6.5 FAIL is part of the result, not a
   blocker for closure".
@@ -1048,7 +1056,39 @@ path.
 - **Allowed autonomous actions**: write; commit; push.
 - **Forbidden actions**: presenting M6.4 PASS without the M6.5
   boundary in the same paragraph.
-- **Status**: PROPOSED
+- **Status**: SUCCEEDED at 2026-04-25T19:14:00Z.  All success
+  criteria met.  `nmb3/nmb3_reports/m6_phase_closure_recommendation.md`
+  created.  The verbatim required phrase "M6.5 FAIL is part of
+  the result, not a blocker for closure" appears load-bearing
+  in § 1 (the Headline section, first sentence in bold) and
+  again in § 5 recommendation item 2.  Boundary co-location
+  discipline holds throughout: every paragraph mentioning M6.4
+  PASS also references M6.5 FAIL or the boundary (verified
+  paragraph-by-paragraph in § 1 / § 2 / § 3.1 / § 3.2 / § 3.3 /
+  § 5 / § 6).  Asymmetric scope explicitly recorded in § 2:
+  O033 / O034 / O035 SUCCEEDED with full CI pinning, O030 /
+  O031 / O032 PROPOSED (M6.1 / M6.2 / M6.3 carry MILESTONES.md
+  baseline + incidental score reproduction inside O033 / O034
+  leaderboards, NOT fresh CI re-validation).  Per-objective
+  evidence pinning present for each SUCCEEDED objective: O033
+  (run 24937477484 at SHA 3929fbc; interpreter output
+  o033_m6_4_family_retrieval_revalidation.md); O034 (run
+  24937928571 at SHA 9eaabac; interpreter output
+  o034_m6_5_lamb_fail_revalidation.md); O035 (canonical commit
+  dd1b689; boundary.md with SHA256 a6fc0d62...d2b28 byte-equal
+  to MILESTONES.md "Current boundary").  Non-claim register in
+  § 7 routes all out-of-scope fix discussion to O043 and
+  explicitly disclaims funding / commercial / perceptual /
+  second-corpus / real-time claims.  Governance note in § 4
+  records that O029 (P6 entry approval) is PROPOSED and the M6
+  work proceeded on a per-objective Steve-string basis (more
+  conservative than a single phase entry).  Approval status
+  header is "Awaiting Steve" per the P4 closure pattern; § 9
+  is the post-approval errata target awaiting an explicit
+  Steve approval string in chat (suggested: "Approve M6
+  partial-scope closure").  Evidence:
+  `nmb3/nmb3_reports/m6_phase_closure_recommendation.md` and
+  `nmb3/nmb3_blocks/block_025_plan.md`.
 - **Auto-execute permission**: YES (validation/measurement-integrity).
 - **Rewrite permission**: Steve only.
 

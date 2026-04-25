@@ -523,3 +523,73 @@ surface message:
     - Do NOT suggest, plan, or pre-stage the next objective
       beyond what was already surfaced in the O035 SUCCEEDED
       message.
+
+[2026-04-25T19:10:00Z] Steve, via chat reply opening a new session
+after the 2026-04-25T19:02:00Z pause:
+  "Execute O036"
+
+  Effect:
+    - Authorises NMB3 objective O036 (M6 phase closure
+      recommendation -- including the boundary).  Declared
+      dependency O035 is SATISFIED at canonical SHA dd1b689
+      (SUCCEEDED at 2026-04-25T18:58:00Z); no waiver required
+      against the literal Dependencies clause.
+    - Note on the wider purpose clause: O036's Purpose names
+      "O030-O035" as the aggregation set, but only O033 / O034
+      / O035 are SUCCEEDED on canonical.  O030 / O031 / O032
+      remain PROPOSED.  This is the same partial-scope shape
+      the O024 P4 partial-scope closure took (which aggregated
+      only O023 of O020-O023); the loop produces the partial-
+      scope variant of the M6 closure recommendation, with
+      O030 / O031 / O032 explicitly recorded as PROPOSED and
+      a future-expansion path preserved for a full-scope
+      successor recommendation.
+    - This is option 1 from the loop's preceding O035
+      SUCCEEDED surface message ("O036 -- declared dependency
+      O035 is now SATISFIED.  Documentation-only ('write;
+      commit; push'); aggregates O030-O035 into a Steve-facing
+      recommendation.  Single clean unblocked step").
+    - Does NOT advance O030 / O031 / O032 / O037 / O042 / O043
+      or any other objective.  Does NOT authorise any broader
+      CI-pinning campaign.  Does NOT auto-apply the M6 closure
+      approval (the recommendation is "Awaiting Steve" until
+      Steve issues an explicit approval string in chat,
+      matching the O024 P4 closure approval pattern where the
+      binding string was "Approve P4 partial-scope closure"
+      at 2026-04-25T17:59:01Z).
+
+  O036's Allowed autonomous actions are documentation-only
+  (write; commit; push) and Auto-execute permission is YES.
+  Forbidden action: presenting M6.4 PASS without the M6.5
+  boundary in the same paragraph.  This block's discipline
+  extends that to: also no M6.5 softening; no fix
+  recommendations; no implication that M6.1 / M6.2 / M6.3
+  have been freshly re-validated by CI in this session (they
+  have not; only their MILESTONES.md baseline plus incidental
+  score reproduction inside O033 / O034 leaderboards exist).
+
+  Loop interpretation:
+    - Write nmb3/nmb3_blocks/block_025_plan.md documenting the
+      partial-scope shape, the boundary co-location discipline,
+      the verbatim required phrase, the asymmetric aggregation
+      record, and the explicit non-claims.
+    - Write nmb3/nmb3_reports/m6_phase_closure_recommendation.md
+      with the headline (verbatim required phrase),
+      partial-scope record (O033/O034/O035 SUCCEEDED, O030/
+      O031/O032 PROPOSED), per-objective evidence pinning,
+      governance note (O029 P6 entry PROPOSED; per-objective
+      Steve-string trail recorded), recommendation, risk
+      assessment, non-claim register, future-expansion path
+      preserved, and "Awaiting Steve" approval-status header
+      with § 9 placeholder for post-approval errata.
+    - Update objective map O036 PROPOSED -> SUCCEEDED.
+    - Per the Session Completion Rule, stop after success
+      and surface the recommendation to Steve for explicit
+      approval-string review (matching the O024 -> "Approve
+      P4 partial-scope closure" workflow).
+
+  Loop budget this session (post-pause, fresh): 1 of 6 used
+  by this objective.  Workflow yml edits unchanged: 0 of 2
+  used this session (the ffmpeg install from O033's commit
+  3929fbc is already in place from the prior session and
+  persists).
