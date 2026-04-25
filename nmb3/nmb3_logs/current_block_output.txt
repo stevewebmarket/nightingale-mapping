@@ -1,40 +1,73 @@
 ==============================================================================
-NMB3 Block 004 -- M3.1 closure: onset_delta boundary coverage
+NMB3 Block 005 -- M3.1 per-case decomposition of the mid-range plateau
 ==============================================================================
 
-Plan:        nmb3/nmb3_blocks/block_004_plan.md
-New values:  onset_delta in [0.01, 0.03, 0.25]
-Reference:   onset_delta in [0.05, 0.10, 0.15, 0.20]
-             (Block 002, 4 / 7 originally planned values)
-Noise floor: stdev = 0.0000,  span = 0.0000
-             (Block 003, 8 bit-identical baseline runs)
+Plan:        nmb3/nmb3_blocks/block_005_plan.md
+Deltas:      onset_delta in [0.1, 0.15, 0.2]
+Runs:        2 per delta (6 total) for determinism cross-check
+Published:   aggregate score at [0.1, 0.15, 0.2] = [0.7917, 0.8125, 0.7917]
+             (Block 002 + Block 004 reference)
 
-Unified onset_delta sweep (block_002 + block_004):
+  running onset_delta=0.10  pass 1/2 ...
+  running onset_delta=0.10  pass 2/2 ...
+  running onset_delta=0.15  pass 1/2 ...
+  running onset_delta=0.15  pass 2/2 ...
+  running onset_delta=0.20  pass 1/2 ...
+  running onset_delta=0.20  pass 2/2 ...
 
-onset_delta     score     within / total    delta vs 0.05   note flips       source
-------------------------------------------------------------------------------
-       0.01    0.8542     41 / 48                -0.0208         -1.0    block_004
-       0.03    0.8958     43 / 48                +0.0208         +1.0    block_004
-       0.05    0.8750     42 / 48               baseline            -    block_002
-       0.10    0.7917     38 / 48                -0.0833         -4.0    block_002
-       0.15    0.8125     39 / 48                -0.0625         -3.0    block_002
-       0.20    0.7917     38 / 48                -0.0833         -4.0    block_002
-       0.25    0.7292     35 / 48                -0.1458         -7.0    block_004
+Aggregate cross-check vs published Block 002 / Block 004 values:
+  onset_delta    observed   published    match
+  ----------------------------------------------------
+         0.10      0.7917      0.7917      YES
+         0.15      0.8125      0.8125      YES
+         0.20      0.7917      0.7917      YES
 
-Signal-vs-noise check (every nonzero delta vs Block 003 noise floor):
-  Baseline stdev is exactly 0.0000 (Block 003).  Every nonzero
-  delta in the table above is therefore infinitely many baseline
-  stdevs above the noise floor and represents real metric
-  response, not pipeline jitter.
+Determinism cross-check (per-case bit-identical across the two passes):
+  bit-identical (within, total) pairs: 18 / 18
+  -> PASS: every case is bit-identical across both passes
 
-Boundary-region observations (for the Interpreter Agent):
-  new boundary scores: [0.8541666666666666, 0.8958333333333334, 0.7291666666666666]
-  new boundary range:  [0.7292, 0.8958]
-  all boundary scores in [0.0, 1.0]: True
-  combined 7-point sweep range: [0.7292, 0.8958]
-  combined 7-point sweep span:  0.1667
+In-range check: every observed aggregate score in [0.0, 1.0]:
+  onset_delta=0.10  pass 1/2  score=0.7917  in [0,1]: YES
+  onset_delta=0.10  pass 2/2  score=0.7917  in [0,1]: YES
+  onset_delta=0.15  pass 1/2  score=0.8125  in [0,1]: YES
+  onset_delta=0.15  pass 2/2  score=0.8125  in [0,1]: YES
+  onset_delta=0.20  pass 1/2  score=0.7917  in [0,1]: YES
+  onset_delta=0.20  pass 2/2  score=0.7917  in [0,1]: YES
 
-Interpretation is the Interpreter Agent's responsibility -- this
-runner only produces evidence.  No M3.1 closure declaration is
-made here; the closure recommendation is written separately to
-nmb3/nmb3_reports/m3_1_closure_recommendation.md after this block.
+Per-case decomposition (6 cases x 3 deltas; values are within / total notes):
+
+  case (label / test)                d=0.10        d=0.15        d=0.20   within span   flag
+  -------------------------------------------------------------------------------------------
+  Orchestra / pitch_shift          7 / 8         7 / 8         7 / 8                0      -
+  Orchestra / time_stretch         6 / 8         6 / 8         5 / 8                1   FLAG
+  Orchestra / composition          6 / 8         5 / 8         5 / 8                1   FLAG
+  Rock / pitch_shift               8 / 8         8 / 8         8 / 8                0      -
+  Rock / time_stretch              5 / 8         6 / 8         6 / 8                1   FLAG
+  Rock / composition               6 / 8         7 / 8         7 / 8                1   FLAG
+
+Per-case sum check (folded aggregate must equal sum of per-case within over sum of per-case total):
+  onset_delta=0.10  sum_within= 38  sum_total= 48  folded=0.7917  observed=0.7917  match: YES
+  onset_delta=0.15  sum_within= 39  sum_total= 48  folded=0.8125  observed=0.8125  match: YES
+  onset_delta=0.20  sum_within= 38  sum_total= 48  folded=0.7917  observed=0.7917  match: YES
+
+Decomposition summary (for the Interpreter Agent):
+  total cases:            6
+  flagged cases (within span >= 1): 4
+  flagged case list:
+    - Orchestra / time_stretch  within span = 1
+    - Orchestra / composition  within span = 1
+    - Rock / time_stretch  within span = 1
+    - Rock / composition  within span = 1
+
+Hypothesis-mapping note (counts only -- not a perceptual claim):
+  4 flagged cases -- consistent with H1
+  (real metric property: the wobble reflects movement across
+  many cases, summing to a small aggregate change).
+  This is a count-evidence pointer for Steve / the Interpreter
+  Agent, NOT a perceptual interpretation.  Block 005 forbids any
+  perceptual claim.
+
+Block 005 produced its evidence cleanly.  Interpretation is the
+Interpreter Agent's responsibility -- this runner only produces
+evidence.  No perceptual claim is made.  No M3.1 re-opening is
+implied (M3.1 remains CLOSED by Steve at 2026-04-25T16:34:20Z).
