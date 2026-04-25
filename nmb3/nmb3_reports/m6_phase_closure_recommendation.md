@@ -280,12 +280,12 @@ funding-package purposes:
      Twinkle, multi-family library), and that the two must
      always be cited together.
   2. **Treat the M6.5 FAIL as part of the result, not a
-     blocker for closure** -- that is, M6.5 FAIL is not an
-     open issue, scheduled improvement, work in progress, or
-     "next steps"; it is what the locked pipeline
-     demonstrably does on multi-family material with
+     blocker for closure** -- M6.5 FAIL is what the locked
+     pipeline demonstrably does on multi-family material with
      fewer than ~4 non-trivial intervals per clip, and the
-     closure approves that demonstrably.
+     closure approves that demonstrably.  M6.5 FAIL is an
+     approved boundary result within closure scope and
+     receives no reclassification.
   3. **Cite M6.4 by run id `24937477484` at SHA `3929fbc`,
      and M6.5 by run id `24937928571` at SHA `9eaabac`,**
      for any external reviewer who needs to verify the

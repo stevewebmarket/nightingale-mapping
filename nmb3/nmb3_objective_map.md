@@ -1093,7 +1093,24 @@ path.
   header is "Awaiting Steve" per the P4 closure pattern; § 9
   is the post-approval errata target awaiting an explicit
   Steve approval string in chat (suggested: "Approve M6
-  partial-scope closure").  Evidence:
+  partial-scope closure").  Architect-driven errata (second
+  errata, after the loop's own commit-time errata) tightened
+  § 5 item 2 to remove a list of negated softening terms
+  ("open issue", "scheduled improvement", "next steps", "work
+  in progress") that the block plan permitted only in § 7's
+  non-claim register; the substantive binding meaning of § 5
+  item 2 is preserved (M6.5 FAIL is what the locked pipeline
+  demonstrably does on multi-family material; the closure
+  approves it; M6.5 FAIL is an approved boundary result
+  within closure scope and receives no reclassification).
+  Two other occurrences of "open issue" remain in the
+  document outside § 7 -- one in § 2 inside a verbatim
+  double-quoted citation of O036's own Purpose clause from
+  this objective map, one in § 6 inside a single-quoted
+  risk-table label naming the risk being prevented -- both
+  in legitimate citation/labeling contexts that the architect
+  review did not flag and that retain accurate cross-reference
+  to the objective spec and risk register.  Evidence:
   `nmb3/nmb3_reports/m6_phase_closure_recommendation.md` and
   `nmb3/nmb3_blocks/block_025_plan.md`.
 - **Auto-execute permission**: YES (validation/measurement-integrity).
