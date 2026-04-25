@@ -71,3 +71,48 @@
       the plateau pattern without changing closure status.
     - Funding claim: NOT authorised.  Policy file edit: NOT
       authorised.  MILESTONES.md edit: NOT authorised.
+
+[2026-04-25T17:22:10Z] Loop errata recorded by interpreter (no Steve action required):
+  In the report closing O004, the loop incorrectly described
+  the canonical objective O020 as "M5.6 lock re-validation".
+  The on-canonical O020 is in fact "M5.4 re-document the
+  pitch-window NEGATIVE result"; the M5.6 lock re-validation
+  objectives are O022 and O023.  When Steve's reply
+  "Execute O020" was received, the loop stopped before
+  executing, surfaced the misdescription explicitly, and
+  presented the actual P4 landscape with five clean string
+  options.  No work was performed under the misdescribed
+  authorisation.  This entry is informational only -- Steve's
+  subsequent gating string ("Execute O023") was issued against
+  the corrected landscape.
+
+[2026-04-25T17:22:10Z] Steve, via chat reply to the corrected P4 landscape:
+  "Execute O023"
+
+  Effect on roadmap (per nmb3/nmb3_objective_map.md):
+    - O023 (M5.6 fresh-clone reproducibility check, on preferred
+      path): authorised to execute.  O023's Auto-execute
+      permission was already YES under the Decision Policy
+      validation/measurement-integrity criterion; Steve's string
+      makes the execution explicit.
+    - O023 is interchangeable with O012 as the creator of the
+      shared no-cache reproducibility workflow at
+      .github/workflows/nmb3_no_cache_repro.yml; O023 ran first,
+      so O023 creates the file per the spec.
+    - No other objective's status changes by this string.
+
+  Loop interpretation:
+    - Execute O023 per its spec (success criteria: bit-identical
+      107/144; per-clip / per-transform reproduces to the note-
+      flip; routing distribution reproduces to +/- 2 routing
+      decisions; CI run id pinned by SHA in the interpreter
+      output).
+    - Per O023's Allowed actions clause, create the shared
+      no-cache workflow yml at the spec'd path with the spec'd
+      shape; dispatch with target=m5_6; record run id and SHA;
+      write interpreter output.
+    - Per O023's Forbidden actions clause, do NOT cache, do NOT
+      cherry-pick runs, do NOT introduce any M5.6-specific
+      logic into the shared workflow yml.
+    - Per the Session Completion Rule, stop after success and
+      propose the next objective without beginning it.

@@ -660,7 +660,25 @@ path.
   reuses it without modification); record run id and SHA.
 - **Forbidden actions**: caching; cherry-picking runs; introducing
   M5.6-specific logic into the shared workflow yml.
-- **Status**: PROPOSED
+- **Status**: SUCCEEDED at 2026-04-25T17:38:00Z.  All three success
+  criteria met with zero drift.  Headline 107/144 = 0.7431
+  reproduces bit-identically; per-clip / per-transform breakdown
+  reproduces at all 18 of 18 (clip, test) cells (canonical
+  `m4_1_results.json` from d332f54 vs Run A); routing distribution
+  reproduces exactly at 234 baseline / 54 short_med (delta = 0,
+  comfortably within ±2).  Two CI runs dispatched against
+  `.github/workflows/nmb3_no_cache_repro.yml` (created in this
+  same objective execution per the O023 / O012 interchangeability
+  clause), both pinned to head SHA
+  `1368524699287cc28ae416c7edda7f6c04b4c0e0`:
+  Run A (24936558636, target=m5_6, headline reproduction) and
+  Run B (24936650442, target=m5_6_routing, routing instrumentation
+  via inline Python wrapper passed in the `script` input — no
+  pipeline file modified, no M5.6-specific logic in the yml).
+  Evidence: `nmb3/nmb3_reports/o023_m5_6_fresh_clone_reproduction.md`.
+  Activation-rule check: no P2 / P3 activation triggered (no
+  regression points back at M4.1 / M5.1 / M5.2 / M5.3); MILESTONES.md
+  remains accurate; no errata commit required.
 - **Auto-execute permission**: YES (validation/measurement-integrity).
 - **Rewrite permission**: Steve only.
 
