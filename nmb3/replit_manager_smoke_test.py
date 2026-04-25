@@ -11,6 +11,7 @@ required_files = [
     "nmb3/nmb3_manager_agent.md",
     "nmb3/nmb3_interpreter_agent.md",
     "nmb3/nmb3_decision_policy.md",
+    "nmb3/nmb3_autonomous_loop_policy.md",
     "nmb3/nmb3_block_template.md",
     "nmb3/nmb3_blocks/block_001_plan.md",
 ]
