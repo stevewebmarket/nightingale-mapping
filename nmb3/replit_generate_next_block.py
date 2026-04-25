@@ -68,3 +68,9 @@ write("nmb3/nmb3_blocks/block_002_plan.md", block_text)
 
 print("Block 002 generated:")
 print(block_text)
+
+import subprocess
+
+subprocess.run(["git", "add", "nmb3/nmb3_blocks/block_002_plan.md"], check=True)
+subprocess.run(["git", "commit", "-m", "Auto-generate Block 002"], check=True)
+subprocess.run(["git", "push"], check=True)
