@@ -2,6 +2,9 @@ name: NMB3 Block 001
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'nmb3/nmb3_blocks/block_002_plan.md'
 
 jobs:
   block-001:
