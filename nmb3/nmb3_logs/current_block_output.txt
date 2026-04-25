@@ -1,12 +1,22 @@
 ==============================================================================
-M3.1 — Audio Transform Invariance Metric
+NMB3 Block 002 — onset_delta sweep (M3.1 invariance metric)
 ==============================================================================
 
-config                                   score   within / total   per-case (folded)
-------------------------------------------------------------------------------
-baseline                           0.8750    42 / 48         Orch/pitch=8/8  Orch/time_=8/8  Orch/compo=8/8  Rock/pitch=8/8  Rock/time_=4/8  Rock/compo=6/8
-mutant_a (onset_delta 0.05->0.20)    0.7917    38 / 48         Orch/pitch=7/8  Orch/time_=5/8  Orch/compo=5/8  Rock/pitch=8/8  Rock/time_=6/8  Rock/compo=7/8
-mutant_b (fmax 16000->4000)         0.8750    42 / 48         Orch/pitch=8/8  Orch/time_=8/8  Orch/compo=8/8  Rock/pitch=8/8  Rock/time_=4/8  Rock/compo=6/8
-mutant_c (tolerance 1%->0.1%)       0.4167    20 / 48         Orch/pitch=4/8  Orch/time_=5/8  Orch/compo=7/8  Rock/pitch=2/8  Rock/time_=1/8  Rock/compo=1/8
+Plan:        nmb3/nmb3_blocks/block_002_plan.md
+Sweep:       onset_delta in [0.05, 0.1, 0.15, 0.2]
+Baseline:    onset_delta = 0.05 (other params unchanged)
 
-Pass = baseline stable across runs AND >=2 mutants move from baseline.
+onset_delta      score   within / total   delta vs baseline
+------------------------------------------------------------------------------
+       0.05     0.8750      42 / 48               baseline
+       0.10     0.7917      38 / 48                -0.0833
+       0.15     0.8125      39 / 48                -0.0625
+       0.20     0.7917      38 / 48                -0.0833
+
+Single-parameter sweep: only onset_delta varied; all other config
+fields are run_milestones.DEFAULT_CONFIG (locked M5.6 extractor).
+
+Pass condition (per block_002_plan.md): scores characterise the
+response of the invariance metric to onset_delta.  Interpretation
+is the Interpreter Agent's responsibility -- this runner only
+produces evidence.
