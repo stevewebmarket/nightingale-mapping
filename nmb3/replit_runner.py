@@ -16,6 +16,7 @@ project_charter = read_file("nmb3/nmb3_project_charter.md")
 manager_rules = read_file("nmb3/nmb3_manager_agent.md")
 interpreter_rules = read_file("nmb3/nmb3_interpreter_agent.md")
 block_template = read_file("nmb3/nmb3_block_template.md")
+decision_policy = read_file("nmb3/nmb3_decision_policy.md")
 
 latest_report = read_file("nmb3/nmb3_reports/block_001_report.md")
 raw_output = read_file("nmb3/nmb3_logs/block_001_raw_output.txt")
@@ -32,6 +33,9 @@ MANAGER RULES:
 
 INTERPRETER RULES:
 {interpreter_rules}
+
+DECISION POLICY (BINDING — overrides any conflicting prior practice):
+{decision_policy}
 
 BLOCK TEMPLATE:
 {block_template}

@@ -1,11 +1,19 @@
-# NMB3 Block 002 — Interpreter Output
+# NMB3 Block 002 — Interpreter Output (Policy-Bound Rerun)
 
 Block:        block_002
 Milestone:    M3.1 — invariance metric
+Policy:       nmb3/nmb3_decision_policy.md (binding)
 Plan:         nmb3/nmb3_blocks/block_002_plan.md
 Report:       nmb3/nmb3_reports/current_block_report.md
 Raw output:   nmb3/nmb3_logs/current_block_output.txt
 Runner:       run_nmb3_block_002.py @ canonical bfcfc50
+
+Note: this file supersedes the prior interpreter judgement at git
+commit 439e312 (which was made before nmb3_decision_policy.md
+existed). The verdict is unchanged; the difference is that the
+recommendation is now backed by an explicit, file-resident policy
+rather than ad-hoc reasoning, and Block 003 is autonomously
+approved rather than waiting for Steve's per-block sign-off.
 
 ---
 
@@ -13,14 +21,14 @@ Runner:       run_nmb3_block_002.py @ canonical bfcfc50
 
 **PARTIAL.**
 
-A real single-parameter sweep was executed and produced honest, varying
-evidence — but only for 4 of the 7 onset_delta values listed in the
-canonical plan, and within that 4-value window the metric response is
-non-monotonic and small relative to the likely noise floor (which has
-not yet been characterised). The block cannot yet be called a Pass
-because its stated question — *"How does systematic variation of
-onset_delta alone affect the invariance metric score?"* — is not
-answered with sufficient coverage or signal-to-noise context.
+A real single-parameter sweep was executed and produced honest,
+varying evidence — but per the *Measurement Integrity Rules* of the
+Decision Policy, the system "must not interpret score movement as
+meaningful until baseline noise is measured". The Block 002 deltas
+fall squarely in the policy's "require baseline stability testing"
+band (0.06–0.08) and therefore cannot be promoted to a Pass on their
+own evidence. The block is closed as PARTIAL with all coverage and
+calibration gaps explicitly carried forward to Block 003.
 
 ## Evidence
 
@@ -33,85 +41,102 @@ Raw sweep table (from current_block_output.txt):
            0.15     0.8125      39 / 48                -0.0625
            0.20     0.7917      38 / 48                -0.0833
 
-Honest observations:
+Policy-bound interpretation (Score Resolution Rule):
 
-1. The metric does respond to onset_delta — scores span 0.7917 to 0.8750
-   (range 0.0833, ~8.3 percentage points).
-2. The response is **non-monotonic** within the tested window: the
-   score drops at 0.10, partially recovers at 0.15, drops again at 0.20.
-3. All deltas are on the order of 1–2 note flips out of 48 total notes
-   (one note flip = 0.0208 score change). The smallest reported delta
-   (-0.0625) is exactly 3 note flips. Without a noise-floor measurement
-   we cannot distinguish real parameter sensitivity from per-note
-   classification jitter.
-4. Only one run per config — no repetition, no error bars.
-5. Coverage gap: the canonical plan listed
-   `[0.01, 0.03, 0.05, 0.10, 0.15, 0.20, 0.25]` (7 values). The runner
-   executed `[0.05, 0.10, 0.15, 0.20]` (4 values). The very-tight end
-   (0.01, 0.03) and the very-loose end (0.25) are unmeasured. These are
-   precisely the regions where saturation / breakdown behaviour would
-   most likely appear.
+    Note resolution:  1 / 48  =  0.0208
+    Observed deltas:  0.0625  =  3 note flips
+                      0.0833  =  4 note flips
+
+Per the policy, deltas of 0.06–0.08 are explicitly in the band that
+"require baseline stability testing". They are not in the
+"may be noise" band (< 0.02) and they are not yet in a "clearly
+above noise" band — that determination requires Block 003.
+
+Other observations:
+
+1. The metric does respond to onset_delta — scores span 0.7917 to
+   0.8750. The response is non-monotonic within the tested window.
+2. Only one run per config — no repetition, no error bars.
+3. Coverage gap: canonical plan listed 7 onset_delta values; runner
+   executed 4. The boundary regions (0.01, 0.03, 0.25) are
+   unmeasured. Per the *Block Ordering Rule*, these MUST NOT be
+   added now — wider sweeps are forbidden until baseline stability
+   is known.
 
 ## Risk
 
-- **Process risk (high):** the canonical block_002_plan.md (7 values)
-  and the executed sweep (4 values) disagree. The 4-value sweep is the
-  one Steve originally approved (commit cca5d55), and the 7-value
-  version was introduced later by the auto-generator overwriting the
-  approved plan. Either the plan should be reverted to match what was
-  run, or the run should be extended to match the plan. Leaving the
-  mismatch in place is exactly the "small lie" the project is trying
-  to avoid.
-- **Scientific risk (medium):** without a noise-floor measurement, the
-  observed 0.0625–0.0833 deltas may be indistinguishable from
-  per-run / per-note jitter. Any Block 004 conclusion drawn on top of
-  Block 002 alone would rest on uncalibrated evidence.
-- **Scope risk (low):** no scope drift detected. The runner touched
-  only `onset_delta`. Other DEFAULT_CONFIG fields were unchanged.
-- **Fake-progress risk (low):** the sweep is real (locally smoke-tested
-  on canonical samples; canonical CI run id 24929399657 produced
-  matching numbers; bot commit 5fb41bb landed the corrected
-  self-consistent report). No metric gaming detected.
+- **Process risk (carried forward, unresolved):** the canonical
+  block_002_plan.md (7 values, autogen) still disagrees with what
+  the runner executed (4 values, originally operator-approved).
+  Per the policy this is not autonomously resolvable — the choice
+  between reverting the plan vs extending the sweep is "subjective
+  judgement not covered by this policy" (pause condition #6) and
+  is therefore a Steve decision. It is *not* a blocker for Block
+  003 because Block 003 does not depend on the onset_delta sweep.
+- **Scientific risk (mitigated by Block 003):** without a
+  noise-floor measurement, the observed 0.0625–0.0833 deltas may
+  be indistinguishable from per-run jitter. Block 003 directly
+  addresses this.
+- **Scope risk (low):** no scope drift. Runner touched only
+  onset_delta. All other DEFAULT_CONFIG fields unchanged.
+- **Fake-progress risk (low):** sweep verified real (smoke-tested
+  locally; canonical CI run 24929399657 produced matching numbers;
+  bot commit 5fb41bb landed self-consistent report).
 
 ## Funding Relevance
 
-Low at this checkpoint. The block confirms the metric is not a flat
-constant function of onset_delta, which is mildly reassuring, but does
-not yet support any external claim ("the metric responds predictably
-to a musically-relevant timing parameter"). Such a claim requires:
+Low. Per the policy: "The system must not begin optimization
+before: (1) metric sensitivity is shown, (2) baseline
+stability/noise floor is measured, (3) score changes are larger
+than baseline jitter." Block 002 satisfies (1). Blocks 003+ are
+required for (2) and (3). No funding claim is made.
 
-- a calibrated noise floor (Block 003), and then
-- full sweep coverage including the boundary regions (post-Block 003).
-
-## Recommended Next Block
+## Recommended Next Block — Autonomously Approved Within M3.1
 
 **block_003 — baseline stability / noise-floor characterisation.**
 
-Rationale: this matches the next expected work item already named in
-nmb3_manifesto.md ("Block 003: test baseline stability") and it is
-the single highest-leverage thing we can do — it is the precondition
-for interpreting the Block 002 deltas as signal vs noise, and it is
-the precondition for trusting any future sweep (including the
-extension to 0.01 / 0.03 / 0.25).
+Policy check (autonomous approval requires all 7 to be true):
 
-A draft plan has been written to:
+| # | Criterion                                      | block_003 |
+|---|------------------------------------------------|-----------|
+| 1 | Remains inside M3.1                            | yes       |
+| 2 | Answers one question only                      | yes       |
+| 3 | Reduces uncertainty                            | yes (directly measures noise floor) |
+| 4 | Does not change project direction              | yes       |
+| 5 | Does not make funding claims                   | yes       |
+| 6 | Does not modify core architecture              | yes       |
+| 7 | Validation / stability / measurement-integrity | yes (literally a stability block) |
 
-    nmb3/nmb3_blocks/block_003_plan.md
+Pause-condition check (any one true → Steve required):
 
-It is **not** approved. It is **not** executed. Per the Interpreter
-Agent rules, I cannot approve my own recommendation. Steve must
-approve (or amend, or reject) before the Manager / Execution layer
-acts on it.
+| # | Condition                                      | Triggered? |
+|---|------------------------------------------------|------------|
+| 1 | Milestone transition proposed                  | no         |
+| 2 | Funding claim proposed                         | no         |
+| 3 | Core algorithm change proposed                 | no         |
+| 4 | Results conflict with previous evidence        | no         |
+| 5 | Drift or metric gaming detected                | no         |
+| 6 | Subjective judgement not covered by policy     | no         |
 
-## One Decision Required From Steve
+Result: **block_003 is autonomously approved under
+nmb3/nmb3_decision_policy.md.** No Steve decision is required to
+proceed to block_003 itself.
 
-Approve, amend, or reject the proposed block_003 plan
-(baseline stability over 5 repeated runs of the M3.1 default config,
-no parameter changes). Specifically: is N=5 sufficient, or should
-we run more repetitions to get a tighter variance estimate before
-extending the onset_delta sweep?
+The plan at nmb3/nmb3_blocks/block_003_plan.md has been updated to
+use **8 baseline repetitions** (per the *Block 003 Policy* section
+of the Decision Policy file), with an autonomous-approval marker.
 
-Secondary decision (can be answered separately): should the canonical
-block_002_plan.md be reverted to the 4-value sweep that was actually
-executed, or should the sweep be extended to cover the 3 missing
-values (0.01, 0.03, 0.25) before declaring Block 002 closed?
+## Items That Still Require Steve
+
+The policy correctly forbids autonomous resolution of the
+following — these are surfaced for Steve's attention but they do
+NOT block block_003:
+
+1. Block 002 closure: revert canonical plan to the 4-value sweep,
+   or extend the sweep to cover [0.01, 0.03, 0.25]? (process /
+   scope question — pause condition #6).
+2. After block_003 completes and noise floor is known: whether the
+   onset_delta sweep should be re-run / extended depends on what
+   the noise floor turns out to be, and may itself require a Steve
+   decision if the result is ambiguous.
+3. Any future M3.1 → M4 milestone transition (always Steve).

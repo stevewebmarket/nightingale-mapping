@@ -18,6 +18,7 @@ manifesto = read("nmb3/nmb3_manifesto.md")
 manager_rules = read("nmb3/nmb3_manager_agent.md")
 interpreter_rules = read("nmb3/nmb3_interpreter_agent.md")
 block_template = read("nmb3/nmb3_block_template.md")
+decision_policy = read("nmb3/nmb3_decision_policy.md")
 
 latest_report = read("nmb3/nmb3_reports/block_001_report.md")
 raw_output = read("nmb3/nmb3_logs/block_001_raw_output.txt")
@@ -33,6 +34,9 @@ Rules:
 
 Interpreter:
 {interpreter_rules}
+
+Decision policy (BINDING — overrides any conflicting prior practice):
+{decision_policy}
 
 Block template:
 {block_template}
