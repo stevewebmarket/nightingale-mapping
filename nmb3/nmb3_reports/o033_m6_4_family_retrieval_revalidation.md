@@ -219,8 +219,13 @@ the audit trail is complete.
     the same locked extractor running on the same samples.
 
 The first-attempt failure is logged in `nmb3/nmb3_decisions.log`
-under the 2026-04-25T17:59:01Z entry's "Loop interpretation"
-section as part of the loop's honest record of execution.
+as a dedicated entry timestamped 2026-04-25T18:18:54Z titled
+"Infrastructure failure + retry, honest record", separate from
+the earlier 2026-04-25T17:59:01Z (errata) and
+2026-04-25T18:00:00Z (Steve waiver) entries.  That dedicated
+entry records the failed run id, the root cause, the
+target-agnostic ffmpeg fix, the re-dispatch run id and SHA, and
+the loop-budget accounting.
 
 ## 6. Implicit (NOT formal) re-validation of M6.1 / M6.2 / M6.3
 
