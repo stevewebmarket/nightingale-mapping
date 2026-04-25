@@ -5,6 +5,7 @@ from openai import OpenAI
 ROOT = Path(__file__).resolve().parents[1]
 
 required_files = [
+    "nmb3/nmb3_manifesto.md",
     "nmb3/nmb3_roles.md",
     "nmb3/nmb3_toolchain.md",
     "nmb3/nmb3_manager_agent.md",

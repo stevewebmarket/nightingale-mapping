@@ -14,6 +14,7 @@ def write(path, content):
     p.write_text(content)
 
 # Load context
+manifesto = read("nmb3/nmb3_manifesto.md")
 manager_rules = read("nmb3/nmb3_manager_agent.md")
 interpreter_rules = read("nmb3/nmb3_interpreter_agent.md")
 block_template = read("nmb3/nmb3_block_template.md")
@@ -23,6 +24,9 @@ raw_output = read("nmb3/nmb3_logs/block_001_raw_output.txt")
 
 prompt = f"""
 You are the NMB3 Manager + Interpreter Agent.
+
+Operating constitution (must obey):
+{manifesto}
 
 Rules:
 {manager_rules}
