@@ -945,7 +945,8 @@ path.
   with the three Lamb clips, with **no per-family tuning, no scoring
   changes, no extractor edits**.  Preserve the FAIL label and the
   per-condition breakdown (4 of 7 conditions FAIL).
-- **Dependencies**: O033
+- **Dependencies**: O033 — SATISFIED at 2026-04-25T18:21:00Z
+  (canonical SHA 9eaabac).  Clean dependency; no waiver required.
 - **Success criteria**: 6-query headline table reproduces verbatim;
   per-condition results reproduce; FAIL label preserved; no
   condition silently re-weighted.
@@ -957,7 +958,29 @@ path.
 - **Forbidden actions**: per-family tuning; scoring changes; extractor
   edits; downgrading the comparator from "outranks-all-other" to a
   weaker comparator; restating cond5 to look better.
-- **Status**: PROPOSED
+- **Status**: SUCCEEDED at 2026-04-25T18:45:00Z.  All success
+  criteria met.  18-cell headline table reproduces verbatim vs
+  MILESTONES.md M6.5 baseline (twinkle_box F1 top3=2/top5=3/YES;
+  twinkle_harmonica F1 top3=1/top5=2/NO; twinkle_people F1
+  top3=1/top5=1/NO+weak; lamb_solo F2 top3=0/top5=1/NO+weak;
+  lamb_group F2 top3=1/top5=2/NO; lamb_male F2 top3=0/top5=1/NO+weak).
+  All 7 pre-set conditions reproduce with bit-identical PASS/FAIL
+  labels (cond1 PASS; cond2 FAIL 1/3; cond3 FAIL 0/3; cond4 FAIL
+  on `polyphonic` partial-melodic-match WARNING firing 3 times;
+  cond5 FAIL with twinkle_box (3,3,True,False)→(2,3,True,False)
+  and twinkle_harmonica (2,3,True,False)→(1,2,False,False); cond6
+  PASS; cond7 EXTERNAL satisfied by this CI evidence).  Final
+  script line `M6.5 FAIL` printed.  Honesty floor explicitly NOT
+  triggered (verdict is FAIL not PASS, only 3 of 7 conditions
+  PASS, both family-level booleans report FAIL).  Forbidden
+  actions respected: no pipeline file modified; no per-family
+  tuning; no scoring change; no extractor edit; comparator
+  remained the strict "outranks-all-other"; cond5 not restated.
+  CI run id 24937928571 pinned to head SHA 9eaabac.  First-
+  attempt success — no infrastructure failure (ffmpeg already in
+  shared workflow from O033's commit 3929fbc).  Evidence:
+  `nmb3/nmb3_reports/o034_m6_5_lamb_fail_revalidation.md` and
+  `nmb3/nmb3_blocks/block_023_plan.md`.
 - **Auto-execute permission**: YES (validation/measurement-integrity)
   — *with explicit honesty floor*: the autonomous loop may execute
   this objective only because the FAIL is the locked, declared

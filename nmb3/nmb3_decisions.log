@@ -327,3 +327,71 @@
   install) -- a target-agnostic fix that benefits any future
   objective using compressed audio.  The other slot remains
   available for any follow-up infrastructure issue.
+
+[2026-04-25T18:30:00Z] Steve, via chat reply to the O037 dependency-chain
+landscape:
+  "Execute O034"
+
+  Effect:
+    - Authorises NMB3 objective O034 (M6.5 re-validate the Lamb
+      FAIL as an honest FAIL).  Declared dependency O033 is
+      SATISFIED at canonical SHA 9eaabac (SUCCEEDED at
+      2026-04-25T18:21:00Z); no waiver required.
+    - This is option E from the loop's preceding O037 surface
+      message ("Pick a different unblocked objective; the
+      cleanest unblocked single-step is O034").
+    - Does NOT advance O037, O036, or O035.  Each remains
+      PROPOSED.  Does NOT authorise any broader CI-pinning
+      campaign for M3.x / M4.1 / M5.1-M5.5 / M6.1 / M6.2 / M6.3.
+      Does NOT re-scope O037 (no Rewrite was issued).
+
+  O034's "Auto-execute permission" clause includes an explicit
+  honesty floor: any reproduction passing M6.5 must trigger the
+  Decision Policy "suspected metric gaming" early-stop and be
+  reported to Steve before any further action.  Per O034's
+  forbidden-action clause, no per-family tuning, scoring change,
+  extractor edit, comparator downgrade, or cond5 restatement is
+  permitted.
+
+  Loop interpretation:
+    - Execute O034 per its spec.  Use the shared no-cache
+      reproducibility workflow with target=m6_5 and
+      script="python run_m6_5_multi_family.py".
+    - Write Block 023 plan documenting the scope, the honesty
+      floor, and the per-condition pass criteria.
+    - On verdict = FAIL with bit-identical arithmetic: standard
+      SUCCEEDED workflow.
+    - On verdict = FAIL but with cell drift: write findings
+      honestly, surface to Steve with the FAIL/drift mixed
+      verdict.
+    - On verdict = PASS: STOP IMMEDIATELY before any commit;
+      surface the anomaly to Steve.
+    - Per the Session Completion Rule, stop after success and
+      propose the next objective without beginning it.
+
+  Loop budget: 3 of 6 loops used after this objective (counting
+  generously: loop 1 = O033 dep-chain catch + Block 022 + ffmpeg
+  + 2 CI attempts + O033 SUCCEEDED; loop 2 = O033 errata fixup;
+  loop 3 = O037 surface + O034 Block 023 + 1 CI attempt + O034
+  SUCCEEDED).  Workflow edits unchanged: 1 of 2 used (the
+  ffmpeg install from O033).
+
+[2026-04-25T18:45:00Z] Honesty floor NON-TRIGGER for O034 / M6.5:
+  CI run 24937928571 at SHA 9eaabac produced verdict
+  "M6.5 FAIL" with 4 of 7 pre-set conditions FAILing (cond2,
+  cond3, cond4, cond5) and 3 of 7 PASSing (cond1, cond6, cond7),
+  bit-identical to the locked baseline in MILESTONES.md.
+
+  All three trigger conditions for the Decision Policy
+  "suspected metric gaming" early-stop were checked and NONE
+  fired:
+    - The script's final summary line is "M6.5 FAIL" (not PASS).
+    - Only 3 of 7 conditions reported PASS (less than the 4
+      that would constitute a flip).
+    - Both family-level booleans ("Twinkle family", "Lamb
+      family") reported FAIL.
+
+  Therefore the loop continued with the standard SUCCEEDED
+  workflow.  Recording this honesty-floor non-trigger explicitly
+  so the audit trail captures the check at the boundary, not
+  only on a hypothetical fire.
