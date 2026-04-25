@@ -1,44 +1,40 @@
 ==============================================================================
-NMB3 Block 003 -- baseline stability / noise-floor characterisation
+NMB3 Block 004 -- M3.1 closure: onset_delta boundary coverage
 ==============================================================================
 
-Plan:        nmb3/nmb3_blocks/block_003_plan.md
-Config:      run_milestones.DEFAULT_CONFIG (no overrides)
-Repetitions: 8
+Plan:        nmb3/nmb3_blocks/block_004_plan.md
+New values:  onset_delta in [0.01, 0.03, 0.25]
+Reference:   onset_delta in [0.05, 0.10, 0.15, 0.20]
+             (Block 002, 4 / 7 originally planned values)
+Noise floor: stdev = 0.0000,  span = 0.0000
+             (Block 003, 8 bit-identical baseline runs)
 
- run      score     within / total
+Unified onset_delta sweep (block_002 + block_004):
+
+onset_delta     score     within / total    delta vs 0.05   note flips       source
 ------------------------------------------------------------------------------
-   1     0.8750     42 / 48      
-   2     0.8750     42 / 48      
-   3     0.8750     42 / 48      
-   4     0.8750     42 / 48      
-   5     0.8750     42 / 48      
-   6     0.8750     42 / 48      
-   7     0.8750     42 / 48      
-   8     0.8750     42 / 48      
+       0.01    0.8542     41 / 48                -0.0208         -1.0    block_004
+       0.03    0.8958     43 / 48                +0.0208         +1.0    block_004
+       0.05    0.8750     42 / 48               baseline            -    block_002
+       0.10    0.7917     38 / 48                -0.0833         -4.0    block_002
+       0.15    0.8125     39 / 48                -0.0625         -3.0    block_002
+       0.20    0.7917     38 / 48                -0.0833         -4.0    block_002
+       0.25    0.7292     35 / 48                -0.1458         -7.0    block_004
 
-Summary statistics:
-  mean   = 0.8750
-  stdev  = 0.0000  (population stdev across 8 runs)
-  min    = 0.8750
-  max    = 0.8750
-  span   = 0.0000  (max - min)
+Signal-vs-noise check (every nonzero delta vs Block 003 noise floor):
+  Baseline stdev is exactly 0.0000 (Block 003).  Every nonzero
+  delta in the table above is therefore infinitely many baseline
+  stdevs above the noise floor and represents real metric
+  response, not pipeline jitter.
 
-Per-case bit-identity check:
-  distinct case-result signatures across 8 runs: 1
-  bit-identical: True
+Boundary-region observations (for the Interpreter Agent):
+  new boundary scores: [0.8541666666666666, 0.8958333333333334, 0.7291666666666666]
+  new boundary range:  [0.7292, 0.8958]
+  all boundary scores in [0.0, 1.0]: True
+  combined 7-point sweep range: [0.7292, 0.8958]
+  combined 7-point sweep span:  0.1667
 
-Signal-vs-noise comparison against Block 002 deltas:
-  note resolution                  = 1 / 48 = 0.0208
-  baseline span (this block)       = 0.0000
-  baseline stdev (this block)      = 0.0000
-  block_002 delta = 0.0625  -> delta/stdev =    inf  clearly above baseline jitter? yes
-  block_002 delta = 0.0833  -> delta/stdev =    inf  clearly above baseline jitter? yes
-
-Interpretation guidance (for the Interpreter Agent):
-  All 8 runs produced bit-identical case-level results and
-  identical scores.  The M3.1 metric pipeline is deterministic
-  under repeated invocation with identical inputs.  The noise
-  floor of the metric itself is therefore zero, and the
-  Block 002 deltas (0.0625 and 0.0833) cannot be attributed to
-  pipeline jitter -- they are real responses to onset_delta.
+Interpretation is the Interpreter Agent's responsibility -- this
+runner only produces evidence.  No M3.1 closure declaration is
+made here; the closure recommendation is written separately to
+nmb3/nmb3_reports/m3_1_closure_recommendation.md after this block.
