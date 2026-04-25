@@ -20,9 +20,10 @@ jobs:
         with:
           persist-credentials: true
 
-      - name: Show block plan
+      - name: Show active block plan
         run: |
-          cat nmb3/nmb3_blocks/block_001_plan.md
+          echo "Showing active block plan:"
+          cat nmb3/nmb3_blocks/block_002_plan.md
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -38,28 +39,30 @@ jobs:
         run: |
           python scripts/fetch_samples.py
 
-      - name: Run M3.1 metric
+      - name: Run current block
         run: |
           mkdir -p nmb3/nmb3_logs nmb3/nmb3_reports
-          python run_m3_1_metric.py 2>&1 | tee nmb3/nmb3_logs/block_001_raw_output.txt
+          echo "Reading block plan:"
+          cat nmb3/nmb3_blocks/block_002_plan.md
+          python run_m3_1_metric.py 2>&1 | tee nmb3/nmb3_logs/current_block_output.txt
           echo "--- file size ---"
-          wc -c nmb3/nmb3_logs/block_001_raw_output.txt
-          test -s nmb3/nmb3_logs/block_001_raw_output.txt
+          wc -c nmb3/nmb3_logs/current_block_output.txt
+          test -s nmb3/nmb3_logs/current_block_output.txt
 
-      - name: Create Block 001 report
+      - name: Create current block report
         run: |
-          cat > nmb3/nmb3_reports/block_001_report.md <<'EOF'
-          # NMB3 Block 001 Report
+          cat > nmb3/nmb3_reports/current_block_report.md <<'EOF'
+          # NMB3 Current Block Report
 
-          Block ID:
-          block_001
+          Active Plan:
+          nmb3/nmb3_blocks/block_002_plan.md
 
           Commands Run:
           - python scripts/fetch_samples.py
           - python run_m3_1_metric.py
 
           Raw Results:
-          See block_001_raw_output.txt artifact.
+          See nmb3/nmb3_logs/current_block_output.txt
 
           Conclusion:
           Pending interpreter review.
@@ -68,16 +71,16 @@ jobs:
       - name: Upload report artifact
         uses: actions/upload-artifact@v4
         with:
-          name: nmb3-block-001-report
+          name: nmb3-current-block-report
           path: |
-            nmb3/nmb3_logs/block_001_raw_output.txt
-            nmb3/nmb3_reports/block_001_report.md
+            nmb3/nmb3_logs/current_block_output.txt
+            nmb3/nmb3_reports/current_block_report.md
 
       - name: Commit results back to repo
         run: |
           git config user.name "nmb3-bot"
           git config user.email "nmb3@bot.com"
-          git add nmb3/nmb3_logs/block_001_raw_output.txt
-          git add nmb3/nmb3_reports/block_001_report.md
-          git commit -m "Add Block 001 results" || echo "No changes to commit"
+          git add nmb3/nmb3_logs/current_block_output.txt
+          git add nmb3/nmb3_reports/current_block_report.md
+          git commit -m "Add current block results" || echo "No changes to commit"
           git push
