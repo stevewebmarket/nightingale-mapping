@@ -1,59 +1,53 @@
-NMB3 Block 002
-
-Block ID:
+Block ID:  
 block_002
 
-Current Milestone:
+Current Milestone:  
 M3.1 — invariance metric
 
-One Question to Answer:
-How does variation in onset_delta affect the invariance score?
+One Question to Answer:  
+How does systematic variation of onset_delta alone affect the invariance metric score?
 
-Why This Matters:
-Block 001 showed the invariance score moves under controlled mutations and is sensitive to onset_delta. This block isolates that single parameter family and sweeps it across a small, well-defined range to characterise the score's response. Establishing how strongly onset_delta drives the score is required before any optimisation or further milestone work.
+Why This Matters:  
+Demonstrating that the metric is sensitive in a predictable way to changes in onset_delta (a musically-relevant timing parameter) is necessary to establish the realness and interpretation of the metric. This isolates parameter effect, rules out confounds, and provides direct evidence of metric validity.
 
-Allowed Actions:
-- vary onset_delta only, across the configs listed below
-- run baseline (onset_delta = 0.05) and three mutants (0.10, 0.15, 0.20)
-- optionally repeat the baseline run once for stability check
-- log all runs and write a single block report
+Allowed Actions:  
+- Systematically sweep onset_delta in controlled increments
+- Run the invariance metric pipeline for each onset_delta value
+- Log all raw and summary outputs
+- Create a table and plot: onset_delta vs invariance score
+- Document any irregularities or non-monotonicities
 
-Forbidden Actions:
-- no changes to any other parameter family (fmax, tolerance, limit_denominator, pitch / onset modes, etc.)
-- no changes to the metric, dataset, sample set, or evaluation logic
-- no refactoring of the core pipeline or repo structure
-- no scope expansion beyond onset_delta
-- no advancing the milestone — stay strictly in M3.1
+Forbidden Actions:  
+- Changing any parameter except onset_delta
+- Modifying core pipeline code
+- Adding unrelated mutants or configs
+- Claiming metric generality beyond onset_delta
 
-Required Commands:
-- python scripts/fetch_samples.py
-- python run_m3_1_metric.py    (once per onset_delta value)
+Required Commands:  
+- python scripts/fetch_samples.py  
+- python run_m3_1_metric.py --config configs/onset_delta_sweep.yaml
 
-Optional Commands:
-- repeat the baseline run once if the first baseline result looks unstable
+Optional Commands:  
+- python scripts/plot_onset_delta_vs_score.py (to generate interpretable graphics)
 
-Configs to Test:
-- baseline: onset_delta = 0.05
-- onset_delta = 0.10
-- onset_delta = 0.15
-- onset_delta = 0.20
+Configs to Test:  
+- onset_delta = [0.01, 0.03, 0.05, 0.10, 0.15, 0.20, 0.25]
 
-Maximum Number of Runs:
-5 (4 sweep values + at most 1 optional baseline repeat)
+Maximum Number of Runs:  
+7 (one per onset_delta value)
 
-Retry Rules:
-- retry a failed run once
-- if a single config fails twice → log the error and skip that config; do not substitute another value
-- do not expand the tested range to compensate for failed runs
+Retry Rules:  
+- Retry failed runs only if failure is due to runtime error, crash, or output corruption
+- Maximum 2 retries per failed config
+- Log all retry attempts and reasons
 
-Stop Conditions:
-- all four onset_delta values successfully tested and logged
-- script fails twice on the same config
-- outputs invalid or unparseable
-- evidence of metric breakdown / unexplainable behavior emerges
+Stop Conditions:  
+- All onset_delta values tested and outputs logged
+- Pipeline failure that blocks further runs
+- More than 2 retries fail for the same config
 
-Report Path:
+Report Path:  
 nmb3/nmb3_reports/block_002_report.md
 
-Approval Required Before Next Block:
-yes
+Approval Required Before Next Block:  
+(yes)
