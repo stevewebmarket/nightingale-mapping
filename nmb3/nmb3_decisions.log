@@ -215,3 +215,115 @@
   objective execution, so it does not consume an additional loop
   beyond the 6 already used for objective execution in this
   session.  The session is still complete after this commit.
+
+[2026-04-25T17:59:01Z] Loop errata recorded by interpreter (no Steve action required):
+  In the loop's report closing O024 (P4 partial-scope closure
+  approval), the loop recommended "Execute O033" as a clean
+  one-shared-workflow-dispatch follow-on objective.  That
+  recommendation did NOT trace O033's declared dependency chain
+  (O033 -> O032 -> O031 -> O030 -> O029, where O029 is the
+  non-bypassable Steve-gate for P6 entry, all PROPOSED on
+  canonical at the time).  When Steve replied "Execute O033" at
+  the same timestamp, the loop's pre-execution dependency check
+  caught the mismatch: executing O033 directly would have
+  violated four levels of declared dependencies, including a
+  Steve-gate (O029) with Auto-execute = NO and Forbidden actions
+  = "starting without the string".  The loop stopped before
+  any dispatch, surfaced the dependency chain to Steve, recorded
+  the prior incorrect recommendation as errata, and presented
+  five clean string options (A authorise the chain via O029
+  entry; B explicit single-objective waiver; C standalone O029;
+  D pick a different unblocked objective; E pause).  This is the
+  second recommendation-level error caught in this multi-session
+  run (the first was the O020 misdescription in the prior
+  session).  Same root cause both times: the loop conflated
+  "easy to dispatch" with "satisfies declared dependencies".
+
+  No work was performed under the misdescribed authorisation.
+  Steve's subsequent gating string ("Override deps for O033
+  (single-objective waiver)") was issued against the corrected
+  landscape with the chain made explicit.
+
+[2026-04-25T18:00:00Z] Steve, via chat reply to the dependency-chain landscape:
+  "Override deps for O033 (single-objective waiver)"
+
+  This is the explicit policy waiver requested as Option B in
+  the loop's prior response.
+
+  Effect on the dependency chain (per nmb3/nmb3_objective_map.md):
+    - O033's "Dependencies: O032" clause is WAIVED for this
+      single execution.  O033 is authorised to execute alone
+      against the current canonical M5.6 extractor without first
+      re-validating M6.1 (O030) / M6.2 (O031) / M6.3 (O032).
+    - O029 (P6 entry Steve-gate) is NOT opened by this waiver.
+      O029's status remains PROPOSED.  The waiver authorises
+      O033 only -- it does not authorise broader P6 entry.
+    - O030 / O031 / O032 statuses are unchanged (PROPOSED).  They
+      remain available for future authorisation by Steve and
+      would, if executed, give the formal M6.1 / M6.2 / M6.3
+      re-validation that this O033 reproduction implies but does
+      not formally provide.
+
+  Effect on O033's spec:
+    - The "Dependencies: O032" clause is the only clause waived.
+      All other clauses bind in full -- in particular:
+      * "Forbidden actions: removing the weak-evidence flag;
+        relaxing cond4" remains binding.
+      * "Success criteria: full table reproduces; weak-evidence
+        flag for twinkle_people reproduces; the cond4 honesty
+        assertion fires" remains binding.
+      * "Evidence required: Block 022 plan + CI bot output +
+        interpreter output; explicit pointer to the 5/5 pre-set
+        conditions PASS" remains binding.
+    - The waiver is for this single execution only.  Future
+      O033 re-runs would need either the formal upstream chain
+      to be satisfied (preferred) or another explicit waiver.
+
+  Loop interpretation:
+    - Execute O033 per its spec (with the waived Dependencies
+      clause).  Use the shared no-cache reproducibility workflow
+      with target=m6_4 and script="python run_m6_4_family_retrieval.py".
+    - Write the Block 022 plan documenting the waiver and the
+      execution scope.  Pin the CI run id by SHA in the
+      interpreter output.
+    - Per the Block 022 no-cherry-picking clause, the first
+      dispatch result is the reproduction unless dispatch failed
+      for infrastructure reasons.  If a retry is required for an
+      infrastructure reason, log the failure honestly and make
+      the retry's reasoning explicit (see the 2026-04-25T18:18Z
+      entry below).
+    - Per the Session Completion Rule, stop after success and
+      propose the next objective without beginning it.
+
+[2026-04-25T18:18:54Z] Infrastructure failure + retry, honest record:
+  First M6.4 dispatch (run 24937425251 at SHA 59fad71) failed
+  with audioread.exceptions.NoBackendError when loading
+  twinkle_people.m4a.  Root cause: ubuntu-latest runner lacked
+  ffmpeg; libsndfile cannot decode M4A natively; audioread fell
+  back without a usable backend.
+
+  Per the Block 022 plan's "Forbidden Actions / no cherry-
+  picking" clause: "the first dispatch's result is the
+  reproduction unless dispatch failed for infrastructure reasons
+  (in which case the failure must be logged honestly and the
+  retry's reasoning made explicit in decisions.log)".  This
+  entry constitutes that explicit honest log.
+
+  Fix: shared workflow yml extended at canonical commit 3929fbc
+  to install ffmpeg as target-agnostic system infrastructure.
+  Adding a system audio backend cannot change the numerical
+  output of any extractor that successfully decoded a sample, so
+  the M5.6 reproduction (Run A under O023 at SHA 1368524,
+  107/144 = 0.7431 with all 18 cells bit-identical) remains
+  valid; this fix only enables decoding of the .m4a sample that
+  M6.4 needs.
+
+  Re-dispatch (run 24937477484 at SHA 3929fbc) succeeded with
+  full M6.4 PASS reproducing every cell of the MILESTONES.md
+  baseline and cond4 honesty assertion firing PASS.  This is the
+  reproduction of record for O033.
+
+  Loop budget cost: 1 of 2 workflow edits used (the ffmpeg
+  install) -- a target-agnostic fix that benefits any future
+  objective using compressed audio.  The other slot remains
+  available for any follow-up infrastructure issue.

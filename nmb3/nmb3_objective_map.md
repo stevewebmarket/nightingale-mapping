@@ -891,7 +891,15 @@ path.
   twinkle_box (3 in top 3, outranks YES), twinkle_harmonica (2 in
   top 3, outranks YES), twinkle_people (1 in top 3, outranks NO and
   flagged weak-evidence).
-- **Dependencies**: O032
+- **Dependencies**: O032 — **WAIVED** by Steve's
+  "Override deps for O033 (single-objective waiver)" string at
+  2026-04-25T18:00Z (recorded in `nmb3/nmb3_decisions.log`).
+  The waiver authorises O033 to execute alone against the current
+  canonical M5.6 extractor without first re-validating M6.1 / M6.2
+  / M6.3 (O030 / O031 / O032).  The waiver does not weaken any
+  forbidden-action clause; "removing the weak-evidence flag" and
+  "relaxing cond4" remain binding (and were respected in the
+  reproduction — see the SUCCEEDED entry below).
 - **Success criteria**: full table reproduces; weak-evidence flag for
   `twinkle_people` reproduces; the cond4 honesty assertion fires.
 - **Evidence required**: Block 022 plan + CI bot output + interpreter
@@ -900,7 +908,29 @@ path.
   `run_m6_4_family_retrieval.py`.
 - **Forbidden actions**: removing the weak-evidence flag; relaxing
   cond4.
-- **Status**: PROPOSED
+- **Status**: SUCCEEDED at 2026-04-25T18:21:00Z.  All success
+  criteria met.  Full table reproduces line-by-line vs MILESTONES.md
+  M6.4 baseline (twinkle_box top3=3 / top5=3 / outranks=YES;
+  twinkle_harmonica top3=2 / top5=3 / outranks=YES; twinkle_people
+  top3=1 / top5=1 / outranks=NO).  Weak-evidence flag fires on
+  `twinkle_people` only (2 non-trivial intervals < MIN_NT=4) and
+  not on `twinkle_box` / `twinkle_harmonica` (both nt=5).  Cond4
+  honesty assertion (every nt<4 query marked weak AND twinkle_people
+  still weak) fires PASS.  All 5 of the script's pre-set conditions
+  PASS (with cond6 EXTERNAL satisfied by this CI evidence).  Final
+  script line `M6.4 PASS` printed.  CI run id 24937477484 pinned to
+  head SHA `3929fbcda21e79045075dcc9ca3802f7bb9d7bc0` (which
+  contains the Block 022 plan and the target-agnostic ffmpeg
+  install in the shared workflow yml; no pipeline file modified).
+  First-attempt run 24937425251 at SHA 59fad71 failed for an
+  infrastructure reason (missing ffmpeg → audioread NoBackendError
+  on `twinkle_people.m4a`); failure recorded honestly in the
+  interpreter output § 5 and in decisions.log per the Block 022
+  no-cherry-picking clause.  Forbidden actions respected: weak-
+  evidence flag preserved; cond4 not relaxed; no M6.4-specific
+  logic in workflow yml.  Evidence:
+  `nmb3/nmb3_reports/o033_m6_4_family_retrieval_revalidation.md`
+  and `nmb3/nmb3_blocks/block_022_plan.md`.
 - **Auto-execute permission**: YES (validation/measurement-integrity).
 - **Rewrite permission**: Steve only.
 
