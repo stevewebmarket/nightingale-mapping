@@ -446,3 +446,80 @@ surface message:
   4 = O034 errata + O035).  Workflow edits unchanged: 1 of 2
   used (still the ffmpeg install from O033; O035 is
   documentation only and needs no workflow edit).
+
+[2026-04-25T19:02:00Z] Steve, via chat reply to the O035 SUCCEEDED
+surface message:
+  "Pause"
+
+  Effect:
+    - Ends the autonomous execution session at canonical SHA
+      dd1b689.  No further objective is initiated in this
+      session.
+    - This is option 4 from the loop's preceding O035 SUCCEEDED
+      surface message ("Pause -- given loop budget at 5 of 6,
+      pausing here and resuming in a fresh session is also
+      clean").
+    - Does NOT advance, withdraw, re-scope, or modify any
+      objective.  All current statuses persist into the next
+      session unchanged.
+    - Does NOT close any phase.  The P4 partial-scope closure
+      approved at 2026-04-25T17:59:01Z remains binding; no
+      new phase closure is triggered by this pause.
+    - Does NOT trigger any waiver, errata, or rewrite.
+    - Does NOT dispatch any CI workflow.
+
+  Session terminal state at pause:
+    - canonical SHA: dd1b689
+    - SUCCEEDED objectives this session: O023 (M5.6 fresh-clone
+      reproduction), O024 (P4 partial-scope closure
+      recommendation -- APPROVED by Steve at 17:59:01Z), O033
+      (M6.4 family-retrieval re-validation), O034 (M6.5 multi-
+      family FAIL re-validation, honesty floor SATISFIED), O035
+      (boundary documentation, byte-equal MILESTONES.md quote).
+    - PROPOSED-and-unblocked objectives next session: O036 (M6
+      phase closure recommendation; declared dep O035 now
+      SATISFIED).
+    - PROPOSED-and-blocked-by-deps next session: O037
+      (reproducibility appendix; declared dep O036 still
+      PROPOSED AND broader empirical-evidence gap for M3.x /
+      M4.1 / M5.1-M5.5 / M6.1 / M6.2 / M6.3 still applies),
+      O038-O041 (packaging artefacts), O042 (Steve-only
+      continuation-scope authorisation), O043 (out-of-scope
+      register; depends on O042).
+    - Loop budget consumed this session: 5 of 6 loops (O033
+      main; O033 errata; O034 main; O034 errata; O035 main).
+    - Workflow yml edits this session: 1 of 2 used (the ffmpeg
+      install from O033 at commit 3929fbc; remains in place
+      and target-agnostic, available for any future target
+      that reads compressed audio).
+    - Architect reviews this session: 5 (O023, O024, O033,
+      O034, O035) -- all APPROVED, four with single-typo
+      errata patches (O023 none; O024 none; O033 one; O034
+      one; O035 none).
+    - CI runs this session: 4 (one O023 M5.6, one O023
+      retry-after-success-of-different-target = 24936650442
+      observational, one O033 M6.4 = 24937477484, one O034
+      M6.5 = 24937928571).
+    - Decision-Policy honesty floor checks this session: one
+      explicit non-trigger record (O034 M6.5; trigger
+      conditions verified to not fire before SUCCEEDED
+      workflow continued).
+    - Empirical CI evidence base on canonical at pause:
+      M5.6 PASS (run 24936558636 at SHA 1368524) and
+      M6.4 PASS (run 24937477484 at SHA 3929fbc) and M6.5
+      FAIL (run 24937928571 at SHA 9eaabac).  No SHA-pinned
+      CI runs yet for M3.1 / M3.2 / M3.3 / M3.4 / M4.1 /
+      M5.1 / M5.2 / M5.3 / M5.4 / M5.5 / M6.1 / M6.2 / M6.3 --
+      this gap is the standing precondition for any future
+      O037 in its current (un-rescoped) form.
+
+  Loop interpretation:
+    - Append this pause record to nmb3_decisions.log.
+    - Do NOT update nmb3_objective_map.md (no objective state
+      changes on a pause).
+    - Commit and push the decisions.log update so the next
+      session begins from the same canonical state with the
+      pause recorded.
+    - Do NOT suggest, plan, or pre-stage the next objective
+      beyond what was already surfaced in the O035 SUCCEEDED
+      message.
