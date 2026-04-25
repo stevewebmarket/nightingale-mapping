@@ -167,12 +167,20 @@ path.
   four options if asked.
 - **Forbidden actions**: choosing on Steve's behalf; closing M3.1
   without an explicit Steve string; editing the recommendation file.
-- **Status**: IN PROGRESS (autonomous portion executed; awaiting
-  Steve decision string in `nmb3/nmb3_decisions.log`).
-- **Evidence to date**: `nmb3/nmb3_reports/o001_report.md` —
-  captures the restated four options and the loop's IN-PROGRESS
-  state.  Does NOT satisfy the success criterion: no Steve string
-  has been supplied, `nmb3/nmb3_decisions.log` does not yet exist.
+- **Status**: CLOSED (Steve-approved) at 2026-04-25T16:34:20Z.
+  Closure is on the "narrow reading" defined in
+  `nmb3/nmb3_reports/m3_1_closure_recommendation.md`; explicitly
+  does NOT authorise M4 work, any funding claim, the perceptual-
+  validity claim, generalisation beyond the canonical 6-case
+  sample set, generalisation to parameters other than onset_delta,
+  or any policy-file edit.
+- **Evidence to date**:
+  - `nmb3/nmb3_reports/o001_report.md` — autonomous-portion
+    execution and restated options (canonical commit 42a113b).
+  - `nmb3/nmb3_decisions.log` — Steve's verbatim closure string
+    (2026-04-25T16:34:20Z entry).
+  - `nmb3/nmb3_reports/o001_closure_report.md` — session summary
+    for the O001 closure step.
 - **Auto-execute permission**: NO (Steve-only milestone decision per
   Decision Policy "Forbidden Without Steve Approval: change milestone").
 - **Rewrite permission**: Steve only.
@@ -196,7 +204,13 @@ path.
 - **Forbidden actions**: starting without Steve authorisation in
   O001's reply; varying any other parameter; declaring perceptual
   interpretation.
-- **Status**: PROPOSED
+- **Status**: STEVE-APPROVED (NOT STARTED) at 2026-04-25T16:34:20Z.
+  Authorised inside Steve's O001 reply (see
+  `nmb3/nmb3_decisions.log`, 2026-04-25T16:34:20Z entry, naming
+  O002 explicitly).  The autonomous loop will not begin O002 until
+  Steve issues a separate "execute O002" string, per the loop
+  policy "do not begin the next objective" rule and the standing
+  "do not execute the whole preferred path yet" constraint.
 - **Auto-execute permission**: NO (must be authorised inside Steve's
   O001 reply).
 - **Rewrite permission**: Steve only.
