@@ -206,13 +206,16 @@ M6.1 / M6.2 / M6.3 baseline carries only its MILESTONES.md
 record plus incidental score reproduction inside the O033
 (M6.4) and O034 (M6.5) leaderboards.  In particular:
 
-  - The M6.4 PASS leaderboard reproduces every M6.2 score
-    (`twinkle_box_tstretch` 0.479, `twinkle_harmonica` 0.284,
-    unrelated clips tied at 0.164) cell-for-cell.  This is
-    incidental observational evidence that M6.1 (which
-    produces the underlying pair scores) and M6.2 (which
-    produces the headline rankings) reproduce on this fresh
-    canonical SHA.
+  - The M6.4 PASS leaderboard (and, on its M6.5 boundary
+    side, the Twinkle rows of the M6.5 FAIL leaderboard --
+    M6.5 extends M6.4's library with Lamb-family clips, so
+    Twinkle scores carry through cell-for-cell) reproduces
+    every M6.2 score (`twinkle_box_tstretch` 0.479,
+    `twinkle_harmonica` 0.284, unrelated clips tied at
+    0.164) cell-for-cell.  This is incidental observational
+    evidence that M6.1 (which produces the underlying pair
+    scores) and M6.2 (which produces the headline rankings)
+    reproduce on this fresh canonical SHA.
   - The M6.4 PASS leaderboard also reproduces the M6.3 9-clip
     library leaderboard cell-for-cell where they overlap.
     Same incidental observational reproduction, not formal

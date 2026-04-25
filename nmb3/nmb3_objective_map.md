@@ -1063,9 +1063,16 @@ path.
   in § 1 (the Headline section, first sentence in bold) and
   again in § 5 recommendation item 2.  Boundary co-location
   discipline holds throughout: every paragraph mentioning M6.4
-  PASS also references M6.5 FAIL or the boundary (verified
-  paragraph-by-paragraph in § 1 / § 2 / § 3.1 / § 3.2 / § 3.3 /
-  § 5 / § 6).  Asymmetric scope explicitly recorded in § 2:
+  PASS also references M6.5 FAIL or the boundary, verified
+  programmatically at commit time (a paragraph-scan finds 14
+  paragraphs containing "M6.4 PASS" and zero violations after
+  errata).  The errata patch (single bullet in § 3.4) added
+  the explicit M6.5 boundary cross-reference to the bullet
+  describing M6.2 score reproduction inside the M6.4 PASS
+  leaderboard, since that bullet had previously stood alone
+  as a paragraph and would have technically violated the
+  forbidden action even though it was incidental rather than
+  load-bearing.  Asymmetric scope explicitly recorded in § 2:
   O033 / O034 / O035 SUCCEEDED with full CI pinning, O030 /
   O031 / O032 PROPOSED (M6.1 / M6.2 / M6.3 carry MILESTONES.md
   baseline + incidental score reproduction inside O033 / O034
