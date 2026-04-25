@@ -167,7 +167,12 @@ path.
   four options if asked.
 - **Forbidden actions**: choosing on Steve's behalf; closing M3.1
   without an explicit Steve string; editing the recommendation file.
-- **Status**: PROPOSED
+- **Status**: IN PROGRESS (autonomous portion executed; awaiting
+  Steve decision string in `nmb3/nmb3_decisions.log`).
+- **Evidence to date**: `nmb3/nmb3_reports/o001_report.md` —
+  captures the restated four options and the loop's IN-PROGRESS
+  state.  Does NOT satisfy the success criterion: no Steve string
+  has been supplied, `nmb3/nmb3_decisions.log` does not yet exist.
 - **Auto-execute permission**: NO (Steve-only milestone decision per
   Decision Policy "Forbidden Without Steve Approval: change milestone").
 - **Rewrite permission**: Steve only.
