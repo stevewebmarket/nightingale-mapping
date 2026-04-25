@@ -1,0 +1,10 @@
+# Repo-local exceptions to the system /etc/.gitignore rule "*.log".
+#
+# The NMB3 autonomous loop's audit trail of Steve decisions lives in
+# nmb3/nmb3_decisions.log and MUST be canonical: the objective map's
+# evidence pointers reference it explicitly, and the autonomous loop
+# policy requires every Steve string to be quoted verbatim there.
+# The system /etc/.gitignore rule "*.log" would otherwise silently
+# drop it on `git add` (caught at canonical commit 33e533d, fixed
+# in the immediate follow-up).
+!nmb3/nmb3_decisions.log
