@@ -116,3 +116,49 @@
       logic into the shared workflow yml.
     - Per the Session Completion Rule, stop after success and
       propose the next objective without beginning it.
+
+[2026-04-25T17:41:53Z] Steve, via chat reply to the O023 SUCCEEDED report:
+  "Execute O024 (partial-scope closure)"
+
+  Effect on roadmap (per nmb3/nmb3_objective_map.md):
+    - O024 (P4 closure recommendation): authorised to execute
+      in the partial-scope variant defined in the loop's prior
+      proposal -- aggregate O023 alone, with O020 / O021 / O022
+      explicitly deferred under the "Activation rule for off-path
+      objectives" clause (which permits off-path objectives to
+      remain deferred when an on-path objective produces evidence
+      that does NOT point back at them, and O023 produced zero
+      drift -- no regression to localise).
+    - O024's Auto-execute permission was already YES under the
+      Decision Policy validation/measurement-integrity criterion;
+      Steve's string makes the partial-scope execution explicit
+      and selects between the literal-spec reading ("aggregate
+      all four") and the activation-rule reading ("aggregate the
+      successful preferred-path objective alone, defer the others
+      under the activation rule").  Steve chose the latter.
+    - No other objective's status changes by this string.  In
+      particular, O020 / O021 / O022 remain PROPOSED, not
+      SUPERSEDED -- the partial-scope closure preserves the
+      future-expansion path to a full-scope v2 recommendation
+      aggregating all four.
+
+  Loop interpretation:
+    - Write nmb3/nmb3_reports/m5_phase_p4_closure_recommendation.md
+      including the headline 107/144 = 0.7431 (required by O024's
+      success criterion).
+    - Aggregate O023's evidence in full (run ids, head SHA,
+      per-cell breakdown, routing distribution) but mark O020 /
+      O021 / O022 as deferred under the activation rule, not
+      claimed.
+    - Per O024's Forbidden actions clause, do NOT claim
+      improvement on the M5.6 baseline.  No improvement is
+      claimed; reproduction of the locked baseline is the entire
+      content.
+    - Mark the recommendation as a draft on canonical until
+      Steve issues an explicit approval string ("Approve P4
+      partial-scope closure" or equivalent).  The recommendation
+      is not binding until that string lands.
+    - Per the Session Completion Rule, stop after success and
+      propose the next objective without beginning it.  This is
+      loop 6 of 6 in the session budget; the next loop will
+      require a fresh session.

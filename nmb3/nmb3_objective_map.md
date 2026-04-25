@@ -693,7 +693,26 @@ path.
 - **Evidence required**: that file.
 - **Allowed autonomous actions**: write; commit; push.
 - **Forbidden actions**: claiming improvement on the M5.6 baseline.
-- **Status**: PROPOSED
+- **Status**: SUCCEEDED at 2026-04-25T17:41:53Z, in the **partial-
+  scope** variant explicitly authorised by Steve's
+  "Execute O024 (partial-scope closure)" string (see
+  `nmb3/nmb3_decisions.log`, 2026-04-25T17:41:53Z entry).  File
+  `nmb3/nmb3_reports/m5_phase_p4_closure_recommendation.md` exists
+  on canonical and contains the headline 107/144 = 0.7431
+  (success criterion), the full O023 evidence base (run ids
+  24936558636 / 24936650442, head SHA
+  `1368524699287cc28ae416c7edda7f6c04b4c0e0`, per-cell breakdown,
+  routing distribution), the activation-rule justification for
+  partial scope (O020 / O021 / O022 deferred — not failed —
+  because O023 succeeded with zero drift and no regression points
+  back at M5.4 / M5.5 / M5.6-in-repo), and an explicit "what this
+  does NOT recommend" section enumerating every forbidden and
+  out-of-scope claim.  Recommendation is a draft on canonical
+  until Steve issues an explicit approval string.  No improvement
+  claim was made (forbidden actions clause respected).  Full-
+  scope expansion to a v2 recommendation aggregating all four
+  P4 objectives remains available if Steve later authorises and
+  succeeds O020 / O021 / O022.
 - **Auto-execute permission**: YES (validation/measurement-integrity).
 - **Rewrite permission**: Steve only.
 
