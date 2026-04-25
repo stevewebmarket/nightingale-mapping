@@ -1,0 +1,123 @@
+name: NMB3 No-Cache Reproducibility Reproduction (shared)
+
+# Shared parameterised reusable workflow.
+#
+# Created under NMB3 objective O023 (M5.6 fresh-clone reproducibility
+# check) per the spec authority in O023's "Allowed autonomous actions"
+# clause and per the design spec in O012's "Allowed autonomous actions"
+# clause (O023 and O012 are interchangeable as the workflow's creator;
+# whichever runs first creates it, the other reuses it without
+# modification).  Reused unmodified by O039 (independent reproduction
+# protocol).
+#
+# Design rules (from O012 / O023 / O039 specs):
+#
+#   1. workflow_dispatch only -- no automatic triggers.
+#   2. Inputs: `target` (label) and `script` (the actual reproduction
+#      command).  Target-specific logic lives in the `script` input,
+#      NEVER baked into this yml file.
+#   3. Fresh checkout, no caches -- `actions/checkout@v4` with no
+#      cache-* options; pip installed with `--no-cache-dir`; no
+#      `actions/cache` step.
+#   4. NO auto-commit of any artefact.  Results are surfaced via the
+#      run log and via `actions/upload-artifact` only.  This protects
+#      reproducibility evidence from being mutated by a follow-up
+#      bot commit.
+#   5. The run id and the head SHA are echoed to the log so the
+#      caller can pin them in their interpreter output.
+#
+# This file must NOT contain target-specific logic.  Adding M5.6 /
+# M4.1 / M6.4 specific commands to this file is forbidden by every
+# consumer's spec.
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Target identifier (e.g. m5_6, m4_1, m6_4_repro_smoke). Used only for labelling the artefact and the log.'
+        required: true
+        type: string
+      script:
+        description: 'Shell command to dispatch (e.g. "python run_m4_1_benchmark.py"). The target-specific logic lives here.'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+
+    env:
+      NMB3_TARGET: ${{ inputs.target }}
+      NMB3_SCRIPT: ${{ inputs.script }}
+
+    steps:
+      - name: Checkout fresh (no caches)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Show context (for SHA pinning in interpreter output)
+        run: |
+          echo "=============================================================="
+          echo "NMB3 No-Cache Reproducibility Reproduction"
+          echo "=============================================================="
+          echo "Target:        $NMB3_TARGET"
+          echo "Script:        $NMB3_SCRIPT"
+          echo "Repo:          ${{ github.repository }}"
+          echo "Head SHA:      ${{ github.sha }}"
+          echo "Run id:        ${{ github.run_id }}"
+          echo "Run number:    ${{ github.run_number }}"
+          echo "Workflow file: .github/workflows/nmb3_no_cache_repro.yml"
+          echo "Runner OS:     $RUNNER_OS"
+          echo "Started at:    $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo "=============================================================="
+
+      - name: Set up Python (no pip cache key)
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies (no caches)
+        run: |
+          python -m pip install --no-cache-dir --upgrade pip
+          pip install --no-cache-dir numpy scipy librosa soundfile
+          echo "--- resolved versions (for the run log) ---"
+          pip freeze | grep -iE "numpy|scipy|librosa|soundfile|numba|llvmlite|audioread|pooch|cffi" || true
+
+      - name: Fetch samples (fresh; no sample cache)
+        run: |
+          python scripts/fetch_samples.py
+
+      - name: Run reproduction script
+        run: |
+          mkdir -p nmb3/nmb3_logs
+          set -o pipefail
+          OUT="nmb3/nmb3_logs/no_cache_repro_${NMB3_TARGET}.txt"
+          echo "Dispatching: $NMB3_SCRIPT"
+          echo "Output file: $OUT"
+          bash -c "$NMB3_SCRIPT" 2>&1 | tee "$OUT"
+          echo "--- file size ---"
+          wc -c "$OUT"
+          test -s "$OUT"
+
+      - name: Show final reproduction summary
+        run: |
+          echo "=============================================================="
+          echo "Reproduction complete for target=$NMB3_TARGET"
+          echo "Head SHA:   ${{ github.sha }}"
+          echo "Run id:     ${{ github.run_id }}"
+          echo "Finished at: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo "=============================================================="
+
+      - name: Upload reproduction artefact (no commit)
+        uses: actions/upload-artifact@v4
+        with:
+          name: nmb3-no-cache-repro-${{ inputs.target }}-${{ github.run_id }}
+          path: |
+            nmb3/nmb3_logs/no_cache_repro_${{ inputs.target }}.txt
+          retention-days: 90
