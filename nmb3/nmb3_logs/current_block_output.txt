@@ -1,22 +1,44 @@
 ==============================================================================
-NMB3 Block 002 — onset_delta sweep (M3.1 invariance metric)
+NMB3 Block 003 -- baseline stability / noise-floor characterisation
 ==============================================================================
 
-Plan:        nmb3/nmb3_blocks/block_002_plan.md
-Sweep:       onset_delta in [0.05, 0.1, 0.15, 0.2]
-Baseline:    onset_delta = 0.05 (other params unchanged)
+Plan:        nmb3/nmb3_blocks/block_003_plan.md
+Config:      run_milestones.DEFAULT_CONFIG (no overrides)
+Repetitions: 8
 
-onset_delta      score   within / total   delta vs baseline
+ run      score     within / total
 ------------------------------------------------------------------------------
-       0.05     0.8750      42 / 48               baseline
-       0.10     0.7917      38 / 48                -0.0833
-       0.15     0.8125      39 / 48                -0.0625
-       0.20     0.7917      38 / 48                -0.0833
+   1     0.8750     42 / 48      
+   2     0.8750     42 / 48      
+   3     0.8750     42 / 48      
+   4     0.8750     42 / 48      
+   5     0.8750     42 / 48      
+   6     0.8750     42 / 48      
+   7     0.8750     42 / 48      
+   8     0.8750     42 / 48      
 
-Single-parameter sweep: only onset_delta varied; all other config
-fields are run_milestones.DEFAULT_CONFIG (locked M5.6 extractor).
+Summary statistics:
+  mean   = 0.8750
+  stdev  = 0.0000  (population stdev across 8 runs)
+  min    = 0.8750
+  max    = 0.8750
+  span   = 0.0000  (max - min)
 
-Pass condition (per block_002_plan.md): scores characterise the
-response of the invariance metric to onset_delta.  Interpretation
-is the Interpreter Agent's responsibility -- this runner only
-produces evidence.
+Per-case bit-identity check:
+  distinct case-result signatures across 8 runs: 1
+  bit-identical: True
+
+Signal-vs-noise comparison against Block 002 deltas:
+  note resolution                  = 1 / 48 = 0.0208
+  baseline span (this block)       = 0.0000
+  baseline stdev (this block)      = 0.0000
+  block_002 delta = 0.0625  -> delta/stdev =    inf  clearly above baseline jitter? yes
+  block_002 delta = 0.0833  -> delta/stdev =    inf  clearly above baseline jitter? yes
+
+Interpretation guidance (for the Interpreter Agent):
+  All 8 runs produced bit-identical case-level results and
+  identical scores.  The M3.1 metric pipeline is deterministic
+  under repeated invocation with identical inputs.  The noise
+  floor of the metric itself is therefore zero, and the
+  Block 002 deltas (0.0625 and 0.0833) cannot be attributed to
+  pipeline jitter -- they are real responses to onset_delta.
