@@ -1,8 +1,22 @@
 # NMB3 Objective Map — M3.1 Closure → M4 → M5 → M6 → Funding Package
 
-**Document status: DRAFT.**  Not yet Steve-approved.  No objective in
-this file is authorised for execution until Steve approves the roadmap
-as a whole or each objective individually.
+**Document status: DRAFT, refinement r1 applied.**  Not yet
+Steve-approved for execution.  Refinement r1 (this commit) reflects
+Steve's roadmap-review reply:
+
+- preferred execution path defined (see "Preferred execution path"
+  section below; subset of the 44 objectives, not all of them);
+- skipped objectives remain *available* and may be activated if an
+  evidence gap appears during execution;
+- the no-cache fresh-clone reproductions O012 / O023 / O039 share
+  one parameterised workflow file (created by O012, dispatched by
+  the others);
+- O042 funding scope is now framed as **continuation work funded by
+  validated existing evidence**, not packaging-only.  O043 and O044
+  updated accordingly.
+
+No objective in this file is authorised for execution until Steve
+approves the roadmap (or individual objectives) explicitly.
 
 **Document scope.**  This roadmap defines granular objectives for the
 autonomous NMB3 loop to *re-validate the already-locked M3.1–M6.5
@@ -77,6 +91,59 @@ Each objective uses these eleven fields:
 | P9    | Funding pkg    | O042–O044   | Funder-facing narrative, risk + out-of-scope registers, final ask. |
 
 Total: 44 objectives.
+
+---
+
+## Preferred execution path (refinement r1)
+
+Steve's preferred execution path covers a subset of the 44 objectives,
+chosen so that the autonomous loop validates the *load-bearing*
+evidence for the funding package without re-validating intermediate
+milestones whose role is fully captured in `MILESTONES.md` and
+already-closed canonical commits.
+
+**On the preferred path (28 objectives):**
+
+| Range       | Phase | Why it is on the path                                             |
+|-------------|-------|-------------------------------------------------------------------|
+| O001–O004   | P0    | Close M3.1 cleanly; archive the M3.1 evidence base.               |
+| O020–O024   | P4    | Re-validate the locked **M5.6 = 107/144 = 0.7431** baseline (the headline number that anchors every later claim) and the M5.4 / M5.5 work that produced it. |
+| O029–O036   | P6+P7 | Re-validate the M6.1 → M6.4 PASS chain *and* the M6.5 Lamb FAIL **as a FAIL** — the boundary is a load-bearing part of the result. |
+| O037–O041   | P8    | Reproducibility, methodology, independent-reproduction protocol, open-issues register, risk register. |
+| O042–O044   | P9    | Funding scope (continuation work, see refinement below), out-of-scope register, final funder-facing draft. |
+
+**Off the preferred path but available (16 objectives):**
+
+| Range       | Phase | Why it is off the preferred path                                  |
+|-------------|-------|-------------------------------------------------------------------|
+| O005–O009   | P1    | M3.2 / M3.3 / M3.4 are intermediate steps already locked; their evidence is fully captured in `MILESTONES.md` and the canonical commit chain. |
+| O010–O014   | P2    | M4.1 baseline (93/135) is superseded by the locked M5.6 baseline (107/144) for funding-package purposes; re-validate only if O020–O024 surface a discrepancy that points back at M4.1. |
+| O015–O019   | P3    | M5.1 / M5.2 / M5.3 are intermediate steps to the cqt_flux lock, which is itself a prerequisite of M5.6; re-validating M5.6 directly is sufficient unless an M5.6 reproduction discrepancy points back at one of them. |
+| O025–O028   | P5    | M5.7 / M5.8 NEGATIVE results and M5.9 abandonment are honestly preserved in `MILESTONES.md`; the funding package can cite them by reference rather than re-running them. |
+
+**Activation rule for off-path objectives.**  An off-path objective
+moves onto the preferred path *only if* an on-path objective
+produces evidence that points back at the off-path milestone — for
+example, if O022 (M5.6 lock re-validation) fails to reproduce
+107/144 to the note-flip, then O017 (M5.2 cqt_flux ablation) and
+O018 (M5.3 lock) become on-path so the regression can be
+localised.  Activation is recorded as a Steve-approved one-line
+update to this section.  No off-path objective is deleted; all
+remain available.
+
+**On-path dependency rewiring.**  Where an on-path objective's
+`Dependencies` field originally pointed at an off-path predecessor,
+the dependency is rewired to the most recent on-path predecessor
+with status `CLOSED (Steve-approved)`.  Concretely:
+
+- O020's effective dependency is O004 (P0 archive), not O019 (P3
+  closure).
+- O029's effective dependency is O024 (P4 closure), not O028 (P5
+  closure).
+
+The original `Dependencies` text in those entries is preserved as
+written; this section is the binding override for the preferred
+path.
 
 ---
 
@@ -309,20 +376,31 @@ Total: 44 objectives.
 
 ### O012
 - **Objective ID**: O012
-- **Name**: Fresh-clone reproducibility check for M4.1
+- **Name**: Fresh-clone reproducibility check for M4.1 (off preferred path)
 - **Purpose**: Independently confirm M4.1 reproducibility from a
   fresh clone of canonical (no caches, no prior CI artefacts).
 - **Dependencies**: O011
 - **Success criteria**: a fresh ubuntu-latest runner, given only
   `git clone` + the documented setup steps, produces bit-identical
   numbers to O011.
-- **Evidence required**: a CI run launched from a workflow that
-  rejects all caches, with output pinned by SHA in the interpreter
-  output.
-- **Allowed autonomous actions**: write a no-cache CI workflow file
-  scoped to this single check; dispatch; record the run id and SHA.
-- **Forbidden actions**: re-using cached samples; cherry-picking runs.
-- **Status**: PROPOSED
+- **Evidence required**: a CI run launched from the shared no-cache
+  reproducibility workflow with output pinned by SHA in the
+  interpreter output.
+- **Allowed autonomous actions**: as the first user of the shared
+  no-cache workflow under refinement r1, *create* the parameterised
+  reusable workflow file at
+  `.github/workflows/nmb3_no_cache_repro.yml` (workflow_dispatch
+  with `target` and `script` inputs; checkout with no caches; setup
+  python; run the parameterised script; print the headline number;
+  do NOT auto-commit any artefact); dispatch with `target=m4_1` and
+  the M4.1 reproduction command; record the run id and SHA.  The
+  same workflow file is reused without modification by O023 and
+  O039.
+- **Forbidden actions**: re-using cached samples; cherry-picking
+  runs; baking M4.1-specific logic into the shared workflow (the
+  M4.1-specific bits live in the `script` input, not in the yml).
+- **Status**: PROPOSED (off preferred path; activate only if O022
+  surfaces a regression that points back at M4.1).
 - **Auto-execute permission**: YES (validation/measurement-integrity).
 - **Rewrite permission**: Steve only.
 
@@ -513,16 +591,30 @@ Total: 44 objectives.
 
 ### O023
 - **Objective ID**: O023
-- **Name**: M5.6 fresh-clone reproducibility check
-- **Purpose**: Independent fresh-clone reproduction of 107/144,
-  analogous to O012 but for the locked M5.6 baseline.
+- **Name**: M5.6 fresh-clone reproducibility check (on preferred path)
+- **Purpose**: Independent fresh-clone reproduction of **107/144 =
+  0.7431**, the locked M5.6 baseline.  This is the headline-
+  reproducibility evidence that anchors every later claim in the
+  funding package.
 - **Dependencies**: O022
 - **Success criteria**: clean ubuntu-latest runner reproduces 107/144
-  with no caches.
-- **Evidence required**: no-cache workflow run id pinned by SHA.
-- **Allowed autonomous actions**: write a no-cache workflow scoped
-  to this check; dispatch; record.
-- **Forbidden actions**: caching; cherry-picking runs.
+  bit-identically with no caches; per-clip / per-transform breakdown
+  reproduces to the note-flip; routing distribution reproduces to ±2
+  routing decisions.
+- **Evidence required**: dispatch of the shared no-cache workflow
+  (created in O012 if O012 has been activated; otherwise created
+  here, at the same path `.github/workflows/nmb3_no_cache_repro.yml`,
+  with the same parameterised shape so O039 can reuse it) with
+  `target=m5_6`; resulting CI run id pinned by SHA in the
+  interpreter output.
+- **Allowed autonomous actions**: dispatch the shared no-cache
+  workflow with the M5.6 reproduction command; if the shared
+  workflow file does not yet exist on canonical, create it per the
+  spec in O012 (this objective and O012 are interchangeable as the
+  workflow's creator; whichever runs first creates it, the other
+  reuses it without modification); record run id and SHA.
+- **Forbidden actions**: caching; cherry-picking runs; introducing
+  M5.6-specific logic into the shared workflow yml.
 - **Status**: PROPOSED
 - **Auto-execute permission**: YES (validation/measurement-integrity).
 - **Rewrite permission**: Steve only.
@@ -842,13 +934,23 @@ Total: 44 objectives.
 - **Dependencies**: O038
 - **Success criteria**: `nmb3/nmb3_packaging/independent_reproduction_protocol.md`
   exists; protocol fits on one page; an external reviewer following
-  it bit-identically reproduces the headline numbers.
+  it bit-identically reproduces the headline numbers; the protocol
+  explicitly references the shared no-cache workflow at
+  `.github/workflows/nmb3_no_cache_repro.yml` so the reviewer can
+  re-dispatch it directly.
 - **Evidence required**: that file; one CI run launched against the
-  protocol's exact commands, pinned by SHA.
-- **Allowed autonomous actions**: write; dispatch the protocol once
-  to verify; record the run id.
+  protocol's exact commands using the shared no-cache workflow with
+  `target=m6_4_repro_smoke` (or an equivalent input naming the
+  M5.6 + one-M6.4-query scope), pinned by SHA.
+- **Allowed autonomous actions**: write the protocol; dispatch the
+  shared no-cache workflow once with the protocol's exact inputs to
+  verify; record the run id.  Do NOT create a new workflow file —
+  reuse the one created in O012 / O023.  If neither O012 nor O023
+  has been activated, create the shared workflow here per the spec
+  in O012.
 - **Forbidden actions**: relaxing the "no caches" requirement;
-  hiding any setup step in an unspoken assumption.
+  hiding any setup step in an unspoken assumption; introducing
+  M6.4-specific logic into the shared workflow yml.
 - **Status**: PROPOSED
 - **Auto-execute permission**: YES (validation/measurement-integrity).
 - **Rewrite permission**: Steve only.
@@ -896,18 +998,47 @@ Total: 44 objectives.
 
 ### O042
 - **Objective ID**: O042
-- **Name**: Funding package scope decision (Steve gate)
-- **Purpose**: Steve declares the funding ask, the audience, and the
-  permissible claims, before any funder-facing prose is written.
+- **Name**: Funding package scope decision — **continuation work
+  funded by validated existing evidence** (Steve gate)
+- **Purpose**: Steve declares the funding ask, the audience, the
+  permissible claims, **and the continuation-work scope** that the
+  ask funds.  Per refinement r1, the package is framed as
+  *continuation work funded by validated existing evidence*: the
+  evidence base is the autonomously-revalidated locked chain
+  (O004 + O024 + O036 outputs + the locked `MILESTONES.md` numbers
+  for the off-path phases), and the ask funds work that pushes past
+  the M6.5 boundary — explicitly named candidate scopes include
+  CREPE pitch tracker integration, voice-friendly extractor work,
+  and second-corpus generalisation.
 - **Dependencies**: O041
 - **Success criteria**: Steve string in `nmb3_decisions.log`
-  specifying (a) funder type / audience, (b) ask amount or range,
-  (c) the locked claim set the package is allowed to assert.
-- **Evidence required**: log entry.
-- **Allowed autonomous actions**: present the question; restate the
-  Decision Policy "no funding claim without Steve approval" rule.
-- **Forbidden actions**: drafting any funder-facing prose before the
-  string exists; suggesting an ask amount.
+  specifying:
+  (a) funder type / audience;
+  (b) ask amount or range;
+  (c) the locked claim set the package is allowed to assert about
+      *existing* validated evidence;
+  (d) the continuation-work scope the ask funds, named at the level
+      of milestone candidates (e.g., "CREPE integration as the
+      first continuation milestone, voice-friendly extractor as the
+      second, second-corpus generalisation as the third");
+  (e) explicit confirmation that the M6.5 boundary will be stated
+      honestly in the funder-facing material as the *reason* for
+      the continuation ask, not hidden by it.
+- **Evidence required**: log entry containing all five elements
+  (a)–(e).
+- **Allowed autonomous actions**: present the five-element question
+  to Steve; restate the Decision Policy "no funding claim without
+  Steve approval" rule; quote the `MILESTONES.md` "Current
+  boundary" section verbatim so the continuation-scope discussion
+  is anchored in the locked record.
+- **Forbidden actions**: drafting any funder-facing prose before
+  the five-element string exists; suggesting an ask amount or a
+  continuation scope on Steve's behalf; proposing continuation work
+  whose success criteria would require softening the M6.5
+  boundary; treating any new algorithmic work as *executed* under
+  this objective (O042 only declares scope; new algorithmic work
+  is itself out-of-scope for the locked repo and must be its own
+  separately-funded follow-on programme).
 - **Status**: PROPOSED
 - **Auto-execute permission**: NO (Steve-only — funding decisions
   are explicitly reserved for Steve).
@@ -915,20 +1046,33 @@ Total: 44 objectives.
 
 ### O043
 - **Objective ID**: O043
-- **Name**: Out-of-scope register
-- **Purpose**: Produce an explicit out-of-scope register naming what
-  this funding package does NOT cover (CREPE pitch tracker, voice-
-  friendly extractor work, multi-family generalisation beyond
-  Twinkle, perceptual-validity studies, etc.) so the funder
-  understands the boundary.
+- **Name**: Out-of-scope register (continuation-work framing)
+- **Purpose**: Per refinement r1, O043 produces a two-part register:
+  (i) what is *in continuation scope* per the O042 string (named
+  candidate continuation milestones, e.g., CREPE, voice extractor,
+  second-corpus generalisation), and (ii) what remains
+  *out-of-scope even for the continuation work* (e.g., perceptual-
+  validity studies if Steve excluded them in O042; cross-language
+  vocal corpora; real-time deployment; commercial productisation).
+  The funder must be able to read this file and know exactly which
+  results the ask buys and which it does not.
 - **Dependencies**: O042
-- **Success criteria**: `nmb3/nmb3_packaging/out_of_scope.md` exists;
-  every "What does not yet work" item from MILESTONES.md "Current
-  boundary" appears.
-- **Evidence required**: that file.
-- **Allowed autonomous actions**: write; commit; push.
-- **Forbidden actions**: implying any out-of-scope item is a "near-
-  term win"; framing the boundary as easily-fixable.
+- **Success criteria**:
+  `nmb3/nmb3_packaging/scope_and_out_of_scope.md` exists; every
+  continuation-scope item named in the O042 string appears in
+  Part (i); every "What does not yet work" item from
+  `MILESTONES.md` "Current boundary" appears in either Part (i) (if
+  Steve put it in continuation scope) or Part (ii) (if not), with
+  no item silently dropped.
+- **Evidence required**: that file; explicit cross-reference to the
+  O042 log entry's element (d).
+- **Allowed autonomous actions**: write the file; commit; push;
+  derive Part (i) and Part (ii) mechanically from the O042 string
+  and `MILESTONES.md` "Current boundary".
+- **Forbidden actions**: implying any in-continuation-scope item is
+  already proven achievable; framing the M6.5 boundary as easily-
+  fixable; adding a continuation-scope item that was not named in
+  the O042 string; promising any specific continuation outcome.
 - **Status**: PROPOSED
 - **Auto-execute permission**: YES (documentation only, post-O042).
 - **Rewrite permission**: Steve only.
@@ -936,26 +1080,42 @@ Total: 44 objectives.
 ### O044
 - **Objective ID**: O044
 - **Name**: Funder-facing package — final draft for Steve approval
+  (continuation-work framing, per r1)
 - **Purpose**: Produce the single funder-facing package
-  (`nmb3/nmb3_packaging/funding_package.md`) that combines: an
-  executive summary (claims-as-permitted-by-O042 only), a technical
-  brief, the headline numbers (M3.1 baseline, M5.6 = 107/144 =
-  0.7431, M6.4 PASS, M6.5 boundary FAIL), and pointers to every
-  appendix (O037, O038, O039, O040, O041, O043).
+  (`nmb3/nmb3_packaging/funding_package.md`) that frames the ask as
+  **continuation work funded by validated existing evidence**.  The
+  package combines:
+  (1) an executive summary stating the validated existing claims
+      (only those permitted by the O042 string), the M6.5 boundary
+      as the explicit *reason* for the continuation ask, and the
+      continuation scope from O042 element (d);
+  (2) a technical brief covering the locked pipeline through M5.6,
+      the M6.1–M6.4 retrieval chain, and the M6.5 boundary;
+  (3) headline numbers (M3.1 baseline, M5.6 = 107/144 = 0.7431,
+      M6.4 PASS, M6.5 boundary FAIL);
+  (4) pointers to every appendix (O037, O038, O039, O040, O041,
+      O043);
+  (5) a continuation-work plan referencing O043 Part (i),
+      explicitly *not* claiming any continuation outcome is proven
+      in advance.
 - **Dependencies**: O043
 - **Success criteria**: file exists; every claim in the executive
-  summary maps to an appendix pointer; the M6.5 boundary appears in
-  the executive summary, not only in the appendices; Steve has
-  explicitly written "Funding package final draft approved" in
+  summary maps to an appendix pointer; the M6.5 boundary appears
+  in the executive summary, not only in the appendices; the
+  continuation-work plan maps every named scope item to the O042
+  string element (d) and to O043 Part (i); the package contains no
+  claim outside the O042-permitted set; Steve has explicitly
+  written "Funding package final draft approved" in
   `nmb3_decisions.log` before any external use.
 - **Evidence required**: the package file, plus the Steve approval
   string.
-- **Allowed autonomous actions**: assemble the file from approved
-  artefacts only; submit for Steve review.
+- **Allowed autonomous actions**: assemble the file from
+  Steve-approved artefacts only; submit for Steve review.
 - **Forbidden actions**: external distribution before the Steve
-  approval string exists; making any claim outside the O042-permitted
-  set; omitting the M6.5 boundary; editing any policy file; editing
-  `MILESTONES.md`.
+  approval string exists; making any claim outside the
+  O042-permitted set; presenting continuation-work scope as
+  already-proven; omitting the M6.5 boundary from the executive
+  summary; editing any policy file; editing `MILESTONES.md`.
 - **Status**: PROPOSED
 - **Auto-execute permission**: NO (Steve-only — funding-package
   release is explicitly reserved for Steve).
@@ -981,17 +1141,35 @@ Total: 44 objectives.
   locked numbers reproduce*, not *that the locked numbers are the
   best achievable*.
 
-## Default open questions (for Steve's roadmap review)
+## Default open questions (for Steve's roadmap review) — RESOLVED in r1
 
-1. Are P1, P3, P5 re-validations actually wanted, or should the
-   loop go straight from O004 (M3.1 archive) to O042 (funding
-   scope) with the locked MILESTONES.md numbers used as-is?
-2. Should the no-cache fresh-clone reproductions (O012, O023,
+All three questions answered by Steve's roadmap-review reply.
+Resolutions retained here for the audit trail; the binding effects
+are encoded in the "Preferred execution path" section, in the O012
+/ O023 / O039 entries, and in the O042 / O043 / O044 entries.
+
+1. **Are P1, P3, P5 re-validations actually wanted?**
+   *Resolved:* not on the preferred execution path.  P1 (O005–O009),
+   P2 (O010–O014), P3 (O015–O019), and P5 (O025–O028) are
+   *available* and may be activated if an evidence gap appears
+   during execution of the on-path objectives, per the activation
+   rule in the "Preferred execution path" section.
+2. **Should the no-cache fresh-clone reproductions (O012, O023,
    O039) all be the same workflow file or three separate
-   workflows?
-3. Does the funding ask in O042 include continuation work (CREPE,
+   workflows?**
+   *Resolved:* one shared parameterised workflow file at
+   `.github/workflows/nmb3_no_cache_repro.yml`, created by whichever
+   of O012 / O023 / O039 is activated first (per the entry-level
+   text added in r1) and reused without modification by the others.
+3. **Does the funding ask in O042 include continuation work (CREPE,
    voice extractor) or is this strictly a packaging-of-existing-
-   work funding ask?
+   work funding ask?**
+   *Resolved:* continuation work funded by validated existing
+   evidence.  O042 success criteria now require Steve to name the
+   continuation-work scope in element (d) of the funding-scope
+   string; O043 produces a two-part register (in-continuation-scope
+   vs. out-of-scope-even-for-continuation); O044 includes a
+   continuation-work plan in the funder-facing draft.
 
 ## Maintenance
 
