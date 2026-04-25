@@ -395,3 +395,54 @@ landscape:
   workflow.  Recording this honesty-floor non-trigger explicitly
   so the audit trail captures the check at the boundary, not
   only on a hypothetical fire.
+
+[2026-04-25T18:55:00Z] Steve, via chat reply to the O034 SUCCEEDED
+surface message:
+  "Execute O035"
+
+  Effect:
+    - Authorises NMB3 objective O035 (Boundary documentation
+      file).  Declared dependency O034 is SATISFIED at canonical
+      SHA cf165f4 / 5190b05 (SUCCEEDED at 2026-04-25T18:45:00Z);
+      no waiver required.
+    - This is option 1 from the loop's preceding O034 SUCCEEDED
+      surface message ("O035 -- declared dependency O034 is now
+      SATISFIED.  Documentation-only ('write; commit; push'),
+      no fresh CI runs.  Single clean unblocked step").
+    - Does NOT advance O036, O037, or any P9 (continuation-
+      scope) objective.  Does NOT authorise any broader CI-
+      pinning campaign.  Does NOT re-scope O037.
+
+  O035's Allowed autonomous actions are documentation-only
+  (write; commit; push) and Auto-execute permission is YES
+  (documentation only).  Forbidden actions: softening boundary
+  language; suggesting out-of-scope fixes (CREPE, voice-friendly
+  extractor) anywhere except the explicit "out of scope"
+  register (O043).  The CREPE mention that already appears in
+  the verbatim MILESTONES.md "Current boundary" passage is
+  permitted (because the success criterion requires byte-
+  equality).  The forbidden action is *adding* new fix-
+  recommendation language outside that verbatim quote.
+
+  Loop interpretation:
+    - Write nmb3/nmb3_blocks/block_024_plan.md documenting the
+      scope, the verbatim-quote requirement, and the no-
+      softening / no-new-fix-language discipline.
+    - Read MILESTONES.md "Current boundary" section bytes
+      (lines 40-53 at canonical SHA cf165f4) and pin their
+      SHA256 (a6fc0d62b760733e96eb40a798fd5c67374bb2689273fcdf42c68d92d21e0cfc).
+    - Write nmb3/nmb3_reports/boundary.md with the verbatim
+      passage embedded as a fenced quote, the SHA256 pinning,
+      the verifier reproduction command, evidence pointers to
+      O033 and O034, the prior-NEGATIVE / ABANDONED front-end
+      ablations (M5.7, M5.8, M5.9) as factual pointers, and
+      the explicit non-claim register.
+    - Update objective map O035 PROPOSED -> SUCCEEDED.
+    - Per the Session Completion Rule, stop after success and
+      propose the next objective without beginning it.
+
+  Loop budget: 4 of 6 loops used after this objective (loop 1
+  = O033 main; loop 2 = O033 errata; loop 3 = O034 main; loop
+  4 = O034 errata + O035).  Workflow edits unchanged: 1 of 2
+  used (still the ffmpeg install from O033; O035 is
+  documentation only and needs no workflow edit).

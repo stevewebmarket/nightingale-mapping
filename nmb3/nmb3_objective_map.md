@@ -996,7 +996,9 @@ path.
   MILESTONES.md "Current boundary" verbatim, points at O034
   evidence, and lists what is and is not within the locked
   pipeline's good case.
-- **Dependencies**: O034
+- **Dependencies**: O034 — SATISFIED at 2026-04-25T18:45:00Z
+  (canonical SHA cf165f4 / 5190b05).  Clean dependency; no
+  waiver required.
 - **Success criteria**: `nmb3/nmb3_reports/boundary.md` exists;
   quoted MILESTONES.md section is checksum-equal to the canonical
   source.
@@ -1005,7 +1007,30 @@ path.
 - **Forbidden actions**: softening boundary language; suggesting
   out-of-scope fixes (CREPE, voice-friendly extractor) anywhere
   except the explicit "out of scope" register (O043).
-- **Status**: PROPOSED
+- **Status**: SUCCEEDED at 2026-04-25T18:58:00Z.  All success
+  criteria met.  `nmb3/nmb3_reports/boundary.md` created with
+  the verbatim MILESTONES.md "Current boundary" passage (lines
+  40-53 at canonical SHA cf165f4) embedded as a fenced quote
+  with explicit SHA256 pinning
+  (`a6fc0d62b760733e96eb40a798fd5c67374bb2689273fcdf42c68d92d21e0cfc`)
+  and a verifier reproduction command
+  (`sed -n '40,53p' MILESTONES.md | sha256sum`).  Document points
+  at O033 (M6.4 PASS, run 24937477484 at SHA 3929fbc) for the
+  good-case side and O034 (M6.5 FAIL, run 24937928571 at SHA
+  9eaabac) for the boundary side, with interpreter output paths
+  and artefact filenames inline.  No softening language
+  introduced (M6.5 FAIL preserved as FAIL; not relabelled
+  "partial pass" / "open issue" / "scheduled improvement").
+  No new fix-recommendation language added outside the verbatim
+  quote (the CREPE mention in § 1 appears only inside the byte-
+  equal quote, as the success criterion requires; § 5 explicitly
+  records that this is not a recommendation made by the
+  document).  Non-claim register in § 5 explicitly points
+  out-of-scope fix discussion to O043.  Pointer summary in
+  § 6 cross-references all five evidence locations (canonical
+  passage; M6.4 PASS interpreter + CI; M6.5 FAIL interpreter +
+  CI).  Evidence: `nmb3/nmb3_reports/boundary.md` and
+  `nmb3/nmb3_blocks/block_024_plan.md`.
 - **Auto-execute permission**: YES (documentation only).
 - **Rewrite permission**: Steve only.
 
