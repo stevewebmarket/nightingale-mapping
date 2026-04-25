@@ -1,0 +1,12 @@
+==============================================================================
+M3.1 — Audio Transform Invariance Metric
+==============================================================================
+
+config                                   score   within / total   per-case (folded)
+------------------------------------------------------------------------------
+baseline                           0.8750    42 / 48         Orch/pitch=8/8  Orch/time_=8/8  Orch/compo=8/8  Rock/pitch=8/8  Rock/time_=4/8  Rock/compo=6/8
+mutant_a (onset_delta 0.05->0.20)    0.7917    38 / 48         Orch/pitch=7/8  Orch/time_=5/8  Orch/compo=5/8  Rock/pitch=8/8  Rock/time_=6/8  Rock/compo=7/8
+mutant_b (fmax 16000->4000)         0.8750    42 / 48         Orch/pitch=8/8  Orch/time_=8/8  Orch/compo=8/8  Rock/pitch=8/8  Rock/time_=4/8  Rock/compo=6/8
+mutant_c (tolerance 1%->0.1%)       0.4167    20 / 48         Orch/pitch=4/8  Orch/time_=5/8  Orch/compo=7/8  Rock/pitch=2/8  Rock/time_=1/8  Rock/compo=1/8
+
+Pass = baseline stable across runs AND >=2 mutants move from baseline.

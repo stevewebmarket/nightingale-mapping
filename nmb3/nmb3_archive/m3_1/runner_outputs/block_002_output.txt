@@ -1,0 +1,22 @@
+==============================================================================
+NMB3 Block 002 — onset_delta sweep (M3.1 invariance metric)
+==============================================================================
+
+Plan:        nmb3/nmb3_blocks/block_002_plan.md
+Sweep:       onset_delta in [0.05, 0.1, 0.15, 0.2]
+Baseline:    onset_delta = 0.05 (other params unchanged)
+
+onset_delta      score   within / total   delta vs baseline
+------------------------------------------------------------------------------
+       0.05     0.8750      42 / 48               baseline
+       0.10     0.7917      38 / 48                -0.0833
+       0.15     0.8125      39 / 48                -0.0625
+       0.20     0.7917      38 / 48                -0.0833
+
+Single-parameter sweep: only onset_delta varied; all other config
+fields are run_milestones.DEFAULT_CONFIG (locked M5.6 extractor).
+
+Pass condition (per block_002_plan.md): scores characterise the
+response of the invariance metric to onset_delta.  Interpretation
+is the Interpreter Agent's responsibility -- this runner only
+produces evidence.

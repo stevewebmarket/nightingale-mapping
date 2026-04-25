@@ -1,0 +1,73 @@
+==============================================================================
+NMB3 Block 005 -- M3.1 per-case decomposition of the mid-range plateau
+==============================================================================
+
+Plan:        nmb3/nmb3_blocks/block_005_plan.md
+Deltas:      onset_delta in [0.1, 0.15, 0.2]
+Runs:        2 per delta (6 total) for determinism cross-check
+Published:   aggregate score at [0.1, 0.15, 0.2] = [0.7917, 0.8125, 0.7917]
+             (Block 002 + Block 004 reference)
+
+  running onset_delta=0.10  pass 1/2 ...
+  running onset_delta=0.10  pass 2/2 ...
+  running onset_delta=0.15  pass 1/2 ...
+  running onset_delta=0.15  pass 2/2 ...
+  running onset_delta=0.20  pass 1/2 ...
+  running onset_delta=0.20  pass 2/2 ...
+
+Aggregate cross-check vs published Block 002 / Block 004 values:
+  onset_delta    observed   published    match
+  ----------------------------------------------------
+         0.10      0.7917      0.7917      YES
+         0.15      0.8125      0.8125      YES
+         0.20      0.7917      0.7917      YES
+
+Determinism cross-check (per-case bit-identical across the two passes):
+  bit-identical (within, total) pairs: 18 / 18
+  -> PASS: every case is bit-identical across both passes
+
+In-range check: every observed aggregate score in [0.0, 1.0]:
+  onset_delta=0.10  pass 1/2  score=0.7917  in [0,1]: YES
+  onset_delta=0.10  pass 2/2  score=0.7917  in [0,1]: YES
+  onset_delta=0.15  pass 1/2  score=0.8125  in [0,1]: YES
+  onset_delta=0.15  pass 2/2  score=0.8125  in [0,1]: YES
+  onset_delta=0.20  pass 1/2  score=0.7917  in [0,1]: YES
+  onset_delta=0.20  pass 2/2  score=0.7917  in [0,1]: YES
+
+Per-case decomposition (6 cases x 3 deltas; values are within / total notes):
+
+  case (label / test)                d=0.10        d=0.15        d=0.20   within span   flag
+  -------------------------------------------------------------------------------------------
+  Orchestra / pitch_shift          7 / 8         7 / 8         7 / 8                0      -
+  Orchestra / time_stretch         6 / 8         6 / 8         5 / 8                1   FLAG
+  Orchestra / composition          6 / 8         5 / 8         5 / 8                1   FLAG
+  Rock / pitch_shift               8 / 8         8 / 8         8 / 8                0      -
+  Rock / time_stretch              5 / 8         6 / 8         6 / 8                1   FLAG
+  Rock / composition               6 / 8         7 / 8         7 / 8                1   FLAG
+
+Per-case sum check (folded aggregate must equal sum of per-case within over sum of per-case total):
+  onset_delta=0.10  sum_within= 38  sum_total= 48  folded=0.7917  observed=0.7917  match: YES
+  onset_delta=0.15  sum_within= 39  sum_total= 48  folded=0.8125  observed=0.8125  match: YES
+  onset_delta=0.20  sum_within= 38  sum_total= 48  folded=0.7917  observed=0.7917  match: YES
+
+Decomposition summary (for the Interpreter Agent):
+  total cases:            6
+  flagged cases (within span >= 1): 4
+  flagged case list:
+    - Orchestra / time_stretch  within span = 1
+    - Orchestra / composition  within span = 1
+    - Rock / time_stretch  within span = 1
+    - Rock / composition  within span = 1
+
+Hypothesis-mapping note (counts only -- not a perceptual claim):
+  4 flagged cases -- consistent with H1
+  (real metric property: the wobble reflects movement across
+  many cases, summing to a small aggregate change).
+  This is a count-evidence pointer for Steve / the Interpreter
+  Agent, NOT a perceptual interpretation.  Block 005 forbids any
+  perceptual claim.
+
+Block 005 produced its evidence cleanly.  Interpretation is the
+Interpreter Agent's responsibility -- this runner only produces
+evidence.  No perceptual claim is made.  No M3.1 re-opening is
+implied (M3.1 remains CLOSED by Steve at 2026-04-25T16:34:20Z).

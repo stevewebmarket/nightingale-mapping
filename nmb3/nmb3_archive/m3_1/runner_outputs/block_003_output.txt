@@ -1,0 +1,44 @@
+==============================================================================
+NMB3 Block 003 -- baseline stability / noise-floor characterisation
+==============================================================================
+
+Plan:        nmb3/nmb3_blocks/block_003_plan.md
+Config:      run_milestones.DEFAULT_CONFIG (no overrides)
+Repetitions: 8
+
+ run      score     within / total
+------------------------------------------------------------------------------
+   1     0.8750     42 / 48      
+   2     0.8750     42 / 48      
+   3     0.8750     42 / 48      
+   4     0.8750     42 / 48      
+   5     0.8750     42 / 48      
+   6     0.8750     42 / 48      
+   7     0.8750     42 / 48      
+   8     0.8750     42 / 48      
+
+Summary statistics:
+  mean   = 0.8750
+  stdev  = 0.0000  (population stdev across 8 runs)
+  min    = 0.8750
+  max    = 0.8750
+  span   = 0.0000  (max - min)
+
+Per-case bit-identity check:
+  distinct case-result signatures across 8 runs: 1
+  bit-identical: True
+
+Signal-vs-noise comparison against Block 002 deltas:
+  note resolution                  = 1 / 48 = 0.0208
+  baseline span (this block)       = 0.0000
+  baseline stdev (this block)      = 0.0000
+  block_002 delta = 0.0625  -> delta/stdev =    inf  clearly above baseline jitter? yes
+  block_002 delta = 0.0833  -> delta/stdev =    inf  clearly above baseline jitter? yes
+
+Interpretation guidance (for the Interpreter Agent):
+  All 8 runs produced bit-identical case-level results and
+  identical scores.  The M3.1 metric pipeline is deterministic
+  under repeated invocation with identical inputs.  The noise
+  floor of the metric itself is therefore zero, and the
+  Block 002 deltas (0.0625 and 0.0833) cannot be attributed to
+  pipeline jitter -- they are real responses to onset_delta.

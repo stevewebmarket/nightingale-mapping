@@ -1,0 +1,33 @@
+[2026-04-25T16:34:20Z] Steve, via chat reply to the O001 autonomous-portion report (canonical 42a113b):
+  "Close M3.1, narrow reading as above. Authorise O002: per-case
+   decomposition of the mid-range onset_delta plateau."
+
+  Effect on roadmap (per nmb3/nmb3_objective_map.md, refinement r1):
+    - O001 (M3.1 closure decision): CLOSED (Steve-approved).
+      Closure on the "narrow reading" defined in
+      nmb3/nmb3_reports/m3_1_closure_recommendation.md, section
+      "What 'M3.1 Closed' Would Mean (Narrow Reading, Recommended)".
+      Authorises only the four claims listed there; explicitly does
+      NOT authorise M4 work, any funding claim, the perceptual-
+      validity claim, generalisation beyond the canonical 6-case
+      sample set, generalisation to parameters other than
+      onset_delta, or any policy-file edit.
+    - O002 (M3.1 per-case mid-range decomposition): authorised by
+      this reply, satisfying O002's "starting without Steve
+      authorisation in O001's reply" forbidden-action.  Status moves
+      from PROPOSED to STEVE-APPROVED (NOT STARTED).  The autonomous
+      loop will not begin O002 in this session, per the loop policy
+      "do not begin the next objective" rule and per Steve's
+      standing "do not execute the whole preferred path yet"
+      constraint.
+    - O003 (M3.1 cross-corpus probe): NOT authorised by this reply.
+      Remains PROPOSED, off-path-but-available.
+    - M3.1 -> M4 transition: NOT authorised.  Option 4 of the
+      closure recommendation was not chosen.
+    - Funding claim: NOT authorised.  No funder-facing claim may be
+      made on the strength of this closure.
+    - Policy file edit: NOT authorised.  No edit to
+      nmb3/nmb3_decision_policy.md or
+      nmb3/nmb3_autonomous_loop_policy.md is implied or permitted.
+    - MILESTONES.md: NOT edited.  The locked record is unchanged.
+

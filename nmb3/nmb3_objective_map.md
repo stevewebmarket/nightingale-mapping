@@ -265,7 +265,22 @@ path.
   `nmb3/nmb3_README.md`; commit and push.
 - **Forbidden actions**: editing any archived file post-copy;
   modifying any policy file; renaming the canonical M3.1 milestone.
-- **Status**: PROPOSED
+- **Status**: SUCCEEDED at 2026-04-25T17:01:00Z.  Archive directory
+  `nmb3/nmb3_archive/m3_1/` exists on canonical and contains:
+  blocks 001–005 plans (block 005 included by the dependency-hint
+  extension since O002 was Steve-authorised and SUCCEEDED);
+  per-block runner outputs extracted from the bot commits that
+  originally landed them (b056e9b/7929524, 5fb41bb, 488a889,
+  c0a1b8c, cec5acd); per-block interpreter outputs (block_001
+  static report + blocks 002–005 interpreter outputs); closure
+  artefacts (closure recommendation, M3.1 session report, O001
+  closure session report, Steve's verbatim O001 decision string
+  extracted from the 2026-04-25T16:34:20Z entry of
+  `nmb3/nmb3_decisions.log`); and `nmb3/nmb3_archive/m3_1/README.md`
+  documenting source-of-truth pointers and the immutability rule.
+  Pointer paragraph appended to `nmb3/nmb3_README.md`.  No
+  archived file was edited post-copy.  No policy file was
+  modified.  M3.1 milestone name was not renamed.
 - **Auto-execute permission**: YES (validation/measurement-integrity
   block under Decision Policy autonomous-approval criterion 7;
   archival is a side effect with no scientific risk).
