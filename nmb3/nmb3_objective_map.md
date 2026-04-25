@@ -204,15 +204,24 @@ path.
 - **Forbidden actions**: starting without Steve authorisation in
   O001's reply; varying any other parameter; declaring perceptual
   interpretation.
-- **Status**: IN PROGRESS at 2026-04-25T16:46:06Z.  Execution
-  authorised by Steve's "Execute O002" string (see
-  `nmb3/nmb3_decisions.log`, 2026-04-25T16:46:06Z entry).  Block
-  005 plan, runner, and CI workflow rewire are landed on
-  canonical; CI dispatch is in flight; per-case results will be
-  recorded in `nmb3/nmb3_reports/block_005_interpreter_output.md`
-  once the bot results commit lands.  M3.1 closure is NOT
-  re-opened by this work — Block 005 is a follow-on within the
-  already-closed milestone.
+- **Status**: SUCCEEDED at 2026-04-25T16:52:53Z.  All three
+  success criteria met (per-case 6×3 within/total counts produced;
+  18/18 per-case bit-identical pairs across the two passes per
+  delta; 4 of 6 cases flagged with within-span ≥ 1; 2 pitch_shift
+  cases flat).  Aggregate scores at 0.10/0.15/0.20 reproduce the
+  published Block 002/004 values exactly (no pipeline drift).
+  Narrow factual conclusion (counts only, NOT perceptual): the
+  mid-range plateau is driven by 4 of 6 cases shifting by exactly
+  1 note across the region, with Orchestra and Rock cases moving
+  in opposite directions; consistent with H1 (real metric
+  property) and not H2 (sample-specific artefact).  Evidence:
+  `nmb3/nmb3_blocks/block_005_plan.md`,
+  `run_nmb3_block_005.py`,
+  `nmb3/nmb3_logs/current_block_output.txt`,
+  `nmb3/nmb3_reports/current_block_report.md`,
+  `nmb3/nmb3_reports/block_005_interpreter_output.md`,
+  CI run id 24935788699 (head d47b8b2, conclusion=success),
+  bot commit cec5acd.  M3.1 closure is NOT re-opened.
 - **Auto-execute permission**: NO (must be authorised inside Steve's
   O001 reply).
 - **Rewrite permission**: Steve only.
