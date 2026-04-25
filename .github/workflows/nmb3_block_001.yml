@@ -6,6 +6,9 @@ on:
     paths:
       - 'nmb3/nmb3_blocks/block_002_plan.md'
 
+permissions:
+  contents: write
+
 jobs:
   block-001:
     runs-on: ubuntu-latest
@@ -14,6 +17,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
       - name: Show block plan
         run: |
@@ -67,3 +72,12 @@ jobs:
           path: |
             nmb3/nmb3_logs/block_001_raw_output.txt
             nmb3/nmb3_reports/block_001_report.md
+
+      - name: Commit results back to repo
+        run: |
+          git config user.name "nmb3-bot"
+          git config user.email "nmb3@bot.com"
+          git add nmb3/nmb3_logs/block_001_raw_output.txt
+          git add nmb3/nmb3_reports/block_001_report.md
+          git commit -m "Add Block 001 results" || echo "No changes to commit"
+          git push
