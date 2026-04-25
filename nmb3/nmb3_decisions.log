@@ -46,3 +46,28 @@
       nmb3/nmb3_decision_policy.md or
       nmb3/nmb3_autonomous_loop_policy.md is implied or permitted.
     - MILESTONES.md: NOT edited.  The locked record is unchanged.
+
+[2026-04-25T16:46:06Z] Steve, via chat reply to the O001 closure report (canonical 1f01854):
+  "Execute O002"
+
+  Effect on roadmap (per nmb3/nmb3_objective_map.md):
+    - O002 (M3.1 per-case mid-range decomposition): execution
+      authorised.  Status moves from STEVE-APPROVED (NOT STARTED)
+      to IN PROGRESS.  The autonomous loop will execute the
+      bounded shape exactly as specified in O002's
+      "Allowed autonomous actions" field: write Block 005 plan
+      varying onset_delta in {0.10, 0.15, 0.20}; smoke-test;
+      dispatch via the CI workflow rewire pattern proven in
+      Blocks 003 and 004; produce per-case (6 cases x 3 deltas)
+      within/total counts; verify determinism by running each
+      delta twice; flag any case whose within count moves by >= 1
+      across the 3 deltas.
+    - O003, O004, every later objective: NOT authorised by this
+      reply.  Remain at their current status (PROPOSED for O003;
+      PROPOSED for O004 and beyond).
+    - M3.1 closure: NOT re-opened.  M3.1 remains CLOSED on the
+      narrow reading per the 2026-04-25T16:34:20Z entry.  Block
+      005 is a follow-on within the closed milestone, resolving
+      the plateau pattern without changing closure status.
+    - Funding claim: NOT authorised.  Policy file edit: NOT
+      authorised.  MILESTONES.md edit: NOT authorised.

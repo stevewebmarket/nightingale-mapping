@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'nmb3/nmb3_blocks/block_004_plan.md'
+      - 'nmb3/nmb3_blocks/block_005_plan.md'
 
 permissions:
   contents: write
@@ -23,7 +23,7 @@ jobs:
       - name: Show active block plan
         run: |
           echo "Showing active block plan:"
-          cat nmb3/nmb3_blocks/block_004_plan.md
+          cat nmb3/nmb3_blocks/block_005_plan.md
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -43,8 +43,8 @@ jobs:
         run: |
           mkdir -p nmb3/nmb3_logs nmb3/nmb3_reports
           echo "Reading block plan:"
-          cat nmb3/nmb3_blocks/block_004_plan.md
-          python run_nmb3_block_004.py 2>&1 | tee nmb3/nmb3_logs/current_block_output.txt
+          cat nmb3/nmb3_blocks/block_005_plan.md
+          python run_nmb3_block_005.py 2>&1 | tee nmb3/nmb3_logs/current_block_output.txt
           echo "--- file size ---"
           wc -c nmb3/nmb3_logs/current_block_output.txt
           test -s nmb3/nmb3_logs/current_block_output.txt
@@ -55,14 +55,14 @@ jobs:
           # NMB3 Current Block Report
 
           Active Plan:
-          nmb3/nmb3_blocks/block_004_plan.md
+          nmb3/nmb3_blocks/block_005_plan.md
 
           Block Question:
-          Does the M3.1 invariance score continue to track onset_delta in the unmeasured boundary regions {0.01, 0.03, 0.25}, and is the resulting combined sweep consistent with Block 002 and Block 003?
+          Within the mid-range plateau (onset_delta in {0.10, 0.15, 0.20}, aggregate scores 0.7917 / 0.8125 / 0.7917 from Block 002 + Block 004), is the non-monotonic 0.10 -> 0.15 -> 0.20 movement driven uniformly across the 6 canonical cases, or by one or two specific cases whose within-tolerance counts shift?
 
           Commands Run:
           - python scripts/fetch_samples.py
-          - python run_nmb3_block_004.py
+          - python run_nmb3_block_005.py
 
           Raw Results:
           See nmb3/nmb3_logs/current_block_output.txt
