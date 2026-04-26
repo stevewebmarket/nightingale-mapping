@@ -64,6 +64,12 @@ non-claim register.
 
 ### 1.2  The M6.5 boundary (per O042 element (e))
 
+The O042 boundary-condition clause, verbatim:
+
+> The M6.5 failure boundary will be stated explicitly and used as
+> the primary motivation for the continuation work, not hidden or
+> softened.
+
 The pipeline as locked at M5.6 / M6.4 has a clear, honestly-reported
 failure boundary at M6.5 (multi-family validation, Lamb corpus): the
 M6.4 family-retrieval result on the Twinkle corpus does not
@@ -73,9 +79,10 @@ without per-family tuning.  This is reported in `MILESTONES.md` as
 `FAIL` verdict is issued in the locked milestone tree.
 
 The M6.5 boundary is the **primary motivation for the continuation
-work** described in §5.  The boundary is not softened; the
-continuation work is required *because of* the boundary, not as a
-characterisation that the boundary has a known remediation path.
+work** described in §5, in keeping with the verbatim O042 clause
+quoted above.  The boundary is not softened; the continuation work
+is required *because of* the boundary, not as a characterisation
+that the boundary has a known remediation path.
 
 ### 1.3  Continuation scope (verbatim from O042 element (d))
 
