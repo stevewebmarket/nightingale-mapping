@@ -1053,3 +1053,48 @@ authorised by Steve.
       (this commit will appear in the next session's
       "previously canonical" set, not the next session's
       loop count).
+
+---
+
+2026-04-26T02:15:00Z  --  O039 (independent reproduction protocol) SUCCEEDED clean.
+
+  Final state:
+    - Protocol artefact: nmb3/nmb3_packaging/independent_reproduction_protocol.md
+      (97 lines, post-erratum form on main HEAD).
+    - Reference CI dispatch: run id 24945531211 at SHA 766cff6 (the
+      execution pin SHA an external reviewer should clone at).
+      Conclusion: success in 1 min 21 s.  All four headline lines
+      verbatim; M5.6 18/18 cells bit-identical vs O023 Run A and
+      canonical m4_1_results.json at lock SHA d332f54; M6.4 3/3 rows
+      bit-identical vs O033 Run.
+    - Interpreter output: nmb3/nmb3_reports/o039_independent_reproduction_protocol.md
+    - Objective map status: SUCCEEDED at 2026-04-26T01:50:00Z.
+
+  Loop history:
+    - Loop 1 commit 1 (766cff6)  -- protocol artefact written + CI
+      dispatched (Steve, 2026-04-26T01:30:00Z).
+    - Loop 1 commit 2 (74e9583)  -- interpreter output + status
+      SUCCEEDED.  Architect FAIL: 2x BLOCKING (Mode B hidden setup;
+      one-page overflow) + 3x MEDIUM (ellipses in §3.2; "or later
+      SHA" loosening; Status narrative too long).
+    - Loop 1 commit 3 (9bee1d0)  -- in-loop erratum: trimmed protocol
+      to 97 lines + explicit gh install/auth + branch-creation in
+      Mode B + strict pin language + literal §3.2 + § 7 erratum
+      discipline + tightened Status.  Architect PASS-not-CLEAN: 1x
+      MEDIUM (stale "111" line count in §3.1; authoritativeness
+      ambiguity).
+    - Loop 1 commit 4 (55d4910)  -- micro-patch: §3.1 line count
+      111 -> 97 + authoritative-text-vs-execution-pin disambiguation.
+      Architect APPROVED CLEAN.
+
+  No second CI dispatch performed (O039's "ONCE" wording in
+  Allowed-actions preserved).  No workflow yml edited.  No script
+  edited.  No pipeline file edited.  No policy file edited.  No
+  MILESTONES.md edited.  No nmb3_README.md edited.  Workflow
+  yml-edit budget consumed: 0 of 2.  Schedule unchanged.
+
+  Per autonomous loop policy "Session Completion Rule": loop stops
+  on objective success and proposes the next objective without
+  beginning it.  Standing constraint "do not execute the whole
+  preferred path yet" still active.  Awaiting Steve.
+
