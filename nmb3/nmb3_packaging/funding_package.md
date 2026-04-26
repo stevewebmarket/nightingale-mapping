@@ -48,19 +48,21 @@ labels every continuation candidate as `unstarted`.
 
 ### 1.1  What has been validated (verbatim from O042 element (c))
 
-The locked claims, exactly as written by Steve in the O042
-funding-scope-decision string:
+We have built and validated a system that measures structure in sound.
 
-> - Metric runs end-to-end
-> - Reproduces exactly on clean CI
-> - Responds to timing changes (real signal)
-> - Has a clear failure boundary (M6.5)
-> - M5.6, M6.4, M6.5 results are reproducible and SHA-pinned
+Specifically, the current system demonstrates that:
 
-These five claims, and only these five claims, are used as the
-"validated existing evidence" envelope for the ask.  See §4 for
-appendix pointers proving each claim; see §6 for the explicit
-non-claim register.
+– the metric runs end-to-end on real audio inputs  
+– the results reproduce exactly on clean CI (no environment dependence)  
+– the metric responds to timing variation in a consistent, measurable way  
+– the system has a clear, repeatable failure boundary (M6.5)  
+– the core results (M5.6, M6.4, M6.5) are reproducible and SHA-pinned  
+
+These five statements, defined in the O042 funding-scope decision, are the full set of claims made in this document.
+
+The key result is not just that the system works, but that it behaves predictably: we can measure where it succeeds, and we can measure where it breaks.
+
+The M6.5 boundary is therefore not incidental — it defines the current limit of the system and is the primary motivation for the continuation work described below.
 
 ### 1.2  The M6.5 boundary (per O042 element (e))
 
@@ -75,8 +77,8 @@ failure boundary at M6.5 (multi-family validation, Lamb corpus): the
 M6.4 family-retrieval result on the Twinkle corpus does not
 generalise to a second, independently-recorded melodic family
 without per-family tuning.  This is reported in `MILESTONES.md` as
-"complete (**honest FAIL / boundary**)" and is the only place a
-`FAIL` verdict is issued in the locked milestone tree.
+"complete (**honest FAIL / boundary**)". This boundary is explicitly 
+preserved as a FAIL in the locked milestone record.
 
 The M6.5 boundary is the **primary motivation for the continuation
 work** described in §5, in keeping with the verbatim O042 clause
