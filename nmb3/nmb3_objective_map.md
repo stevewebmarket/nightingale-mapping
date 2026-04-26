@@ -1134,25 +1134,90 @@ path.
 
 ### O037
 - **Objective ID**: O037
-- **Name**: Reproducibility appendix
-- **Purpose**: Produce a single appendix that, for every locked
-  milestone result (M3.1 through M6.5), gives a SHA, a CI run id,
-  the exact command, and the headline number, in a form that lets a
-  third party reproduce every claim in one read.
-- **Dependencies**: O036
+- **Name**: Reproducibility appendix (partial-scope)
+- **Purpose**: Produce a single appendix that, for the milestone
+  results currently backed by SHA-pinned CI evidence on canonical
+  (M5.6 from O023, M6.4 from O033, M6.5 from O034), gives a SHA, a
+  CI run id, the exact command, the workflow file, the artefact
+  name, and the headline number, in a form that lets a third party
+  reproduce every cited claim in one read; and **explicitly lists**
+  the 13 milestones that are not yet SHA-pinned (M3.1, M3.2, M3.3,
+  M3.4, M4.1, M5.1, M5.2, M5.3, M5.4, M5.5, M6.1, M6.2, M6.3) as
+  **gaps, not failures**, with each gap entry naming the script
+  whose locked baseline lives in MILESTONES.md.
+- **Dependencies**: O036 — APPROVED at 2026-04-25T19:18:00Z
+  (canonical SHA ea935f4).  Clean dependency.
 - **Success criteria**: `nmb3/nmb3_packaging/reproducibility_appendix.md`
-  exists and lists ≥ 1 SHA-pinned CI run for every M3.1–M6.5
-  milestone; an external reviewer can reproduce every headline number
-  using only the appendix.
-- **Evidence required**: that file; cross-link from
-  `nmb3/nmb3_README.md`.
+  exists; section A (or equivalent) lists the three SHA-pinned
+  reproductions (M5.6 / M6.4 / M6.5) with full pinning per the
+  Purpose; section B (or equivalent) lists the 13 gap milestones
+  with each gap labelled as "gap, not failure" and each pointing at
+  the MILESTONES.md baseline; the appendix explicitly disclaims any
+  full-chain reproducibility claim and any funding claim; the
+  appendix does NOT introduce any un-pinned number into its
+  SHA-pinned section.
+- **Evidence required**: that file.
 - **Allowed autonomous actions**: assemble from existing artefacts;
-  no fresh runs required if all evidence already exists.
-- **Forbidden actions**: omitting any locked milestone; omitting the
-  M6.5 FAIL; introducing un-pinned numbers.
-- **Status**: PROPOSED
+  write; commit; push.  No fresh CI runs.
+- **Forbidden actions**: omitting any of the 13 gap milestones from
+  the gap list; mis-labelling a gap as a failure or vice-versa;
+  introducing any number into the SHA-pinned section that is not
+  pinned to a CI run id + head SHA; running a broader CI-pinning
+  campaign (specifically forbidden by Steve in the rewrite string);
+  claiming full-chain reproducibility; editing any policy file;
+  making any funding / commercial / perceptual claim.
+- **Status**: SUCCEEDED at 2026-04-25T19:26:00Z.  All success
+  criteria met under the partial-scope rewrite at
+  2026-04-25T19:24:00Z.  `nmb3/nmb3_packaging/reproducibility_appendix.md`
+  created; section A pins three reproductions (M5.6 Run A id
+  24936558636 at SHA 1368524, M6.4 run id 24937477484 at SHA
+  3929fbcda21e79045075dcc9ca3802f7bb9d7bc0, M6.5 run id 24937928571
+  at SHA 9eaabacf5ae5640d329fa97ebe316486eaccd08f) with full
+  pinning (head SHA, CI run id, exact command, workflow file,
+  artefact name, headline number, interpreter output filename,
+  closure recommendation cross-reference) and a verifier command
+  per entry; section B lists all 13 gap milestones (M3.1, M3.2,
+  M3.3, M3.4, M4.1, M5.1, M5.2, M5.3, M5.4, M5.5, M6.1, M6.2,
+  M6.3) labelled "gap, not failure" with each pointing at
+  MILESTONES.md and naming the script in repo, with explicit
+  caveat for M5.3 (no separate script -- diagnostics derived
+  via M5.1/M5.2 scripts) and incidental-observational-
+  reproduction caveats for M6.1 / M6.2 / M6.3 (their scores
+  reproduce inside the M6.4 / M6.5 leaderboards but the scripts
+  themselves have not been dispatched as SHA-pinned CI runs);
+  section C non-claim register disclaims full-chain
+  reproducibility, funding, commercial, perceptual, second-
+  corpus generalisation, real-time-deployment claims, and the
+  Steve-forbidden broader CI-pinning campaign; section D
+  preserves a future-expansion path if Steve later authorises
+  a broader campaign.  Negative / FAIL / ABANDONED milestones
+  (M5.7, M5.8, M5.9, M6.5) are explicitly distinguished from
+  gaps so the gap list cannot mislead a reviewer.  No policy
+  file edited; no MILESTONES.md edited; no nmb3_README.md
+  edited; no other objective's status changed; no fresh CI
+  runs dispatched.  Evidence:
+  `nmb3/nmb3_packaging/reproducibility_appendix.md` and
+  `nmb3/nmb3_blocks/block_026_plan.md`.
 - **Auto-execute permission**: YES (documentation only).
 - **Rewrite permission**: Steve only.
+- **Rewrite history**:
+    - 2026-04-25T19:24:00Z — Rewrite by Steve.  Authorisation
+      string: "Re-scope O037 to partial-scope.  Rewrite permission
+      granted by Steve."  (See `nmb3/nmb3_decisions.log`,
+      2026-04-25T19:24:00Z entry, for the verbatim full text and
+      the loop's interpretation.)  This rewrite narrows the
+      Purpose / Success criteria from the original "every M3.1
+      through M6.5 milestone" scope to the partial-scope "currently
+      SHA-pinned evidence (M5.6 / M6.4 / M6.5) plus an explicit
+      gap list for the 13 non-SHA-pinned milestones".  Explicit
+      Steve-imposed forbidden actions added: no broader CI-pinning
+      campaign; no full-chain reproducibility claim; no policy
+      change; no funding claim.  The original Evidence required
+      field "cross-link from `nmb3/nmb3_README.md`" is superseded
+      by this rewrite (Steve's rewrite did not carry it forward;
+      adding a README cross-link would require a separate Steve
+      authorisation since editing the README is a substantive
+      change outside this rewrite's scope).
 
 ### O038
 - **Objective ID**: O038

@@ -695,3 +695,109 @@ on § 5 item 2 negated softening terms):
   approval errata).  Workflow yml edits this session: 0 of 2
   used (the ffmpeg install from prior session's O033 commit
   3929fbc persists).
+
+[2026-04-25T19:24:00Z] Steve, via chat reply to the loop's O038
+dependency-block surface message:
+
+  "Re-scope O037 to partial-scope.
+
+  Rewrite permission granted by Steve.
+
+  New O037 scope:
+  Create a reproducibility appendix for the currently SHA-pinned
+  evidence only:
+  - M5.6 fresh-clone reproduction from O023
+  - M6.4 PASS reproduction from O033
+  - M6.5 FAIL reproduction from O034
+
+  The appendix must explicitly list milestones not yet SHA-pinned:
+  - M3.1-M3.4
+  - M4.1
+  - M5.1-M5.5
+  - M6.1-M6.3
+
+  Those are gaps, not failures.
+
+  Do not run a broader CI-pinning campaign.
+  Do not claim full-chain reproducibility.
+  Do not change policies.
+  Do not make funding claims.
+
+  After re-scoping, execute O037 under this partial-scope
+  definition.
+  If O037 succeeds, execute O038 only if its dependency is then
+  satisfied and no new gate is triggered.
+  Stop after O038 or earlier if a gate triggers."
+
+  Effect:
+    - Two governance actions in one chat turn:
+      (1) Rewrite of O037 (Rewrite permission granted by Steve;
+          per the canonical Rewrite permission field, only
+          Steve can rewrite an objective).  Original Purpose /
+          Success criteria / Forbidden actions narrowed to
+          partial-scope: 3 SHA-pinned reproductions (M5.6 /
+          M6.4 / M6.5) plus an explicit gap list for the 13
+          non-SHA-pinned milestones (M3.1, M3.2, M3.3, M3.4,
+          M4.1, M5.1, M5.2, M5.3, M5.4, M5.5, M6.1, M6.2,
+          M6.3).  Explicit Steve-imposed forbidden actions
+          added: no broader CI-pinning campaign; no full-chain
+          reproducibility claim; no policy change; no funding
+          claim.  The original Evidence required field
+          "cross-link from nmb3/nmb3_README.md" is superseded
+          by Steve's rewrite (which did not carry it forward);
+          adding a README cross-link would require a separate
+          Steve authorisation since editing the README is a
+          substantive change outside this rewrite's scope.
+      (2) Authorisation to execute O037 under the new
+          partial-scope spec, plus conditional authorisation
+          to execute O038 if O037 succeeds and no new gate is
+          triggered.  Steve also imposed a session-scope stop
+          rule: "Stop after O038 or earlier if a gate triggers."
+    - The dependency O036 is APPROVED at canonical SHA ea935f4
+      (2026-04-25T19:18:00Z).  Clean dependency for the
+      rewritten O037.
+    - Does NOT advance any other objective.  Does NOT authorise
+      a broader CI-pinning campaign (explicitly forbidden in
+      the rewrite).  Does NOT authorise editing of any policy
+      file or any milestone artefact.
+
+  Loop interpretation:
+    - Apply the O037 rewrite to nmb3/nmb3_objective_map.md
+      (Purpose, Dependencies, Success criteria, Evidence
+      required, Allowed autonomous actions, Forbidden actions,
+      Status, Rewrite history fields all updated).
+    - Write nmb3/nmb3_blocks/block_026_plan.md documenting the
+      rewrite provenance, the partial-scope success criteria,
+      the explicit Steve-imposed forbidden actions, and the
+      out-of-scope non-claims.
+    - Create nmb3/nmb3_packaging/ if not already present and
+      write nmb3/nmb3_packaging/reproducibility_appendix.md
+      with: header (partial-scope, rewrite provenance);
+      Section A (3 SHA-pinned reproductions with full pinning
+      and verifier commands); Section B (13 explicit gaps,
+      labelled "gap, not failure", each pointing at its
+      MILESTONES.md baseline and naming the script in repo);
+      Section C (non-claim register: no full-chain
+      reproducibility / no funding / no commercial / no
+      perceptual / no broader CI-pinning campaign / no policy
+      change / no closure re-litigation); Section D (future-
+      expansion path preserved if Steve later authorises a
+      broader campaign).
+    - Update O037 PROPOSED -> SUCCEEDED in objective_map.md
+      after the appendix is written and verified.
+    - Stage all changes in a single commit: O037 rewrite + block
+      plan + appendix + status flip + this decisions.log entry.
+    - Run architect review on the O037 commit range.
+    - If architect APPROVED with no BLOCKING / HIGH findings,
+      proceed to O038 in a separate block (block_027) and
+      separate commit, per Steve's stop rule.  If architect
+      surfaces any BLOCKING or HIGH finding, stop after O037
+      and surface to Steve before considering O038 (a
+      BLOCKING / HIGH finding counts as "a gate triggered"
+      under Steve's stop rule).
+
+  Loop budget this session: 5 of 6 used by this O037 commit
+  (O036 main + self-caught errata + architect-driven errata +
+  post-approval errata + this O037 main).  Workflow yml edits:
+  0 of 2 (the ffmpeg install from O033's commit 3929fbc
+  persists; not touched by O037).
