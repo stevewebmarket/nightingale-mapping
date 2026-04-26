@@ -1280,3 +1280,65 @@ authorised by Steve.
   'do not execute the whole preferred path yet' is in force;
   awaiting Steve's explicit 'Execute O043' string.
 
+
+---
+
+2026-04-26T05:10:00Z  --  O043 (scope-and-out-of-scope register,
+                         continuation-work framing) SUCCEEDED
+                         clean after 1 erratum cycle.
+
+  Final state:
+    - Register: nmb3/nmb3_packaging/scope_and_out_of_scope.md
+      (~275 lines).
+    - Part (i): 4 rows, in O042 element-(d) order, verbatim
+      Steve wording in row 1 of each.  (i.x) rows now contain
+      ZERO occurrences of 'fix' / 'resolve' / 'solve' /
+      'easily-fixable' lexical forms (per architect's
+      literal-string check carried out of O042 review;
+      enforced by erratum 2fb53c4).
+    - Part (ii): 6 rows (real-time deployment; commercial
+      productisation; copyright/IP/forensic; end-user UI;
+      streaming infrastructure; M6.5-softening), each
+      sourced from boundary.md § 5 (or O042 element (e) for
+      the M6.5-softening row) and confirmed not-named in
+      element (d).
+    - Part (iii) mechanical-derivation audit: 4-of-4
+      element-(d) coverage; 1-of-1 'What does not yet work'
+      routing (no silent drop); explicit cross-reference to
+      O042 log entry's element (d).
+    - Part (iv) non-claim register.
+    - Interpreter output: nmb3/nmb3_reports/o043_scope_and_out_of_scope.md
+    - Objective map status: SUCCEEDED at 2026-04-26T04:50:00Z.
+
+  Loop history:
+    - Loop 5 commit 1 (7bab7f7) -- register + interpreter
+      output + status SUCCEEDED.  Architect MEDIUM finding:
+      'fix' / 'easily-fixable' lexical forms in (i.x) rows
+      (lines 50, 62, 92), and interpreter output § 3.5 row
+      2 falsely claimed they were absent.
+    - Loop 5 commit 2 (2fb53c4) -- erratum: surgical rewrite
+      of (i.x) rows using 'known remediation path' /
+      'guaranteed improvement path' framing; interpreter
+      output § 3.5 row 2 corrected to match.  Architect
+      APPROVED CLEAN.
+
+  Discipline preserved:
+    - No CI dispatch (O043 is documentation-only per spec).
+    - No script edited; no pipeline file edited; no policy file
+      edited; no MILESTONES.md edited; no nmb3_README.md edited.
+    - No CI workflow yml edited.  Workflow yml-edit budget
+      consumed this loop: 0 of 2.
+    - No funder-facing prose drafted.
+
+  Architect's forward note for O044: keep the lexical
+  constraint check explicitly scoped to Part (i.x) /
+  funder-facing-prose sections to avoid false positives from
+  non-claim / meta sections.
+
+  Next: O044 (funder-facing package, continuation-work framing
+  per r1) is unblocked per Dependencies field; auto-execute
+  permission requires Steve approval per O044 success criteria
+  ('Steve has explicitly written "Funding package final draft
+  approved" in nmb3_decisions.log before any external use');
+  awaiting Steve's explicit 'Execute O044' string.
+
