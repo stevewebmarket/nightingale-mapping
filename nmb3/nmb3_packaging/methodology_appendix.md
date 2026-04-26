@@ -179,8 +179,8 @@ text, not by the quotes here.
 
 ### 3.1 Early Stop Conditions
 
-From `nmb3/nmb3_autonomous_loop_policy.md` § "Early Stop
-Conditions":
+Quoted verbatim from `nmb3/nmb3_autonomous_loop_policy.md`
+§ "Early Stop Conditions":
 
 > - results conflict with previous evidence
 > - metric gaming is suspected
@@ -191,31 +191,32 @@ Conditions":
 > - the next action would require changing this policy or the
 >   decision policy
 
-Any of these conditions, when triggered, halts the loop and
-requires explicit Steve direction before resuming.  This list
-is the operational floor under which the loop refuses to
-silently continue.
+The binding effect of these conditions is whatever the
+canonical policy file says it is; this appendix adds no
+operational gloss.  See `nmb3/nmb3_autonomous_loop_policy.md`
+for the canonical text.
 
-### 3.2 Session Budget (cost / scope discipline)
+### 3.2 Session Budget
 
-From `nmb3/nmb3_autonomous_loop_policy.md` § "Session Budget":
+Quoted verbatim from `nmb3/nmb3_autonomous_loop_policy.md`
+§ "Session Budget":
 
 > - maximum wall time: 3 hours
 > - maximum loops: 6
 > - maximum new files per loop: 3
 > - maximum workflow edits per session: 2
 
-These caps prevent unbounded autonomous execution and
-unbounded operational cost in a single session.  They are
-soft against "single-objective-with-errata" patterns (errata
-that fix architect findings on the same objective count
-within that objective's loop, not as new loops) and hard
-against new objectives.
+The interpretation of these caps (e.g. how an in-loop erratum
+counts against `maximum loops`, or how a multi-file commit
+counts against `maximum new files per loop`) is governed by the
+canonical policy file and any precedents recorded in
+`nmb3/nmb3_decisions.log`; this appendix adds no rule about
+those interpretations.
 
 ### 3.3 Forbidden Without Steve Approval
 
-From `nmb3/nmb3_autonomous_loop_policy.md` § "Forbidden
-Without Steve Approval":
+Quoted verbatim from `nmb3/nmb3_autonomous_loop_policy.md`
+§ "Forbidden Without Steve Approval":
 
 > - change milestone
 > - move to M4
@@ -226,39 +227,32 @@ Without Steve Approval":
 > - perform broad refactors
 > - begin open-ended exploration
 
-The "make funding claims" item is the single hardest floor on
-loop output: no funder-facing artefact (this appendix
-included) may state, imply, or invite the inference that any
-loop result is funding-grade, perceptually validated,
-generalises beyond the locked corpus, or is ready for
-commercial deployment.  Where such a claim would otherwise
-be tempting (e.g. in this appendix's own framing or in
-cross-references to the reproducibility appendix), the
-appendix instead names the partial-scope nature of the
-evidence (3 SHA-pinned reproductions; 13 explicit gaps) and
-the binding closures' own scope language ("not the locked
-pipeline's intended operating regime", verbatim from the M6
-partial-scope closure recommendation).
+The `make funding claims` item directly bounds this appendix's
+own framing and the framing of the companion reproducibility
+appendix.  Both appendices accordingly use partial-scope
+language (e.g. "3 SHA-pinned reproductions; 13 explicit
+gaps") and quote the binding closures' own scope language
+verbatim where citing closure outcomes; neither appendix
+states, implies, or invites a funding-grade / perceptual /
+generalisation / commercial-deployment claim.
 
 ### 3.4 Measurement integrity (decision policy anchor)
 
-From `nmb3/nmb3_decision_policy.md` § "Measurement Integrity
-Rules" (anchor; see file for canonical text), the loop is
-bound to:
-  - measure baseline stability and noise floor before
-    interpreting any new metric (§ 1-2 of that section);
-  - resolve score discrepancies via the Score Resolution
-    Rule (§ "Score Resolution Rule" of that file);
-  - not soften or fabricate any metric (§ "Measurement
-    Integrity Rules", explicit "metric gaming" floor).
+The canonical text governing measurement integrity lives in
+`nmb3/nmb3_decision_policy.md` § "Measurement Integrity
+Rules" and § "Score Resolution Rule"; the canonical "metric
+gaming" floor is named in those sections and referenced from
+the Early Stop Conditions list above.  This appendix does not
+restate those rules; it points at them.
 
-The "suspected metric gaming" floor is the specific anchor
-that gated the M6.5 FAIL re-validation (O034): a fresh CI
-reproduction returning PASS where the locked baseline returned
-FAIL would have fired this floor and stopped the loop; the
-fresh reproduction returned FAIL with bit-identical headline
-table and condition outputs, so the floor was satisfied
-without firing.  This is documented in
+Operational anchor (factual, not a rule restatement): the
+M6.5 FAIL re-validation in O034 was the most recent loop event
+where the metric-gaming floor was a live consideration.  A
+fresh CI reproduction returning PASS where the locked baseline
+returned FAIL would have raised that floor; the fresh
+reproduction returned FAIL with bit-identical headline table
+and condition outputs (run id 24937928571 at SHA 9eaabac), so
+no floor fired.  Documented in
 `nmb3/nmb3_reports/o034_m6_5_lamb_fail_revalidation.md` and
 in the reproducibility appendix entry A.3.
 
@@ -267,57 +261,73 @@ in the reproducibility appendix entry A.3.
 ## 4. Schema for `nmb3/nmb3_objective_map.md` entries
 
 Every persistent objective in the queue is specified by an
-entry in `nmb3/nmb3_objective_map.md` carrying the following
-canonical 11 fields:
+entry in `nmb3/nmb3_objective_map.md`.  The canonical schema
+is documented in that file under § "Schema (legend for every
+entry below)" and is quoted verbatim here.  In any case of
+discrepancy between this appendix and that file, the file is
+authoritative.
 
-  1. **Objective ID** -- `O###` stable identifier.  Never
-     reused.  (Quoted from the schema documentation in the
-     same file.)
-  2. **Name** -- short human-readable title.
-  3. **Purpose** -- one-paragraph statement of what the
-     objective produces and why.
-  4. **Dependencies** -- list of `O###` IDs that must be in
-     `Status: SUCCEEDED` (or APPROVED, where applicable)
-     before the objective can be executed.  Unsatisfied
-     dependencies are surfaced to Steve, not silently waived;
-     waivers require an explicit Steve string (e.g. the
-     2026-04-25T18:00:00Z `"Override deps for O033
-     (single-objective waiver)"` precedent in
-     `nmb3/nmb3_decisions.log`).
-  5. **Success criteria** -- the concrete state of the repo
-     that must hold for the objective to be eligible to flip
-     PROPOSED -> SUCCEEDED.
-  6. **Evidence required** -- the concrete artefact(s) that
-     must be present to back the success criteria.
-  7. **Allowed autonomous actions** -- the bounded set of
-     actions the loop may take to execute the objective
-     without further Steve approval.
-  8. **Forbidden actions** -- explicit no-go list, in addition
-     to the policy-wide forbidden set in
-     `nmb3/nmb3_autonomous_loop_policy.md`.
-  9. **Status** -- one of PROPOSED, IN PROGRESS, SUCCEEDED,
-     CLOSED, APPROVED (Steve-only flip), DEFERRED, REJECTED.
- 10. **Auto-execute permission** -- one of `NO`, `YES
-     (validation/stability ablation)`, `YES (documentation
-     only)`, etc.
- 11. **Rewrite permission** -- typically `Steve only`.
+> Each objective uses these eleven fields:
+>
+> - **Objective ID** — `O###` stable identifier.  Never reused.
+> - **Name** — short human-readable title.
+> - **Purpose** — one paragraph stating the question the objective
+>   answers and why that answer matters for the funding package.
+> - **Dependencies** — list of `O###` IDs that must be in `Status:
+>   CLOSED (Steve-approved)` before this objective may begin.
+> - **Success criteria** — pre-set, measurable, declared *before*
+>   execution per Decision Policy "pass condition declared before run".
+> - **Evidence required** — the concrete artefact(s) that must be
+>   produced and committed to canonical before the objective may close.
+> - **Allowed autonomous actions** — the bounded set of actions the
+>   Autonomous Loop may take inside this objective.
+> - **Forbidden actions** — explicit no-go list, in addition to the
+>   global Decision Policy "Forbidden Without Steve Approval" set.
+> - **Status** — one of: `PROPOSED`, `STEVE-APPROVED (NOT STARTED)`,
+>   `IN PROGRESS`, `BLOCKED`, `CLOSED (Steve-approved)`, `CLOSED
+>   (autonomously, validation block)`, `DEFERRED`, `OBSOLETE`.
+> - **Auto-execute permission** — `NO`, `YES (validation/stability
+>   only)`, or `YES (full)`.  Default `NO`.  Anything other than `NO`
+>   must cite which Decision Policy autonomous-approval criterion
+>   applies.
+> - **Rewrite permission** — who may edit the objective definition
+>   after Steve approves the roadmap.  Default: `Steve only`.  The
+>   autonomous loop may always update the `Status` field to reflect
+>   observed reality and may append evidence pointers; it may not edit
+>   any other field without Steve approval.
 
-Optional extension fields, used where the objective's history
-warrants them:
-  - **Rewrite history** -- timestamped record of any rewrites
+Observed extension fields (not part of the canonical 11; used
+where an objective's history warrants them and consistent with
+the Rewrite-permission clause that the autonomous loop may
+"append evidence pointers"):
+
+  - **Rewrite history** — timestamped record of any rewrites
     Steve has authorised (with the verbatim Steve string and
-    the loop's interpretation), e.g. the O037 entry in
+    the loop's interpretation).  Example: the O037 entry in
     `nmb3/nmb3_objective_map.md` records the
-    2026-04-25T19:24:00Z partial-scope rewrite.
-  - **Evidence to date** -- progress notes when the objective
-    has produced partial evidence en route to its full
-    Evidence-required set.
+    2026-04-25T19:24:00Z partial-scope rewrite under this
+    field.
+  - **Evidence to date** — progress notes recording partial
+    evidence en route to the full `Evidence required` set.
 
 Worked example: see the **O037** entry in
 `nmb3/nmb3_objective_map.md` (around the `### O037` heading
-in the P8 packaging artefacts section).  All 11 canonical
+in the P8 — Packaging artefacts section).  All 11 canonical
 fields plus the Rewrite history extension are present and
 populated.
+
+Note on field-value drift: individual objective entries in
+`nmb3/nmb3_objective_map.md` have, in practice, sometimes used
+`Status` and `Auto-execute permission` values that vary from
+the canonical enums (e.g. `Status: SUCCEEDED at <timestamp>`
+or `Auto-execute permission: YES (documentation only)`).
+Where this appendix is read alongside such entries, the
+canonical schema text quoted above remains the binding
+specification; any practical drift in individual entries is
+visible in the file itself and can be reconciled by a future
+schema-alignment objective.  This appendix does not amend the
+canonical schema and does not endorse any drift; it documents
+the schema as canonical text says it.
 
 ---
 

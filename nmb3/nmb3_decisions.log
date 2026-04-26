@@ -886,3 +886,96 @@ the 19:30:00Z entry above).
   three errata were treated as part of the O036 loop rather
   than as separate loops).  No new objective will be
   initiated regardless.
+
+[2026-04-25T19:36:00Z] Loop, O038 erratum (in-loop, per O036
+errata-pattern precedent; the architect FAIL is the single gate
+trigger event under Steve's stop rule, but errata that fix the
+finding within the same objective are within scope of the same
+objective's loop, not a new loop).
+
+  Architect review of O038 commit 3d5b304 returned FAIL with two
+  BLOCKING findings, both restricted to the methodology
+  appendix:
+
+    1. § 4 schema restatement was inaccurate vs the canonical
+       schema block in `nmb3/nmb3_objective_map.md` § "Schema
+       (legend for every entry below)".  Specifically:
+         - Dependencies field text said `Status: SUCCEEDED (or
+           APPROVED, where applicable)` -- canonical text is
+           `Status: CLOSED (Steve-approved)`.
+         - Status enum listed `PROPOSED, IN PROGRESS, SUCCEEDED,
+           CLOSED, APPROVED (Steve-only flip), DEFERRED,
+           REJECTED` -- canonical 8-value enum is `PROPOSED`,
+           `STEVE-APPROVED (NOT STARTED)`, `IN PROGRESS`,
+           `BLOCKED`, `CLOSED (Steve-approved)`, `CLOSED
+           (autonomously, validation block)`, `DEFERRED`,
+           `OBSOLETE`.
+         - Auto-execute permission values listed `NO`, `YES
+           (validation/stability ablation)`, `YES (documentation
+           only)`, etc -- canonical values are `NO`, `YES
+           (validation/stability only)`, `YES (full)` with
+           explicit `Default NO` and "anything other than NO
+           must cite which Decision Policy autonomous-approval
+           criterion applies" qualifier.
+
+    2. § 3 added non-canonical normative text in two places:
+         - § 3.1 added "Any of these conditions, when
+           triggered, halts the loop and requires explicit
+           Steve direction before resuming.  This list is the
+           operational floor under which the loop refuses to
+           silently continue." -- this binding-effect statement
+           is not in canonical
+           `nmb3/nmb3_autonomous_loop_policy.md`.
+         - § 3.2 added "These caps prevent unbounded autonomous
+           execution and unbounded operational cost in a single
+           session.  They are soft against
+           'single-objective-with-errata' patterns ... and hard
+           against new objectives." -- this interpretive rule
+           is not in canonical text and would, if accepted,
+           change the practical interpretation of the canonical
+           `maximum loops: 6` cap.
+         - § 3.3 contained editorial framing ("the single
+           hardest floor on loop output") that softened toward
+           additive-rule territory; corrected to neutral
+           pointer.
+         - § 3.4 paraphrased Decision Policy "Measurement
+           Integrity Rules" as "the loop is bound to: ..."
+           with sub-bullet rule restatements; corrected to
+           a strict pointer pattern.
+
+  Erratum action:
+    - Edit only `nmb3/nmb3_packaging/methodology_appendix.md`
+      (no other file).  Specifically:
+      (i) replace § 3.1 / § 3.2 / § 3.3 / § 3.4 binding-effect
+          text and editorial framing with neutral pointers and
+          factual operational anchors that do not add
+          rules to the canonical policy;
+      (ii) replace § 4 schema enumeration with a verbatim
+           quote of the canonical "Schema (legend for every
+           entry below)" block from `nmb3/nmb3_objective_map.md`,
+           plus a note that the canonical text is
+           authoritative in any discrepancy, plus an explicit
+           "Note on field-value drift" paragraph that
+           distinguishes (a) the canonical schema this
+           appendix mirrors verbatim from (b) practical
+           variations in individual objective entries, without
+           amending the schema or endorsing the drift.
+    - No other file edited.  No policy file edited.  No
+      MILESTONES.md edited.  No nmb3_README.md edited.  No
+      objective status changed (O038 remains SUCCEEDED at
+      19:32:00Z; the erratum corrects the appendix text, not
+      the closure status).
+    - Commit and push under nightingalemap/info@webmarket.ie
+      with commit message naming both BLOCKING findings.
+    - Re-run architect review on the erratum commit; if PASS,
+      O038 closes clean.  If a further finding surfaces, treat
+      as a second erratum within the same objective per the
+      O036 precedent (which carried two errata + a
+      post-approval errata, all within the same objective
+      loop) -- but the loop will halt regardless after this
+      objective per Steve's stop rule.
+
+  Loop budget this session: erratum is in-loop (does not count
+  as a new loop under the O036 precedent); session budget
+  remains 6 of 6 used by completed loops.  Workflow yml edits:
+  0 of 2.  No new objective initiated.
