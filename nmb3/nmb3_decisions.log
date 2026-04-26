@@ -1183,3 +1183,59 @@ authorised by Steve.
   beginning it.  Standing constraint "do not execute the whole
   preferred path yet" still active.  Awaiting Steve.
 
+
+---
+
+2026-04-26T04:00:00Z  --  O042 Steve gate satisfied: funding scope
+                         declaration string received.
+
+  Per O042 spec, Steve's verbatim 5-element declaration is
+  recorded below.  This entry IS the O042 evidence per
+  "Evidence required: log entry containing all five elements
+  (a)-(e)".  The interpreter output at
+  nmb3/nmb3_reports/o042_funding_scope_decision.md verifies
+  element-by-element coverage.
+
+  -- BEGIN STEVE VERBATIM --
+
+  Execute O042.
+
+  Funding scope decision:
+
+  (a) Audience:
+  Technical research funders / AI labs (e.g. xAI, OpenAI-level research groups)
+
+  (b) Ask:
+  €250k-€750k initial funding
+
+  (c) Locked claims:
+  - Metric runs end-to-end
+  - Reproduces exactly on clean CI
+  - Responds to timing changes (real signal)
+  - Has a clear failure boundary (M6.5)
+  - M5.6, M6.4, M6.5 results are reproducible and SHA-pinned
+
+  (d) Continuation work:
+  - Voice-friendly / polyphonic-capable extractor
+  - Extension beyond canonical 6-case dataset
+  - Cross-corpus generalisation
+  - Perceptual validation layer
+
+  (e) Boundary condition:
+  The M6.5 failure boundary will be stated explicitly and used as
+  the primary motivation for the continuation work, not hidden or
+  softened.
+
+  -- END STEVE VERBATIM --
+
+  Loop posture:
+    - This entry is the success-criteria artefact for O042.
+    - O042 is Steve-gated; the autonomous loop only records the
+      string; it does not draft funder-facing prose at this gate.
+    - O043 (out-of-scope register) is now unblocked per its
+      Dependencies field; auto-execute permission is YES per
+      O043 spec, awaiting Steve authorisation to begin loop 4.
+    - Per autonomous loop policy "Session Completion Rule": loop
+      stops on objective success and proposes the next objective
+      without beginning it.
+

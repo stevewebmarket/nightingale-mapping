@@ -1406,7 +1406,14 @@ path.
   this objective (O042 only declares scope; new algorithmic work
   is itself out-of-scope for the locked repo and must be its own
   separately-funded follow-on programme).
-- **Status**: PROPOSED
+- **Status**: SUCCEEDED at 2026-04-26T04:00:00Z.  Steve verbatim
+  5-element declaration recorded in `nmb3/nmb3_decisions.log`
+  under entry `2026-04-26T04:00:00Z` between `BEGIN STEVE
+  VERBATIM` / `END STEVE VERBATIM` delimiters; all five elements
+  (a)-(e) present and explicit; M6.5 boundary condition (e)
+  reaffirmed by Steve as primary motivation for continuation
+  work.  See `nmb3/nmb3_reports/o042_funding_scope_decision.md`
+  for element-by-element verification.
 - **Auto-execute permission**: NO (Steve-only — funding decisions
   are explicitly reserved for Steve).
 - **Rewrite permission**: Steve only.
