@@ -1323,7 +1323,13 @@ path.
 - **Allowed autonomous actions**: write; commit; push.
 - **Forbidden actions**: dropping any tracked issue; reclassifying
   any open issue as resolved without explicit Steve approval.
-- **Status**: PROPOSED
+- **Status**: SUCCEEDED at 2026-04-26T02:45:00Z.  Register artefact
+  at `nmb3/nmb3_packaging/open_issues_final.md` (207 lines) lists
+  all 4 `MILESTONES.md` "Open issues" items verbatim plus 6
+  tracked-not-hidden items added during P0 – P8 (4 from M3.1
+  closure, 1 reproducibility-gap, 1 ffmpeg drift); no item dropped,
+  no item reclassified.  See
+  `nmb3/nmb3_reports/o040_open_issues_register.md`.
 - **Auto-execute permission**: YES (documentation only).
 - **Rewrite permission**: Steve only.
 
