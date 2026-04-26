@@ -1098,3 +1098,48 @@ authorised by Steve.
   beginning it.  Standing constraint "do not execute the whole
   preferred path yet" still active.  Awaiting Steve.
 
+
+---
+
+2026-04-26T03:00:00Z  --  O040 (open-issues register, final) SUCCEEDED clean.
+
+  Final state:
+    - Register artefact: nmb3/nmb3_packaging/open_issues_final.md
+      (207 lines).
+    - Section 1: 4 items from MILESTONES.md "Open issues (tracked,
+      not hidden)" reproduced verbatim with current status lines
+      (none reclassified as resolved).
+    - Section 2: 6 tracked-not-hidden items added during P0-P8
+      (4 from M3.1 closure Open Questions; 1 reproducibility-gap
+      from O037 § Section B; 1 ffmpeg backend-version drift from
+      O033 § 7 / O039 § 4).
+    - Interpreter output: nmb3/nmb3_reports/o040_open_issues_register.md
+    - Objective map status: SUCCEEDED at 2026-04-26T02:45:00Z.
+
+  Loop history:
+    - Loop 2 commit 1 (14f380b)  -- register + interpreter output
+      + status SUCCEEDED.  Architect APPROVED CLEAN on first review
+      (no FAIL, no erratum cycle).
+
+  Discipline preserved:
+    - No CI dispatch (O040 is documentation-only per spec).
+    - No script edited; no pipeline file edited; no policy file
+      edited; no MILESTONES.md edited; no nmb3_README.md edited.
+    - No CI workflow yml edited.  Workflow yml-edit budget consumed
+      this loop: 0 of 2.
+    - Forbidden-actions check passed: no tracked issue dropped; no
+      open issue reclassified as resolved; M6.5 boundary-doctrine
+      reframing recorded as existing-elsewhere fact but explicitly
+      NOT applied in this register.
+
+  Architect note (next-spec hint, NOT acted on this loop): future
+  packaging-arc spec language could explicitly allow P0/P8 supersets
+  alongside P1-P7 to avoid the "scope stretch" ambiguity the
+  architect flagged-but-accepted here.  Steve-only policy edit; not
+  authorised for this loop.
+
+  Per autonomous loop policy "Session Completion Rule": loop stops
+  on objective success and proposes the next objective without
+  beginning it.  Standing constraint "do not execute the whole
+  preferred path yet" still active.  Awaiting Steve.
+
