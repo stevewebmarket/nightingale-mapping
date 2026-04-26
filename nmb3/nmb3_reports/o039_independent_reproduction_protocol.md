@@ -1,6 +1,7 @@
 # O039 Interpreter Output — Independent Reproduction Protocol
 
-Generated:   2026-04-26T01:50:00Z
+Generated:   2026-04-26T01:50:00Z (updated by in-loop erratum at
+             2026-04-26T02:05:00Z; see § 7)
 Objective:   O039 — Independent reproduction protocol
              (`nmb3/nmb3_objective_map.md`, P8 packaging arc,
              after O038 methodology appendix)
@@ -87,16 +88,22 @@ re-dispatch) are documented, both with explicit
 ### 3.2  Reference CI dispatch reproduces the headline numbers
 
 Four expected lines verified verbatim in the run log
-(`reproduce/8_Run reproduction script.txt` of run 24945531211):
+(`reproduce/8_Run reproduction script.txt` of run 24945531211).
+Both columns are exact strings (no ellipses; whitespace
+preserved; the runner's timestamp prefix is stripped from the
+"Found" column for direct comparison with the protocol's
+"Expected" column):
 
-| Expected line | Found at log line | Match |
-|---|---|---|
-| `TOTAL ... 107/144   0.7431` (M5.6 baseline) | `TOTAL                                                      107/144   0.7431` | ✅ |
-| `twinkle_box ... top3=3 top5=3 outranks-all-nonfam=YES` | `  twinkle_box               top3=3 top5=3 outranks-all-nonfam=YES` | ✅ |
-| `4. weak-evidence honestly flagged AND twinkle_people still weak: PASS` | exact match | ✅ |
-| `M6.4 PASS` (final line of M6.4 stdout) | exact match | ✅ |
+| # | Expected (from protocol § Expected output) | Found (from run log) | Match |
+|---|---|---|---|
+| 1 | `TOTAL                                                      107/144   0.7431` | `TOTAL                                                      107/144   0.7431` | ✅ |
+| 2 | `  twinkle_box               top3=3 top5=3 outranks-all-nonfam=YES` | `  twinkle_box               top3=3 top5=3 outranks-all-nonfam=YES` | ✅ |
+| 3 | `  4. weak-evidence honestly flagged AND twinkle_people still weak: PASS` | `  4. weak-evidence honestly flagged AND twinkle_people still weak: PASS` | ✅ |
+| 4 | `M6.4 PASS` | `M6.4 PASS` | ✅ |
 
-**PASS.**  All four headline-line verifications succeeded.
+**PASS.**  All four headline-line verifications succeeded; every
+column above is a literal byte-for-byte string with whitespace
+preserved.
 
 ### 3.3  Cell-level reproduction of the M5.6 6-clip × 3-transform table
 
@@ -212,3 +219,42 @@ methodology appendix + O039 independent reproduction protocol):
   - **Pause.**
 
 Awaiting Steve.
+
+## 7. In-loop erratum (2026-04-26T02:05:00Z)
+
+Architect re-review of the initial O039 commit pair (`766cff6` +
+`74e9583`) returned FAIL with two BLOCKING findings and two
+medium findings.  This erratum addresses them in a single
+follow-up commit, in keeping with the in-loop erratum precedent
+established by O038 (FAIL → erratum at SHA `796ef84` → APPROVED
+CLEAN).
+
+| # | Finding | Resolution |
+|---|---|---|
+| 1 | **BLOCKING** — Mode B hides setup steps: assumes `gh` is installed and authenticated; assumes the reviewer can pin `--ref` to a raw SHA (gh accepts only branch/tag). | Protocol's Mode B now contains explicit `apt-get install gh` + `gh auth login` lines, plus concrete `git fetch upstream <SHA>` + `git push origin <SHA>:refs/heads/o039-pin` branch-creation commands.  Non-Debian platforms get a one-line pointer to `https://cli.github.com/manual/installation`.  No setup step is now implicit. |
+| 2 | **BLOCKING** — protocol likely overflows one page (111 lines / ~548 words). | Protocol trimmed to 97 lines source (Pinning bullets compacted; out-of-scope register condensed; redundant prose removed) while preserving all four headline-line specifications, both Mode A and Mode B, and every forbidden-action discipline. |
+| 3 | MEDIUM — § 3.2 used ellipses for the "Expected" column, weakening the "verbatim" claim. | § 3.2 above is now a literal byte-for-byte table: both columns are exact strings with whitespace preserved; only the runner's timestamp prefix is stripped from the "Found" column for direct comparison. |
+| 4 | MEDIUM — protocol's "any canonical SHA at or after that commit" language weakened strict pinning. | Protocol's Pinning section now reads `Pin SHA: 766cff65… (exact; no other SHA is in scope of this protocol).`  No looser-pinning language remains. |
+| 5 | MEDIUM — Status field narrative in objective map ran much longer than a "brief description". | Status narrative tightened to three sentences (artefact path; reference-dispatch run id + SHA; pointer to this interpreter output). |
+
+Erratum scope NOT touched by this revision (explicitly preserved):
+
+  - The reference CI dispatch (run id `24945531211` at SHA
+    `766cff6`) is unchanged; no second dispatch was performed
+    (O039's "Allowed autonomous actions" field permits the
+    workflow to be dispatched **once**).  The dispatch SHA and
+    the protocol's pin SHA both remain `766cff6`; an external
+    reviewer cloning at `766cff6` will see the protocol document
+    in its initial-commit form rather than its post-erratum
+    form, but the four Mode A / Mode B / Expected-output /
+    out-of-scope sections specify the same commands and the
+    same headline lines in both forms; both forms produce
+    identical CI dispatches and identical headline numbers.
+  - The shared workflow yml is unchanged from canonical (last
+    edit was O033's ffmpeg add at SHA `3929fbc`).
+  - No script edited; no pipeline file edited; no policy file
+    edited; no MILESTONES.md edited; no nmb3_README.md edited.
+  - Workflow yml-edit budget consumed this loop: 0 of 2.
+
+This erratum stays in-loop per the O036 / O038 precedent (the
+in-loop architect FAIL → erratum cycle is a single loop).
