@@ -1302,7 +1302,19 @@ path.
 - **Forbidden actions**: relaxing the "no caches" requirement;
   hiding any setup step in an unspoken assumption; introducing
   M6.4-specific logic into the shared workflow yml.
-- **Status**: PROPOSED
+- **Status**: SUCCEEDED at 2026-04-26T01:50:00Z.  Protocol artefact
+  written at `nmb3/nmb3_packaging/independent_reproduction_protocol.md`
+  (introduced at SHA `766cff6`); reference CI dispatch run id
+  `24945531211` at head SHA `766cff6` reproduced all four headline
+  lines (M5.6 `TOTAL 107/144 0.7431`; M6.4 `twinkle_box top3=3 top5=3
+  outranks-all-nonfam=YES`; cond4 `weak-evidence honestly flagged AND
+  twinkle_people still weak: PASS`; final `M6.4 PASS`); cell-level
+  M5.6 reproduction is 18/18 bit-identical vs O023 Run A and the
+  canonical `m4_1_results.json` at the M5.6 lock SHA `d332f54`; M6.4
+  table is 3/3 bit-identical vs O033 Run.  No new workflow file
+  created; the shared workflow yml was reused unmodified.  Workflow
+  yml-edit budget consumed this loop: 0 of 2.  See
+  `nmb3/nmb3_reports/o039_independent_reproduction_protocol.md`.
 - **Auto-execute permission**: YES (validation/measurement-integrity).
 - **Rewrite permission**: Steve only.
 
