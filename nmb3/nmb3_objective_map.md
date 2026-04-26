@@ -1498,7 +1498,50 @@ path.
   O042-permitted set; presenting continuation-work scope as
   already-proven; omitting the M6.5 boundary from the executive
   summary; editing any policy file; editing `MILESTONES.md`.
-- **Status**: PROPOSED
+- **Status**: DRAFT AWAITING STEVE APPROVAL (autonomous portion
+  of success criteria satisfied at 2026-04-26T05:40:00Z; final
+  Steve-only success-criterion clause -- verbatim string
+  `Funding package final draft approved` in
+  `nmb3/nmb3_decisions.log` -- not yet present).
+  - Artefact: `nmb3/nmb3_packaging/funding_package.md` (~348
+    lines), structured per O044 spec items (1) – (5):
+    (1) executive summary §1 with verbatim O042 element-(c)
+        locked claims (only those five claims used as the
+        claim envelope), M6.5 boundary called out in §1.2 as
+        the primary continuation motivation, and §1.3
+        restating the O042 element-(d) continuation scope
+        verbatim;
+    (2) technical brief §2 covering pipeline shape through
+        M5.6, retrieval chain M6.1 – M6.4, and the M6.5
+        boundary;
+    (3) headline numbers table §3: M3.1 = 44/48 = 0.9167;
+        M5.6 = 107/144 = 0.7431 (locked); M6.4 = PASS
+        (Twinkle); M6.5 = honest FAIL / boundary (Lamb,
+        4-of-7 pre-set conditions fail);
+    (4) appendix pointers §4 covering O037 (reproducibility
+        appendix), O038 (methodology appendix), O039
+        (independent reproduction protocol), O040 (final
+        open-issues register), O041 (risk register), O043
+        (scope and out-of-scope register);
+    (5) continuation-work plan §5 with one sub-section per
+        element-(d) item, each labelled `unstarted candidate`
+        per O043 Part (i), each carrying a "no specific
+        outcome is promised" clause; §5.5 cross-reference
+        table making the element-(d) → O043 Part (i.x)
+        mapping mechanical.
+  - Interpreter output: `nmb3/nmb3_reports/o044_funding_package.md`
+    (success-criteria mapping, forbidden-actions check,
+    discipline check; explicitly records Steve-approval
+    clause as not yet satisfied).
+  - DRAFT discipline: package §0 / §6.5 / §7 all explicitly
+    state no external use is authorised before the Steve
+    verbatim string exists.  No external delivery channel
+    has been used.  Package is held inside the repository.
+  - Loop bookkeeping (this loop): 0 CI dispatches; 0
+    workflow yml edits; 0 script / pipeline / policy /
+    `MILESTONES.md` / `nmb3_README.md` edits.  Inputs were
+    Steve-approved artefacts only (per O044 "Allowed
+    autonomous actions").
 - **Auto-execute permission**: NO (Steve-only — funding-package
   release is explicitly reserved for Steve).
 - **Rewrite permission**: Steve only.
