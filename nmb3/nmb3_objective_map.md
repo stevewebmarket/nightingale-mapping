@@ -1226,7 +1226,11 @@ path.
   loop discipline (block plan → smoke test → CI dispatch → bot
   commit → interpreter output → closure recommendation), the policy
   files that bind it, and the explicit honesty floors.
-- **Dependencies**: O037
+- **Dependencies**: O037 — SUCCEEDED at 2026-04-25T19:26:00Z under
+  the partial-scope rewrite (canonical SHA be48a65); architect
+  review PASS at 2026-04-25T19:30:00Z with no BLOCKING / HIGH
+  findings; Steve's conditional permission from
+  2026-04-25T19:24:00Z therefore active for O038.
 - **Success criteria**: `nmb3/nmb3_packaging/methodology_appendix.md`
   exists; references the binding policy files; references the schema
   in this objective map.
@@ -1234,7 +1238,40 @@ path.
 - **Allowed autonomous actions**: write; commit; push.
 - **Forbidden actions**: editing the policy files; restating policy
   rules in a way that conflicts with their canonical text.
-- **Status**: PROPOSED
+- **Status**: SUCCEEDED at 2026-04-25T19:32:00Z.  All success
+  criteria met.  `nmb3/nmb3_packaging/methodology_appendix.md`
+  created with five sections: (§ 1) the loop discipline phases
+  (block plan → smoke test → CI dispatch → bot commit →
+  interpreter output → closure recommendation), each pointing at
+  the binding policy file(s) and quoting `nmb3/nmb3_cycle.md`'s
+  canonical 6-step cycle and supporting rules verbatim; (§ 2) the
+  inventory of 13 binding policy / process files (`nmb3_manifesto`,
+  `nmb3_decision_policy`, `nmb3_autonomous_loop_policy`,
+  `nmb3_cycle`, `nmb3_roles`, the four agent role files, the
+  Manager-on-Replit-with-OpenAI integration spec, the toolchain
+  spec, the two template files, and the objective map itself);
+  (§ 3) the explicit honesty floors quoting the Early Stop
+  Conditions, Session Budget, and Forbidden Without Steve
+  Approval lists from `nmb3/nmb3_autonomous_loop_policy.md`
+  verbatim and anchoring the Measurement Integrity Rules from
+  `nmb3/nmb3_decision_policy.md`, with the M6.5 metric-gaming
+  floor anchored to the O034 / appendix-A.3 evidence; (§ 4) the
+  canonical 11-field schema for `nmb3/nmb3_objective_map.md`
+  entries (Objective ID, Name, Purpose, Dependencies, Success
+  criteria, Evidence required, Allowed autonomous actions,
+  Forbidden actions, Status, Auto-execute permission, Rewrite
+  permission) plus the optional Rewrite history / Evidence to
+  date extensions, with the O037 entry as the worked example;
+  (§ 5) a non-claim register paralleling the reproducibility
+  appendix's Section C (no funding / commercial / perceptual /
+  generalisation / deployment claims; no policy edit; no
+  closure re-litigation; no scope creep; explicit binding to
+  Steve's session stop rule).  No policy file edited; no
+  MILESTONES.md edited; no nmb3_README.md edited; no other
+  objective's status changed; no fresh CI runs dispatched; no
+  workflow yml change.  Evidence:
+  `nmb3/nmb3_packaging/methodology_appendix.md` and
+  `nmb3/nmb3_blocks/block_027_plan.md`.
 - **Auto-execute permission**: YES (documentation only).
 - **Rewrite permission**: Steve only.
 
