@@ -1342,3 +1342,95 @@ authorised by Steve.
   approved" in nmb3_decisions.log before any external use');
   awaiting Steve's explicit 'Execute O044' string.
 
+
+---
+
+2026-04-26T05:55:00Z  --  O044 (funder-facing package final draft)
+                         autonomous portion CLEAN; status held at
+                         DRAFT AWAITING STEVE APPROVAL.
+
+  Final state of autonomous portion:
+    - Package: nmb3/nmb3_packaging/funding_package.md
+      (~351 lines, structured per O044 spec items (1)-(5)).
+    - Interpreter output:
+      nmb3/nmb3_reports/o044_funding_package.md (~176 lines).
+    - Objective map status: DRAFT AWAITING STEVE APPROVAL at
+      2026-04-26T05:40:00Z.
+
+  Verbatim-quote audit (O042 elements (a)-(e), all
+  byte-identical to nmb3_decisions.log entry
+  2026-04-26T04:00:00Z source lines after stripping the log's
+  leading two-space indent and the markdown '> ' prefix):
+    - (a) Audience: package line 8 = log line 1206. CLEAN.
+    - (b) Ask: package lines 12 and 98 = log line 1209. CLEAN.
+    - (c) Locked claims (5 lines): package = log lines
+      1212-1216. CLEAN.
+    - (d) Continuation work (4 lines): package = log lines
+      1219-1222. CLEAN.
+    - (e) Boundary condition (3 lines): package lines 69-71
+      = log lines 1225-1227. CLEAN.
+
+  Lexical disciplines (architect's forward note from O043
+  erratum), inside the funder-facing prose:
+    - 'fix' / 'resolve' / 'solve' / 'easily-fixable':
+      0 occurrences.
+    - Strong-claim verbs ('proves', 'demonstrates', 'achieves',
+      'succeeds', 'generalises', 'generalizes', 'outperforms',
+      'state-of-the-art', 'breakthrough', 'novel'):
+      0 occurrences.
+    - 'easy' / 'non-trivial' (2 occurrences, both documented
+      in interpreter output § 3.5): 'non-trivial intervals' is
+      the verbatim technical term from MILESTONES.md;
+      'characterised as easy to overcome' is inside the § 6
+      non-claim register as a NEGATION.  Neither asserts the
+      boundary is easy to overcome.
+
+  Loop history:
+    - Loop 6 commit 1 (c144f08) -- package + interpreter
+      output + status DRAFT AWAITING STEVE APPROVAL.
+      Architect BLOCKING: O042 elements (a) and (b) not
+      byte-identical (en-dash vs hyphen, trailing
+      punctuation).
+    - Loop 6 commit 2 (4385d9c) -- erratum 1: explicit > 
+      blockquote verbatim blocks for (a) and (b) at three
+      locations.  Architect FAIL: element (e) was
+      paraphrased in § 1.2 prose.
+    - Loop 6 commit 3 (862e7e5) -- erratum 2: 3-line > 
+      blockquote verbatim block for (e) at top of § 1.2;
+      existing prose retained underneath as technical
+      context cross-referencing the verbatim clause.
+      Architect APPROVED CLEAN.
+
+  Discipline preserved (this loop):
+    - Files added/edited: package (new), interpreter output
+      (new), objective map status block (update only).
+    - 0 CI dispatches.
+    - 0 workflow yml edits.  Workflow yml-edit budget
+      consumed this loop: 0 of 2.
+    - 0 script / pipeline / policy / MILESTONES.md /
+      nmb3_README.md edits.
+    - 0 external delivery channels used.  Package is held
+      inside the repository as DRAFT.
+    - Inputs were Steve-approved artefacts only (per O044
+      'Allowed autonomous actions' clause): O042 string in
+      nmb3_decisions.log; O043 register; O037-O041
+      appendices; MILESTONES.md (locked, quoted only); CI
+      workflow yml SHA (referenced only).
+
+  Steve gate (final O044 success-criterion clause, per
+  spec):
+    - The verbatim string 'Funding package final draft
+      approved' must appear in nmb3/nmb3_decisions.log,
+      written by Steve, before:
+        (a) O044 status changes to SUCCEEDED in the
+            objective map; and
+        (b) any external use of
+            nmb3/nmb3_packaging/funding_package.md.
+    - Per autonomous loop policy 'Session Completion Rule':
+      this loop closes here.  The next objective is not
+      auto-started.
+
+  Next: O044 SUCCEEDED is Steve-gated and awaits Steve's
+  verbatim approval string.  The autonomous loop has
+  exhausted its allowed actions for O044.
+
