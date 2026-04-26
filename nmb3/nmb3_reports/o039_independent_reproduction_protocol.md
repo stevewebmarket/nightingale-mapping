@@ -76,14 +76,19 @@ workflow yml is unaware of which client dispatched it.
 | Property | Value |
 |---|---|
 | Path | `nmb3/nmb3_packaging/independent_reproduction_protocol.md` |
-| Source line count | 111 lines markdown source (incl. blank lines, code-block fences, multi-line bullet continuations) |
+| Source line count | 97 lines markdown source (post-erratum; incl. blank lines, code-block fences, multi-line bullet continuations) |
 | Effective rendered length | one page (single-page markdown render at standard width) |
 | Sections | Header / Pinning / Mode B / Mode A / Expected output / Out of scope / Reference dispatch |
 
 **PASS.**  The protocol was written and committed at SHA
-`766cff6`.  Both Mode A (local fresh clone) and Mode B (CI
-re-dispatch) are documented, both with explicit
-`--no-cache-dir` / no-`actions/cache` discipline.
+`766cff6`; the **authoritative protocol text** (post-erratum
+trimmed form, with explicit `gh` install/auth + branch-creation
+in Mode B + strict pin language) is on `main` HEAD at SHA
+`9bee1d0` and forward.  The **execution pin SHA** an external
+reviewer should clone at remains `766cff6` (the dispatch SHA).
+Both Mode A (local fresh clone) and Mode B (CI re-dispatch) are
+documented, both with explicit `--no-cache-dir` /
+no-`actions/cache` discipline.
 
 ### 3.2  Reference CI dispatch reproduces the headline numbers
 
