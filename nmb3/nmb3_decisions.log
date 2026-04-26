@@ -593,3 +593,105 @@ after the 2026-04-25T19:02:00Z pause:
   used this session (the ffmpeg install from O033's commit
   3929fbc is already in place from the prior session and
   persists).
+
+[2026-04-25T19:18:00Z] Steve, via chat reply to the O036 SUCCEEDED
+surface message at 2026-04-25T19:14:00Z (canonical SHA 8f89cd7,
+after the architect-driven errata 2 patching the MEDIUM finding
+on § 5 item 2 negated softening terms):
+  "Approve M6 partial-scope closure"
+
+  Effect:
+    - The M6 partial-scope closure recommendation at
+      nmb3/nmb3_reports/m6_phase_closure_recommendation.md
+      becomes binding for funding-package purposes on the
+      partial-scope basis defined in § 2 of that document.
+    - The six binding items in § 5 are now in force:
+        (1) treat M6.4 PASS + M6.5 FAIL as the load-bearing
+            M6 result and always cite them together;
+        (2) treat M6.5 FAIL as part of the result, not a
+            blocker for closure;
+        (3) cite M6.4 by run id 24937477484 at SHA 3929fbc
+            and M6.5 by run id 24937928571 at SHA 9eaabac;
+        (4) treat O030 / O031 / O032 (M6.1 / M6.2 / M6.3
+            fresh CI re-validation) as deferred under the
+            partial-scope activation rule, not skipped or
+            failed;
+        (5) keep nmb3/nmb3_reports/boundary.md as the
+            canonical boundary reference and route all
+            out-of-scope fix discussion through O043;
+        (6) keep .github/workflows/nmb3_no_cache_repro.yml
+            as the canonical M6 reproduction surface in its
+            current target-agnostic shape.
+    - This is option 1 from the loop's preceding O036 SUCCEEDED
+      surface message ("Recommendation is awaiting your
+      explicit approval string in chat.  Suggested string
+      (matching the O024 -> 'Approve P4 partial-scope closure'
+      pattern at 2026-04-25T17:59:01Z): 'Approve M6 partial-
+      scope closure'"), and Steve's verbatim string matches
+      the suggested string exactly.
+
+  What this approval does NOT do, by policy:
+    - Does NOT auto-advance any other objective.  O030 / O031
+      / O032 / O037 / O038-O041 / O042 / O043 all remain
+      PROPOSED on canonical with no status change.
+    - Does NOT formally re-validate M6.1 / M6.2 / M6.3.
+      Their evidence remains MILESTONES.md baseline plus
+      incidental score reproduction inside the O033 / O034
+      leaderboards, exactly as recorded in § 3.4 of the
+      recommendation.
+    - Does NOT propose, endorse, or hint at any fix for the
+      M6.5 FAIL.  Fix discussion remains routed to O043 via
+      the § 7 non-claim register.
+    - Does NOT extend M6.5's claim beyond the canonical
+      12-clip library + 6-query set.
+    - Does NOT soften M6.5's FAIL label.  The closure
+      approves the FAIL as part of the result; it does not
+      relabel it.
+    - Does NOT re-open M3.1 / M3.2 / M3.3 / M3.4 / M5.x or
+      M6.4 closure.
+    - Does NOT invalidate the P4 partial-scope closure
+      approved at 2026-04-25T17:59:01Z.  P4 closure remains
+      binding alongside this M6 closure.
+    - Does NOT make any funding, commercial, perceptual-
+      validity, second-corpus generalisation, or real-time-
+      deployment claim.
+
+  Boundary co-location discipline post-approval:  the same
+  forbidden-action discipline that bound the recommendation
+  pre-approval continues to bind it post-approval.  External
+  citations of the M6.4 PASS must continue to co-locate the
+  M6.5 FAIL boundary in the same paragraph; the closure
+  approval does NOT lift this requirement.
+
+  Loop interpretation:
+    - Apply post-approval errata to
+      nmb3/nmb3_reports/m6_phase_closure_recommendation.md:
+        (a) update the Status: header from "Awaiting Steve"
+            to "APPROVED by Steve at 2026-04-25T19:18:00Z
+            via chat string 'Approve M6 partial-scope
+            closure'";
+        (b) replace § 9 placeholder fields with the binding
+            approval record (verbatim approval string,
+            timestamp, channel, effect, post-approval
+            boundary co-location discipline reaffirmation,
+            future-expansion path preserved, what this
+            approval does NOT do, cross-references including
+            the precedent of the O024 P4 partial-scope
+            closure approval at 2026-04-25T17:59:01Z which
+            this M6 closure approval mirrors step-for-step).
+    - Update O036 Status entry in nmb3/nmb3_objective_map.md
+      to reflect the binding approval.  Initial SUCCEEDED
+      timestamp 2026-04-25T19:14:00Z preserved; APPROVED
+      timestamp 2026-04-25T19:18:00Z added.
+    - Append this entry to nmb3_decisions.log.
+    - Commit and push as a single post-approval errata
+      commit (matching the O024 P4 closure approval errata
+      pattern -- one commit, no substantive content change,
+      only Status / § 9 / objective-map / decisions.log
+      changes).
+
+  Loop budget this session: 4 of 6 used (O036 main +
+  self-caught errata + architect-driven errata + post-
+  approval errata).  Workflow yml edits this session: 0 of 2
+  used (the ffmpeg install from prior session's O033 commit
+  3929fbc persists).

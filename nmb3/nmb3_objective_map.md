@@ -1056,7 +1056,19 @@ path.
 - **Allowed autonomous actions**: write; commit; push.
 - **Forbidden actions**: presenting M6.4 PASS without the M6.5
   boundary in the same paragraph.
-- **Status**: SUCCEEDED at 2026-04-25T19:14:00Z.  All success
+- **Status**: **APPROVED by Steve at 2026-04-25T19:18:00Z** via
+  chat string "Approve M6 partial-scope closure" (see
+  `nmb3/nmb3_decisions.log` 2026-04-25T19:18:00Z entry and
+  § 9 of `nmb3/nmb3_reports/m6_phase_closure_recommendation.md`).
+  Binding for funding-package purposes on the partial-scope
+  basis defined in § 2 of the recommendation.  Initial
+  SUCCEEDED at 2026-04-25T19:14:00Z; approval applied via
+  post-approval errata at 2026-04-25T19:18:00Z (no change to
+  the recommendation's substantive content -- the approval
+  errata only updates the Status: header from "Awaiting Steve"
+  to APPROVED, fills in § 9's previously-placeholder fields
+  with the verbatim approval string + timestamp + binding
+  effect, and updates this Status entry).  All success
   criteria met.  `nmb3/nmb3_reports/m6_phase_closure_recommendation.md`
   created.  The verbatim required phrase "M6.5 FAIL is part of
   the result, not a blocker for closure" appears load-bearing
