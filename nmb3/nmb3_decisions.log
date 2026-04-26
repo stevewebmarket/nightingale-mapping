@@ -979,3 +979,77 @@ objective's loop, not a new loop).
   as a new loop under the O036 precedent); session budget
   remains 6 of 6 used by completed loops.  Workflow yml edits:
   0 of 2.  No new objective initiated.
+
+[2026-04-25T19:50:00Z] Session end -- punt-to-fresh-session,
+authorised by Steve.
+
+  Sequence:
+    - Loop completed O038 erratum at 2026-04-25T19:36:00Z
+      (canonical SHA 796ef84) and surfaced "Session budget
+      exhausted: 6 of 6 loops used" in chat.
+    - Steve sent "Execute O039" at 2026-04-25T19:46:00Z.
+    - Loop surfaced two facts before any execution:
+      (1) the canonical "maximum loops: 6" cap from
+          nmb3/nmb3_autonomous_loop_policy.md § "Session
+          Budget" was already at 6 of 6, and the canonical
+          "Session Completion Rule" reads "stop execution;
+          produce a session summary report; propose the next
+          objective; do not begin the next objective"; the
+          loop refused to silently treat "Execute O039" as
+          an implicit budget override (per the precedent set
+          by the dep-waiver discipline at the
+          2026-04-25T18:00:00Z O033 waiver string).
+      (2) O039's Allowed-actions field requires a fresh CI
+          dispatch of the shared no-cache workflow with
+          target=m6_4_repro_smoke (or equivalent), which is
+          a different operational mode than the documentation-
+          only objectives (O036 / O037 / O038) executed
+          earlier in this session.
+    - Loop offered five options: explicit override (both /
+      budget-only); re-scope O039 to documentation-only;
+      punt to fresh session; pause.
+    - Steve sent "Punt to fresh session -- resume O039 in a
+      new session" at 2026-04-25T19:49:00Z, selecting
+      option 4.
+
+  Effect:
+    - This session canonically halts at SHA 796ef84.  The
+      session-completion-rule "stop execution" step is now
+      satisfied.  The session-completion-rule "propose the
+      next objective" step is already satisfied by the
+      O039 entry in nmb3/nmb3_objective_map.md (Status:
+      PROPOSED).  The session-completion-rule "do not begin
+      the next objective" step is satisfied by deferring
+      O039 execution to a new session.
+    - O039's substantive scope is unchanged from canonical
+      (no rewrite occurred); when a new session begins, O039
+      remains PROPOSED with O038 as a clean dependency
+      (SUCCEEDED at 796ef84, architect APPROVED CLEAN).
+    - This decisions.log entry itself is a bookkeeping
+      append, not a measurement loop; no new objective is
+      initiated and no fresh CI run is dispatched.  It is
+      authorised implicitly by Steve's "Punt to fresh
+      session" string (which requires this audit-trail
+      record to be honest).
+
+  Session inventory (for the next session's manager):
+    - Canonical SHA at session end: 796ef84 (after this
+      bookkeeping commit will be one commit ahead).
+    - Loops used this session: 6 of 6 (O036 main + 3 errata
+      + O037 main + O038 main; O038 erratum stayed in-loop
+      per O036 precedent).
+    - Workflow yml edits this session: 0 of 2 (ffmpeg from
+      O033's commit 3929fbc persists).
+    - APPROVED closures still binding: P4 partial-scope
+      (2026-04-25T17:59:01Z) and M6 partial-scope
+      (2026-04-25T19:18:00Z).
+    - SUCCEEDED objectives this session: O036 (M6 closure
+      recommendation), O037 (reproducibility appendix,
+      partial-scope after Steve rewrite), O038 (methodology
+      appendix).
+    - Next objective for the new session: O039 (independent
+      reproduction protocol) -- requires fresh CI dispatch;
+      manager should account for budget at session start
+      (this commit will appear in the next session's
+      "previously canonical" set, not the next session's
+      loop count).
