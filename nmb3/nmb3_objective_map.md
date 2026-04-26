@@ -1498,7 +1498,7 @@ path.
   O042-permitted set; presenting continuation-work scope as
   already-proven; omitting the M6.5 boundary from the executive
   summary; editing any policy file; editing `MILESTONES.md`.
-- **Status**: DRAFT AWAITING STEVE APPROVAL (autonomous portion
+- **Status**: SUCCEEDED at 2026-04-26T06:15:00Z (Steve verbatim approval string "Funding package final draft approved" recorded in nmb3_decisions.log entry 2026-04-26T06:15:00Z, between BEGIN STEVE VERBATIM / END STEVE VERBATIM delimiters; previously DRAFT AWAITING STEVE APPROVAL (autonomous portion
   of success criteria satisfied at 2026-04-26T05:40:00Z; final
   Steve-only success-criterion clause -- verbatim string
   `Funding package final draft approved` in

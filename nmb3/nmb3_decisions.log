@@ -1434,3 +1434,133 @@ authorised by Steve.
   verbatim approval string.  The autonomous loop has
   exhausted its allowed actions for O044.
 
+
+---
+
+2026-04-26T06:15:00Z  --  O044 Steve gate satisfied: funder-facing
+                         package final draft approval string
+                         received.  O044 promoted SUCCEEDED.
+
+  Per O044 spec, Steve's verbatim approval string is recorded
+  below.  This entry IS the O044 final-stage evidence per
+  "Evidence required: the package file, plus the Steve approval
+  string".  The autonomous portion of O044 was previously
+  recorded CLEAN at 2026-04-26T05:55:00Z; this entry closes
+  the Steve-only portion.
+
+  -- BEGIN STEVE VERBATIM --
+
+  i adjusted 1.1 and 1.2
+
+  Funding package final draft approved
+
+  -- END STEVE VERBATIM --
+
+  Steve's adjustments were committed by Steve directly to main
+  as commit 43ff742d7de8482e69b05e4b55fd81e0a9117d9b ("Update
+  funding_package.md", author stevewebmarket, 2026-04-26 05:24:41
+  +0200), prior to sending the approval string.  The approval
+  string is therefore taken as approval of the package state at
+  HEAD 43ff742 (the same HEAD this entry is being committed
+  against, prior to this entry's own bookkeeping commit).
+
+  Steve's edits (43ff742) cover § 1.1 and § 1.2 only:
+    - § 1.1: removed the byte-identical > blockquote of O042
+      element (c) (5 locked claims) and replaced it with
+      closely-paraphrased en-dash bullets, with a top-line
+      framing sentence ("We have built and validated a system
+      that measures structure in sound."), an opener
+      ("Specifically, the current system demonstrates that:"),
+      a closing summary sentence ("The key result is not just
+      that the system works, but that it behaves predictably:
+      we can measure where it succeeds, and we can measure
+      where it breaks."), and a new closing M6.5 sentence
+      ("The M6.5 boundary is therefore not incidental -- it
+      defines the current limit of the system and is the
+      primary motivation for the continuation work described
+      below.").
+    - § 1.2: small wording tweak; substance preserved.
+    - All other sections unchanged: § 0, § 1.3, § 1.4, § 2,
+      § 3, § 4, § 5, § 6, § 7.
+    - Verbatim quotes for O042 elements (a), (b), (d), (e)
+      remain byte-identical to nmb3_decisions.log entry
+      2026-04-26T04:00:00Z source lines.  Only element (c) is
+      no longer carried as a verbatim blockquote; it is now
+      paraphrased with explicit O042 provenance attribution
+      inline ("These five statements, defined in the O042
+      funding-scope decision, are the full set of claims made
+      in this document.").
+
+  Architect review against O044 SPEC criteria (commit 43ff742):
+  PASS, with explicit acknowledgement that the removal of the
+  byte-identical (c) blockquote and the introduction of two
+  strong-claim words ("demonstrates", "succeeds") are
+  agent-internal-discipline regressions but NOT O044 spec
+  violations.  The O044 spec requires "no claim outside the
+  O042-permitted set"; the architect judged Steve's paraphrase
+  to preserve the (c) claim envelope without introducing a new
+  performance / generalisation claim.  Steve, as the author of
+  the funder-facing prose, has authority over presentation
+  form within the spec envelope.
+
+  Honest reportage (per O044 spec "package contains no claim
+  outside the O042-permitted set" being a spec criterion that
+  applies to the final state, not just the autonomous draft):
+    - "We have built and validated a system that measures
+      structure in sound" -- read as a high-level summary of
+      what the metric does (consistent with O042 (c) clause 1
+      "Metric runs end-to-end"); not a new claim about
+      generalisation, perceptual validity, or downstream
+      utility.
+    - "the current system demonstrates that: [O042 (c) clauses
+      paraphrased]" -- the verb "demonstrates" applies to the
+      enumerated (c) clauses that follow it, not to a broader
+      claim.  Within envelope.
+    - "we can measure where it succeeds, and we can measure
+      where it breaks" -- "succeeds" refers to M6.4 (which is
+      the locked PASS verdict in MILESTONES.md), "breaks"
+      refers to M6.5 (which is the locked FAIL / boundary
+      verdict).  Within envelope.
+    - The closing M6.5 sentence in § 1.1 strengthens the M6.5
+      framing in the executive summary; it does not soften
+      the boundary.
+
+  External-use authorisation: with this entry, Steve's
+  approval string is recorded.  External use of
+  nmb3/nmb3_packaging/funding_package.md is now authorised by
+  Steve.  The autonomous loop has no role in choosing
+  delivery channel; that is a Steve action.
+
+  Loop history (Steve gate close-out):
+    - Loop 6 commit 1 (c144f08) -- agent draft.
+    - Loop 6 commit 2 (4385d9c) -- agent erratum 1
+      (verbatim (a)/(b)).
+    - Loop 6 commit 3 (862e7e5) -- agent erratum 2
+      (verbatim (e)).
+    - Loop 6 commit 4 (78fa8c2) -- agent decisions.log
+      bookkeeping for autonomous portion CLEAN.
+    - Loop 6 commit 5 (43ff742) -- STEVE direct edit to § 1.1
+      and § 1.2; pushed by Steve before sending the approval
+      string.
+    - Loop 6 commit 6 (this entry) -- agent decisions.log
+      bookkeeping for Steve gate satisfied; status SUCCEEDED.
+
+  Discipline preserved (this Steve-gate close-out commit):
+    - Files edited by the autonomous loop in this commit:
+      nmb3/nmb3_decisions.log (this entry); objective map
+      status block (DRAFT AWAITING STEVE APPROVAL ->
+      SUCCEEDED); interpreter output o044_funding_package.md
+      (Steve-edits acknowledgement appended to § 6).
+    - The funding package file itself is NOT edited by the
+      autonomous loop in this commit; Steve's commit 43ff742
+      is the final state.
+    - 0 CI dispatches.
+    - 0 workflow yml edits.  Workflow yml-edit budget
+      consumed this loop: 0 of 2.
+    - 0 script / pipeline / policy / MILESTONES.md /
+      nmb3_README.md edits.
+
+  Per autonomous loop policy "Session Completion Rule": loop
+  6 closes here on objective success.  Next objective is not
+  auto-started.
+

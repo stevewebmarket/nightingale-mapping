@@ -174,3 +174,87 @@ Therefore:
   status **DRAFT AWAITING STEVE APPROVAL** (not `SUCCEEDED`); the
   loop does not auto-promote to `SUCCEEDED` without the Steve
   verbatim string.
+
+---
+
+## 7.  Steve-gate close-out addendum (appended 2026-04-26T06:15:00Z)
+
+This addendum is appended after the Steve gate is satisfied, to
+keep the interpreter output consistent with the package state at
+HEAD `43ff742` (Steve's direct edits to § 1.1 and § 1.2) and at
+the close-out commit (this loop).
+
+### 7.1  What changed between the autonomous-portion CLEAN HEAD
+and the Steve-edited HEAD
+
+Steve committed `43ff742` ("Update funding_package.md", author
+`stevewebmarket`, 2026-04-26 05:24:41 +0200) directly to `main`.
+The diff covers § 1.1 and § 1.2 of the package only.
+
+- § 1.1: the byte-identical `>` blockquote of O042 element (c)
+  (5 locked claims) was REMOVED and replaced with closely-
+  paraphrased en-dash bullets carrying the same five clauses
+  with slight rewording (e.g. "responds to timing changes (real
+  signal)" → "responds to timing variation in a consistent,
+  measurable way").  Three new framing sentences were added by
+  Steve in his author capacity: a top-line ("We have built and
+  validated a system that measures structure in sound."), an
+  opener ("Specifically, the current system demonstrates that:"),
+  and a closing summary ("The key result is not just that the
+  system works, but that it behaves predictably: we can measure
+  where it succeeds, and we can measure where it breaks.").  A
+  new closing M6.5 sentence was added ("The M6.5 boundary is
+  therefore not incidental — it defines the current limit of
+  the system and is the primary motivation for the continuation
+  work described below.").
+- § 1.2: small wording tweak; substance preserved.
+- All other sections unchanged: § 0, § 1.3, § 1.4, § 2, § 3,
+  § 4, § 5, § 6, § 7.
+
+### 7.2  Effect on § 3 success-criteria mapping
+
+| § 3 sub-clause | Status at 43ff742 |
+|---|---|
+| 3.1 file exists | PASS (unchanged). |
+| 3.2 every exec-summary claim maps to appendix pointer | PASS.  § 4 per-claim mapping covers the same five clauses, paraphrased.  Steve's three framing sentences are read as rhetorical wrappers around the same five claims, not standalone evidence claims requiring new pointer rows. |
+| 3.3 M6.5 in exec summary | PASS (strengthened).  M6.5 now appears in BOTH § 1.1 (Steve's new closing sentence) and § 1.2 (verbatim element-(e) blockquote + retained prose). |
+| 3.4 continuation plan maps to (d) and O043 (i.x) | PASS (unchanged).  § 5 not edited. |
+| 3.5 no claim outside O042-permitted set | PASS.  Architect review at HEAD 43ff742 judged Steve's paraphrase to preserve the (c) claim envelope.  "We can measure where it succeeds, and we can measure where it breaks" maps to M6.4 PASS / M6.5 FAIL respectively (both inside the O042 (c) clause "Has a clear failure boundary (M6.5)" and the locked MILESTONES.md verdicts).  "System that measures structure in sound" is read as a high-level summary of what the metric does, consistent with O042 (c) clause 1. |
+| 3.6 Steve verbatim approval string | NOW SATISFIED.  Steve sent "Funding package final draft approved" via chat at 2026-04-26T06:15:00Z; the autonomous loop has recorded it verbatim in `nmb3_decisions.log` entry of the same timestamp, between `BEGIN STEVE VERBATIM` / `END STEVE VERBATIM` delimiters. |
+
+### 7.3  Effect on § 3.5 lexical disciplines
+
+The lexical disciplines applied during autonomous-portion review
+were the architect's prior forward note from the O043 erratum.
+That note is an internal agent discipline tightening, not an
+O044 spec requirement.  Steve's edits regress two of those
+internal tightenings:
+
+- The byte-identical (c) blockquote is no longer present;
+  paraphrase + inline O042 provenance attribution replaces it.
+- Two strong-claim verbs are introduced inside funder-facing
+  prose: "demonstrates" (§ 1.1, applied to the enumerated O042
+  (c) clauses that follow it) and "succeeds" (§ 1.1, applied to
+  the M6.4 PASS verdict in the locked milestone tree).
+
+These regressions are author-of-record choices by Steve and are
+NOT O044 spec violations.  They are recorded here for honest
+audit trail.
+
+### 7.4  Effect on § 3.6 / § 4 forbidden actions
+
+| Forbidden action | Status at 43ff742 |
+|---|---|
+| External distribution before the Steve approval string exists | NOT done.  Package was held inside the repo from autonomous-portion CLEAN at 78fa8c2 through Steve's edit at 43ff742 through the Steve approval string at this entry.  External use is now authorised by Steve, but the autonomous loop has performed no external distribution. |
+| Making any claim outside the O042-permitted set | NOT done (per § 7.2 row 3.5 above). |
+| Presenting continuation-work scope as already-proven | NOT done.  § 5 unchanged.  Steve's new § 1.1 closing sentence frames M6.5 as the *motivation* for continuation work, not as a proof of any continuation outcome. |
+| Omitting the M6.5 boundary from the executive summary | NOT done; strengthened (per § 7.2 row 3.3). |
+| Editing any policy file | NOT done.  Steve's commit 43ff742 only touches funding_package.md. |
+| Editing MILESTONES.md | NOT done.  Steve's commit 43ff742 only touches funding_package.md. |
+
+### 7.5  Final O044 status
+
+`SUCCEEDED` at 2026-04-26T06:15:00Z.
+
+External use of `nmb3/nmb3_packaging/funding_package.md` is now
+authorised by Steve.
