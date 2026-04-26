@@ -1143,3 +1143,43 @@ authorised by Steve.
   beginning it.  Standing constraint "do not execute the whole
   preferred path yet" still active.  Awaiting Steve.
 
+
+---
+
+2026-04-26T03:35:00Z  --  O041 (risk register, final) SUCCEEDED clean.
+
+  Final state:
+    - Register artefact: nmb3/nmb3_packaging/risk_register.md
+      (131 lines).
+    - 5 spec-named categories across 10 rows, each with
+      Likelihood + Impact + Mitigation columns:
+        § 1 Scientific (M6.5 boundary)            -- 1 row
+        § 2 Reproducibility (CI drift)             -- 2 rows
+        § 3 Perceptual-validity                    -- 1 row
+        § 4 Corpus (canonical 6-case set)          -- 1 row
+        § 5 Process (autonomous loop failure modes) -- 5 rows
+    - Forbidden-actions check passed: perceptual-validity risk
+      included (REALISED x SIGNIFICANT, verbatim m3_1 quote
+      preserved); M6.5 boundary risk rated REALISED x SIGNIFICANT
+      (not understated, not framed as 'open issue' or 'scheduled
+      improvement').
+    - Interpreter output: nmb3/nmb3_reports/o041_risk_register.md
+    - Objective map status: SUCCEEDED at 2026-04-26T03:20:00Z.
+
+  Loop history:
+    - Loop 3 commit 1 (b860edc)  -- register + interpreter output
+      + status SUCCEEDED.  Architect APPROVED CLEAN on first
+      review (no FAIL, no erratum cycle).
+
+  Discipline preserved:
+    - No CI dispatch (O041 is documentation-only per spec).
+    - No script edited; no pipeline file edited; no policy file
+      edited; no MILESTONES.md edited; no nmb3_README.md edited.
+    - No CI workflow yml edited.  Workflow yml-edit budget consumed
+      this loop: 0 of 2.
+
+  Per autonomous loop policy "Session Completion Rule": loop stops
+  on objective success and proposes the next objective without
+  beginning it.  Standing constraint "do not execute the whole
+  preferred path yet" still active.  Awaiting Steve.
+
