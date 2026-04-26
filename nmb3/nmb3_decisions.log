@@ -1239,3 +1239,44 @@ authorised by Steve.
       stops on objective success and proposes the next objective
       without beginning it.
 
+
+---
+
+2026-04-26T04:25:00Z  --  O042 (funding scope decision, Steve gate)
+                         SUCCEEDED clean.
+
+  Final state:
+    - Steve verbatim 5-element string: nmb3/nmb3_decisions.log
+      entry 2026-04-26T04:00:00Z, between BEGIN STEVE VERBATIM
+      / END STEVE VERBATIM delimiters.
+    - Element-by-element coverage (a)-(e) verified in
+      nmb3/nmb3_reports/o042_funding_scope_decision.md § 3.1.
+    - Forbidden-actions check passed: no funder-facing prose
+      drafted; no autonomous-loop suggestion of ask amount or
+      continuation scope; no continuation work proposed whose
+      success criteria would soften the M6.5 boundary; no
+      algorithmic work claimed as executed.
+    - Allowed autonomous actions exhausted: five-element question
+      presented (O041 close-out); decision-policy 'no funding
+      claim without Steve approval' rule restated (interpreter
+      output § 5); MILESTONES.md 'Current boundary' quoted
+      verbatim (interpreter output § 4).
+    - Objective map status: SUCCEEDED at 2026-04-26T04:00:00Z.
+
+  Loop history:
+    - Loop 4 commit 1 (53224a3) -- Steve verbatim block +
+      interpreter output + status SUCCEEDED.  Architect APPROVED
+      CLEAN on first review (no FAIL, no erratum cycle).
+
+  Discipline preserved:
+    - No CI dispatch (O042 is a Steve gate).
+    - No script edited; no pipeline file edited; no policy file
+      edited; no MILESTONES.md edited; no nmb3_README.md edited.
+    - No CI workflow yml edited.  Workflow yml-edit budget consumed
+      this loop: 0 of 2.
+
+  Next: O043 (out-of-scope register) is unblocked per Dependencies
+  field; auto-execute YES per O043 spec; standing constraint
+  'do not execute the whole preferred path yet' is in force;
+  awaiting Steve's explicit 'Execute O043' string.
+
