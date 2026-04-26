@@ -1447,7 +1447,15 @@ path.
   already proven achievable; framing the M6.5 boundary as easily-
   fixable; adding a continuation-scope item that was not named in
   the O042 string; promising any specific continuation outcome.
-- **Status**: PROPOSED
+- **Status**: SUCCEEDED at 2026-04-26T04:50:00Z.  Register artefact
+  at `nmb3/nmb3_packaging/scope_and_out_of_scope.md` (274 lines).
+  Part (i) carries 4-of-4 O042 element-(d) items in element-(d)
+  order, verbatim; Part (ii) carries 6 out-of-scope rows derived
+  from `boundary.md` § 5 minus element-(d) items; Part (iii)
+  mechanical-derivation audit confirms 1-of-1 `MILESTONES.md`
+  "What does not yet work" item routed (no silent drop) and
+  carries explicit cross-reference to O042 log entry's element
+  (d).  See `nmb3/nmb3_reports/o043_scope_and_out_of_scope.md`.
 - **Auto-execute permission**: YES (documentation only, post-O042).
 - **Rewrite permission**: Steve only.
 
