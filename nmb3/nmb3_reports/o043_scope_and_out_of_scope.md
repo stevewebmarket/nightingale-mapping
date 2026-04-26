@@ -141,7 +141,7 @@ outcome".
 | Forbidden action | Status |
 |---|---|
 | Implying any (i.x) item is already proven achievable | NOT done.  Each (i.x) row carries a "Status: unstarted candidate" bullet; the register's header paragraph and Part (iv) bullet 1 both state explicitly that no in-scope item is implied to be achievable. |
-| Framing the M6.5 boundary as easily-fixable | NOT done.  Each (i.x) "Why needed" bullet uses the phrase "needed *because of* M6.5, not as a guaranteed fix for it" or equivalent; Part (iv) bullet 2 restates this as a non-claim. |
+| Framing the M6.5 boundary as easily-fixable | NOT done.  Each (i.x) "Why needed" bullet frames M6.5 as the motivating constraint and explicitly disclaims any "known remediation path" / "guaranteed improvement path" characterisation, without using the lexical forms "fix" / "resolve" / "solve" / "easily-fixable" inside any (i.x) row; Part (iv) bullet 2 restates this as a non-claim. |
 | Adding a continuation-scope item not named in the O042 string | NOT done.  Part (i) contains exactly the 4 items in element (d), in element-(d) order; sub-scope candidates listed under (i.1) are framed as items Steve's wording *encompasses*, not as additions, and naming any of them as a specific milestone is itself a separate Steve gate (per (i.1)'s sub-scope bullet). |
 | Promising any specific continuation outcome | NOT done.  Each (i.x) row states "no claim of achievability is made"; success criteria for each candidate are explicitly Steve-gated; Part (iv) bullet 4 restates this as a non-claim. |
 

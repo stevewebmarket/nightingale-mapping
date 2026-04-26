@@ -46,8 +46,9 @@ for O043.
     `MILESTONES.md` § "Current boundary" ("The bottleneck
     is the front-end pitch tracker on weak-melodic
     material, not the retrieval layer").  The continuation
-    work is needed *because of* M6.5, not as a guaranteed
-    fix for it.
+    work is needed *because of* M6.5; no part of this row
+    characterises M6.5 as having a known remediation path
+    or a guaranteed improvement path.
   - **Maps from `MILESTONES.md` "What does not yet work":**
     "voice-heavy / weak-melodic extraction" — covered here.
   - **Sub-scope candidates Steve's wording encompasses:**
@@ -59,7 +60,7 @@ for O043.
     continuation milestone is itself a separate Steve gate.
   - **Status:** unstarted candidate; no claim of
     achievability is made by this register; M6.5 is not
-    framed as easily-fixable.
+    characterised here as having a known remediation path.
 
 ### (i.2)  Extension beyond canonical 6-case dataset
 
@@ -89,7 +90,8 @@ for O043.
     independently-recorded melodic family without per-family
     tuning (risk register § 1.1, REALISED × SIGNIFICANT).
     Continuation work is needed *because of* M6.5; M6.5 is
-    not framed as easily-fixable.
+    not characterised here as having a known remediation
+    path.
   - **Maps from `MILESTONES.md` "What does not yet work":**
     co-located with the front-end bottleneck (the "M6.5
     Lamb result" reference); the cross-corpus generalisation
