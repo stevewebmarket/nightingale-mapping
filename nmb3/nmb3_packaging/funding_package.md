@@ -3,9 +3,14 @@
 **Repository:** `stevewebmarket/nightingale-mapping`
 **HEAD this draft is built against:** `4d6ebc1` (main).
 **CI workflow this draft is built against:** `.github/workflows/nmb3_no_cache_repro.yml` at canonical SHA `3929fbc`.
-**Audience (per O042 element (a)):** Technical research funders / AI
-labs (e.g. xAI, OpenAI-level research groups).
-**Ask (per O042 element (b)):** €250k – €750k initial funding.
+**Audience (per O042 element (a), verbatim):**
+
+> Technical research funders / AI labs (e.g. xAI, OpenAI-level research groups)
+
+**Ask (per O042 element (b), verbatim):**
+
+> €250k-€750k initial funding
+
 **Status of this document:** DRAFT — not for external distribution
 until Steve has explicitly written `Funding package final draft
 approved` in `nmb3/nmb3_decisions.log`. No external use is authorised
@@ -88,10 +93,13 @@ O043 Part (i) row.
 
 ### 1.4  The ask
 
-€250k – €750k initial funding (per O042 element (b)) to begin the
-four continuation work items in §1.3 against the validated baseline
-in §1.1, in order to address the M6.5 boundary in §1.2.  No
-continuation outcome is claimed as already-proven.
+The ask, per O042 element (b), verbatim:
+
+> €250k-€750k initial funding
+
+to begin the four continuation work items in §1.3 against the
+validated baseline in §1.1, in order to address the M6.5 boundary
+in §1.2.  No continuation outcome is claimed as already-proven.
 
 ---
 
