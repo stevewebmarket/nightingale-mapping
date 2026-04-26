@@ -1349,7 +1349,13 @@ path.
 - **Allowed autonomous actions**: write; commit; push.
 - **Forbidden actions**: omitting the perceptual-validity risk;
   understating the M6.5 boundary risk.
-- **Status**: PROPOSED
+- **Status**: SUCCEEDED at 2026-04-26T03:20:00Z.  Risk register
+  artefact at `nmb3/nmb3_packaging/risk_register.md` (131 lines)
+  carries all 5 spec-named categories across 10 rows, each with
+  Likelihood, Impact, Mitigation columns; perceptual-validity
+  risk included; M6.5 boundary risk rated REALISED × SIGNIFICANT
+  (not understated).  See
+  `nmb3/nmb3_reports/o041_risk_register.md`.
 - **Auto-execute permission**: YES (documentation only).
 - **Rewrite permission**: Steve only.
 
